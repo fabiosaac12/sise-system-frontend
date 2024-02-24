@@ -6,16 +6,16 @@ export const palette = (mode: ThemeModeEnum): Partial<Theme["palette"]> =>
     ? {
         mode: "light",
         primary: {
-          main: "#007FFF",
-          light: "#66B2FF",
-          dark: "#004C99",
-          contrastText: "#fff",
+          light: "#fdebf3",
+          main: "#fab1d0",
+          dark: "#b84165",
+          contrastText: "#1C2025",
         },
         secondary: {
-          main: "#DAE0E7",
-          contrastText: "#2F3A46",
-          light: "rgb(225, 230, 235)",
-          dark: "rgb(152, 156, 161)",
+          light: "#fdebf3",
+          main: "#fab1d0",
+          dark: "#b84165",
+          contrastText: "#1C2025",
         },
         common: {
           black: "#0B0D0E",
@@ -52,7 +52,7 @@ export const palette = (mode: ThemeModeEnum): Partial<Theme["palette"]> =>
         },
         background: {
           paper: "#fff",
-          default: "#fff",
+          default: "#ffe0ed",
         },
         action: {
           active: "rgba(0, 0, 0, 0.54)",
