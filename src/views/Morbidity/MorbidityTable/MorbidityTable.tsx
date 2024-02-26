@@ -203,7 +203,7 @@ export const MorbidityTable = () => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      {/* <EnhancedTableToolbar numSelected={1}></EnhancedTableToolbar> */}
+      <EnhancedTableToolbar numSelected={1}></EnhancedTableToolbar>
       <DataGrid
         rows={rows}
         columns={columns}
