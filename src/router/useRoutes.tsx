@@ -1,16 +1,16 @@
-import { AuthRoleEnum, AuthStatusEnum } from "@app/enums/auth";
-import { BaseLayout } from "@app/layouts";
-import { useAuth } from "@app/providers/auth";
-import { Home } from "@app/views/Home";
-import { Login } from "@app/views/auth/Login/Login";
-import { RouteProps, Navigate } from "react-router-dom";
+import { AuthRoleEnum, AuthStatusEnum } from '@app/enums/auth';
+import { BaseLayout } from '@app/layouts';
+import { useAuth } from '@app/providers/auth';
+import { Morbidity } from '@app/views/Morbidity';
+import { Login } from '@app/views/auth/Login/Login';
+import { RouteProps, Navigate } from 'react-router-dom';
 
 export const useRoutes = () => {
   const auth = useAuth();
 
   const loggedOutRoutes: RouteProps[] = [
     {
-      path: "/login",
+      path: '/login',
       element: (
         <BaseLayout>
           <Login />
@@ -18,38 +18,38 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: "/*",
-      element: <Navigate to="/login" replace={true} />,
+      path: '/*',
+      element: <Navigate to='/login' replace={true} />,
     },
   ];
 
   const adminRoutes: RouteProps[] = [
     {
-      path: "/",
+      path: '/',
       element: (
         <BaseLayout>
-          <Home />
+          <Morbidity />
         </BaseLayout>
       ),
     },
     {
-      path: "/*",
-      element: <Navigate to="/" replace={true} />,
+      path: '/*',
+      element: <Navigate to='/' replace={true} />,
     },
   ];
 
   const userRoutes: RouteProps[] = [
     {
-      path: "/",
+      path: '/',
       element: (
         <BaseLayout>
-          <Home />
+          <Morbidity />
         </BaseLayout>
       ),
     },
     {
-      path: "/*",
-      element: <Navigate to="/" replace={true} />,
+      path: '/*',
+      element: <Navigate to='/' replace={true} />,
     },
   ];
 
