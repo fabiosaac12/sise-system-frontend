@@ -1,59 +1,35 @@
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { useMemo, useState } from 'react';
 
-import { useStyles } from './MorbidityTableStyles';
 import { IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+// tables components
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+// icons
 import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import EditIcon from '@mui/icons-material/Edit';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
-const columns: GridColDef[] = [
-  {
-    field: 'date',
-    headerName: 'Fecha',
-    type: 'date',
-    width: 150,
-  },
-  {
-    field: 'hour',
-    headerName: 'Hora',
-    width: 150,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Nombre y Apellido',
-    width: 150,
-  },
-  {
-    field: 'identification',
-    headerName: 'Cedula',
-    width: 150,
-  },
-  {
-    field: 'age',
-    headerName: 'Edad',
-    type: 'number',
-    width: 150,
-  },
-  {
-    field: 'position',
-    headerName: 'Cargo',
-    width: 150,
-  },
-  {
-    field: 'diagnosis',
-    headerName: 'Diagnostico',
-    width: 150,
-  },
-  {
-    field: 'treatment',
-    headerName: 'Tratamiento',
-    width: 150,
-  },
-  {
-    field: 'amount',
-    headerName: 'Cantidad',
-    width: 150,
-  },
-];
+interface Data {
+  date: Date;
+  hour: number;
+  fullName: string;
+  identification: number;
+  age: number;
+  position: string;
+  diagnosis: string;
+  treatment: string;
+  amount: number;
+}
 
 const rows = [
   {
@@ -142,11 +118,115 @@ const rows = [
   },
 ];
 
+interface HeadCell {
+  disablePadding: boolean;
+  id: keyof Data;
+  label: string;
+  numeric: boolean;
+}
+const headCells: readonly HeadCell[] = [
+  {
+    id: 'date',
+    numeric: false,
+    disablePadding: true,
+    label: 'Fecha',
+  },
+  {
+    id: 'hour',
+    numeric: true,
+    disablePadding: false,
+    label: 'Horas',
+  },
+  {
+    id: 'fullName',
+    numeric: false,
+    disablePadding: false,
+    label: 'Nombre y Apellido',
+  },
+  {
+    id: 'identification',
+    numeric: false,
+    disablePadding: false,
+    label: 'Cedula',
+  },
+  {
+    id: 'age',
+    numeric: true,
+    disablePadding: false,
+    label: 'Edad',
+  },
+  {
+    id: 'position',
+    numeric: true,
+    disablePadding: false,
+    label: 'Cargo',
+  },
+  {
+    id: 'diagnosis',
+    numeric: true,
+    disablePadding: false,
+    label: 'Diagnostico',
+  },
+  {
+    id: 'treatment',
+    numeric: true,
+    disablePadding: false,
+    label: 'Tratamiento',
+  },
+  {
+    id: 'amount',
+    numeric: true,
+    disablePadding: false,
+    label: 'Cantidad',
+  },
+];
+
+interface EnhancedTableProps {
+  numSelected: number;
+  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  rowCount: number;
+}
+
+function EnhancedTableHead(props: EnhancedTableProps) {
+  const { onSelectAllClick, numSelected, rowCount } = props;
+
+  return (
+    <TableHead>
+      <TableRow>
+        <TableCell padding='checkbox'>
+          <Checkbox
+            sx={{
+              color: 'initial',
+              '&.Mui-checked': {
+                color: '#EF579A',
+              },
+            }}
+            indeterminate={numSelected > 0 && numSelected < rowCount}
+            checked={rowCount > 0 && numSelected === rowCount}
+            onChange={onSelectAllClick}
+            inputProps={{
+              'aria-label': 'select all desserts',
+            }}
+          />
+        </TableCell>
+        {headCells.map((headCell) => (
+          <TableCell
+            key={headCell.id}
+            align={headCell.numeric ? 'center' : 'center'}
+            padding={headCell.disablePadding ? 'none' : 'normal'}
+          >
+            {headCell.label}
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  );
+}
+
 interface EnhancedTableToolbarProps {
   numSelected: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
   const { numSelected } = props;
 
@@ -154,66 +234,208 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     <Toolbar
       sx={{
         pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        // ...(numSelected > 0 && {
-        //   bgcolor: (theme) =>
-        //     alpha(
-        //       theme.palette.primary.main,
-        //       theme.palette.action.activatedOpacity
-        //     ),
-        // }),
+        pr: { xs: 3.5, sm: 3.5 },
+        ...(numSelected > 0 && {
+          bgcolor: (theme) => theme.palette.secondary.light,
+        }),
       }}
     >
       {numSelected > 0 ? (
         <Typography
           sx={{ flex: '1 1 100%' }}
-          color='inherit'
+          color='white'
           variant='subtitle1'
           component='div'
         >
-          {numSelected} selected
+          {numSelected > 1
+            ? `${numSelected} Elementos seleccionados`
+            : `${numSelected} Elemento seleccionado`}
         </Typography>
       ) : (
         <Typography
           sx={{ flex: '1 1 100%' }}
-          variant='h6'
+          variant='h5'
           id='tableTitle'
+          fontWeight='bold'
           component='div'
         >
-          Nutrition
+          Morbilidad
         </Typography>
       )}
       {numSelected > 0 ? (
-        <Tooltip title='Delete'>
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
+        <>
+          <Tooltip
+            title='Elminar'
+            onClick={() => alert('Funcionalidad en desarrollo')}
+          >
+            <IconButton>
+              <DeleteIcon sx={{ color: 'white' }} />
+            </IconButton>
+          </Tooltip>
+          {numSelected === 1 && (
+            <Tooltip
+              title='Editar'
+              onClick={() => alert('Funcionalidad en desarrollo')}
+            >
+              <IconButton>
+                <EditIcon sx={{ color: 'white' }} />
+              </IconButton>
+            </Tooltip>
+          )}
+        </>
       ) : (
-        <Tooltip title='Filter list'>
+        <Tooltip
+          title='Agregar consulta'
+          onClick={() => alert('Funcionalidad en desarrollo')}
+        >
           <IconButton>
-            <FilterListIcon />
+            <AddCircleIcon sx={{ color: '#EF579A', fontSize: 40 }} />
           </IconButton>
         </Tooltip>
       )}
     </Toolbar>
   );
 }
-export const MorbidityTable = () => {
-  const classes = useStyles();
+export function MorbidityTable() {
+  const [selected, setSelected] = useState<readonly number[]>([]);
+  const [page, setPage] = useState(0);
+  const [dense, setDense] = useState(false);
+
+  // const classes = useStyles();
+
+  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      const newSelected = rows.map((n) => n.id);
+      setSelected(newSelected);
+      return;
+    }
+    setSelected([]);
+  };
+
+  const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
+    const selectedIndex = selected.indexOf(id);
+    let newSelected: readonly number[] = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+    setSelected(newSelected);
+  };
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDense(event.target.checked);
+  };
+
+  const isSelected = (id: number) => selected.indexOf(id) !== -1;
+
+  // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * 5 - rows.length) : 0;
+
+  const visibleRows = useMemo(() => rows.slice(page * 5, page * 5 + 5), [page]);
+
   return (
-    <div className={classes.container}>
-      <EnhancedTableToolbar numSelected={1}></EnhancedTableToolbar>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        checkboxSelection
+    <Box sx={{ width: '100%' }}>
+      <Paper sx={{ width: '100%', mb: 2 }}>
+        <EnhancedTableToolbar numSelected={selected.length} />
+        <TableContainer>
+          <Table
+            sx={{ minWidth: 750 }}
+            aria-labelledby='tableTitle'
+            size={dense ? 'small' : 'medium'}
+          >
+            <EnhancedTableHead
+              numSelected={selected.length}
+              onSelectAllClick={handleSelectAllClick}
+              rowCount={rows.length}
+            />
+            <TableBody>
+              {visibleRows.map((row, index) => {
+                const isItemSelected = isSelected(row.id);
+                const labelId = `enhanced-table-checkbox-${index}`;
+
+                return (
+                  <TableRow
+                    hover
+                    onClick={(event) => handleClick(event, row.id)}
+                    role='checkbox'
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={row.id}
+                    selected={isItemSelected}
+                    sx={{ cursor: 'pointer' }}
+                  >
+                    <TableCell padding='checkbox'>
+                      <Checkbox
+                        sx={{
+                          color: 'initial',
+                          '&.Mui-checked': {
+                            color: '#EF579A',
+                          },
+                        }}
+                        checked={isItemSelected}
+                        inputProps={{
+                          'aria-labelledby': labelId,
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell
+                      component='th'
+                      id={labelId}
+                      scope='row'
+                      padding='none'
+                      align='center'
+                    >
+                      {row.date.toLocaleDateString()}
+                    </TableCell>
+                    <TableCell align='center'>{row.hour}</TableCell>
+                    <TableCell align='center'>{row.fullName}</TableCell>
+                    <TableCell align='center'>{row.fullName}</TableCell>
+                    <TableCell align='center'>{row.identification}</TableCell>
+                    <TableCell align='center'>{row.age}</TableCell>
+                    <TableCell align='center'>{row.position}</TableCell>
+                    <TableCell align='center'>{row.diagnosis}</TableCell>
+                    <TableCell align='center'>{row.treatment}</TableCell>
+                  </TableRow>
+                );
+              })}
+              {emptyRows > 0 && (
+                <TableRow
+                  style={{
+                    height: (dense ? 33 : 53) * emptyRows,
+                  }}
+                >
+                  <TableCell colSpan={10} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5]}
+          component='div'
+          count={rows.length}
+          rowsPerPage={5}
+          page={page}
+          onPageChange={handleChangePage}
+        />
+      </Paper>
+      <FormControlLabel
+        control={<Switch checked={dense} onChange={handleChangeDense} />}
+        label='Dense padding'
       />
-    </div>
+    </Box>
   );
-};
+}

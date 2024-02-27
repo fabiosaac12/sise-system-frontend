@@ -7,4 +7,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     height: '400px',
     backgroundColor: '#FFFFFF',
   },
+
+  checkBox: {
+    color: theme.palette.secondary.dark,
+  },
 }));

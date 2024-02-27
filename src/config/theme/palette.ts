@@ -12,9 +12,9 @@ export const palette = (mode: ThemeModeEnum): Partial<Theme['palette']> =>
           contrastText: '#1C2025',
         },
         secondary: {
-          light: '#fdebf3',
+          light: '#EF579A',
           main: '#fab1d0',
-          dark: '#b84165',
+          dark: '#CB055C',
           contrastText: '#1C2025',
         },
         common: {
