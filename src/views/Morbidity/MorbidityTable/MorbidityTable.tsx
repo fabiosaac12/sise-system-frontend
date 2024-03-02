@@ -1,11 +1,15 @@
 import { useMemo, useState } from 'react';
 
-import { IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
+import {
+  IconButton,
+  TableSortLabel,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 // tables components
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -18,6 +22,7 @@ import TableRow from '@mui/material/TableRow';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { visuallyHidden } from '@mui/utils';
 
 interface Data {
   date: Date;
@@ -37,8 +42,8 @@ const rows = [
     date: new Date(),
     hour: 75619,
     fullName: 'Kristi Mayer',
-    identification: 1708893822759,
-    age: 95602,
+    identification: 93822759,
+    age: 27,
     position: 'Supervisor',
     diagnosis: 'dSC<-K77B6',
     treatment: "qqbA9'tlDs",
@@ -49,8 +54,8 @@ const rows = [
     date: new Date(),
     hour: 37980,
     fullName: 'Tracy Rutherford MD',
-    identification: 1708893828917,
-    age: 46257,
+    identification: 93828917,
+    age: 57,
     position: 'Strategist',
     diagnosis: 'MxFJOAiy*2',
     treatment: "'_r$]5IR_8",
@@ -61,8 +66,8 @@ const rows = [
     date: new Date(),
     hour: 33348,
     fullName: 'Blanca Schmitt',
-    identification: 1708893836829,
-    age: 16772,
+    identification: 93836829,
+    age: 72,
     position: 'Associate',
     diagnosis: '[9[wBBgq@7',
     treatment: 'Xaryp9>,PO',
@@ -73,8 +78,8 @@ const rows = [
     date: new Date(),
     hour: 66085,
     fullName: 'Pete Funk',
-    identification: 1708893841335,
-    age: 23355,
+    identification: 93841335,
+    age: 55,
     position: 'Technician',
     diagnosis: 'Y-C%<&WaXZ',
     treatment: '`4_a4p`OC*',
@@ -85,8 +90,8 @@ const rows = [
     date: new Date(),
     hour: 88870,
     fullName: 'Jonathon Casper MD',
-    identification: 1708893843735,
-    age: 32957,
+    identification: 93843735,
+    age: 57,
     position: 'Coordinator',
     diagnosis: "'c2SD5(O'c",
     treatment: 'W/$?M&}^2r',
@@ -97,8 +102,8 @@ const rows = [
     date: new Date(),
     hour: 98310,
     fullName: 'Jean Predovic',
-    identification: 1708893846851,
-    age: 12763,
+    identification: 93846851,
+    age: 63,
     position: 'Developer',
     diagnosis: ',o4"rhp;\'\\',
     treatment: 'IQ2*R$ezI^',
@@ -109,8 +114,8 @@ const rows = [
     date: new Date(),
     hour: 10627,
     fullName: 'Dr. Barry Waters',
-    identification: 1708893850347,
-    age: 70960,
+    identification: 93850347,
+    age: 60,
     position: 'Director',
     diagnosis: 'xVoV8fE="x',
     treatment: 'Z-t?mZ7I%Y',
@@ -135,7 +140,7 @@ const headCells: readonly HeadCell[] = [
     id: 'hour',
     numeric: true,
     disablePadding: false,
-    label: 'HORAS',
+    label: 'HORA',
   },
   {
     id: 'fullName',
@@ -145,7 +150,7 @@ const headCells: readonly HeadCell[] = [
   },
   {
     id: 'identification',
-    numeric: false,
+    numeric: true,
     disablePadding: false,
     label: 'CEDULA',
   },
@@ -185,11 +190,28 @@ interface EnhancedTableProps {
   numSelected: number;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   rowCount: number;
+  order: Order;
+  orderBy: OrderBy;
+  onRequestSort: (
+    event: React.MouseEvent<unknown>,
+    property: keyof Data
+  ) => void;
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-  const { onSelectAllClick, numSelected, rowCount } = props;
+  const {
+    onSelectAllClick,
+    numSelected,
+    rowCount,
+    order,
+    orderBy,
+    onRequestSort,
+  } = props;
 
+  const createSortHandler =
+    (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+      onRequestSort(event, property);
+    };
   return (
     <TableHead>
       <TableRow>
@@ -206,13 +228,24 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'center' : 'center'}
+            align={headCell.numeric ? 'left' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sx={{
               fontWeight: 'bold',
             }}
           >
-            {headCell.label}
+            <TableSortLabel
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : 'asc'}
+              onClick={createSortHandler(headCell.id)}
+            >
+              {headCell.label}
+              {orderBy === headCell.id ? (
+                <Box component='span' sx={visuallyHidden}>
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </Box>
+              ) : null}
+            </TableSortLabel>
           </TableCell>
         ))}
       </TableRow>
@@ -294,10 +327,46 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     </Toolbar>
   );
 }
+
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+type Order = 'asc' | 'desc';
+type OrderBy = keyof Data;
+
+const getComparator = <Key extends keyof Data>(
+  order: Order,
+  orderBy: Key
+): ((
+  a: { [key in Key]: number | string | Date },
+  b: { [key in Key]: number | string | Date }
+) => number) => {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+};
+
 export function MorbidityTable() {
+  const [order, setOrder] = useState<Order>('asc');
+  const [orderBy, setOrderBy] = useState<OrderBy>('fullName');
   const [selected, setSelected] = useState<readonly number[]>([]);
   const [page, setPage] = useState(0);
-  const [dense, setDense] = useState(false);
+
+  const handleRequestSort = (
+    event: React.MouseEvent<unknown>,
+    property: keyof Data
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
 
   // const classes = useStyles();
 
@@ -333,31 +402,33 @@ export function MorbidityTable() {
     setPage(newPage);
   };
 
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked);
-  };
-
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * 5 - rows.length) : 0;
 
-  const visibleRows = useMemo(() => rows.slice(page * 5, page * 5 + 5), [page]);
+  const visibleRows = useMemo(
+    () =>
+      rows
+        .slice()
+        .sort(getComparator(order, orderBy))
+        .slice(page * 5, page * 5 + 5),
+    [page, order, orderBy]
+  );
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby='tableTitle'
-            size={dense ? 'small' : 'medium'}
-          >
+          <Table sx={{ minWidth: 750 }} aria-labelledby='tableTitle'>
             <EnhancedTableHead
               numSelected={selected.length}
               onSelectAllClick={handleSelectAllClick}
               rowCount={rows.length}
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
@@ -388,25 +459,25 @@ export function MorbidityTable() {
                       id={labelId}
                       scope='row'
                       padding='none'
-                      align='center'
+                      align='left'
                     >
                       {row.date.toLocaleDateString()}
                     </TableCell>
-                    <TableCell align='center'>{row.hour}</TableCell>
-                    <TableCell align='center'>{row.fullName}</TableCell>
-                    <TableCell align='center'>{row.fullName}</TableCell>
-                    <TableCell align='center'>{row.identification}</TableCell>
-                    <TableCell align='center'>{row.age}</TableCell>
-                    <TableCell align='center'>{row.position}</TableCell>
-                    <TableCell align='center'>{row.diagnosis}</TableCell>
-                    <TableCell align='center'>{row.treatment}</TableCell>
+                    <TableCell align='left'>{row.hour}</TableCell>
+                    <TableCell align='left'>{row.fullName}</TableCell>
+                    <TableCell align='left'>{row.identification}</TableCell>
+                    <TableCell align='left'>{row.age}</TableCell>
+                    <TableCell align='left'>{row.position}</TableCell>
+                    <TableCell align='left'>{row.diagnosis}</TableCell>
+                    <TableCell align='left'>{row.treatment}</TableCell>
+                    <TableCell align='left'>{row.amount}</TableCell>
                   </TableRow>
                 );
               })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (dense ? 33 : 53) * emptyRows,
+                    height: 53 * emptyRows,
                   }}
                 >
                   <TableCell colSpan={10} />
@@ -424,10 +495,6 @@ export function MorbidityTable() {
           onPageChange={handleChangePage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label='Dense padding'
-      />
     </Box>
   );
 }
