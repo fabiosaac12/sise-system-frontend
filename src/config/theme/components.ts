@@ -58,4 +58,13 @@ export const components = (mode: ThemeModeEnum): Theme['components'] => ({
       },
     },
   },
+  MuiCheckbox: {
+    styleOverrides: {
+      root: {
+        '&.Mui-checked': {
+          color: palette(mode).secondary?.main,
+        },
+      },
+    },
+  },
 });

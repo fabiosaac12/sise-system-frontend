@@ -129,55 +129,55 @@ const headCells: readonly HeadCell[] = [
     id: 'date',
     numeric: false,
     disablePadding: true,
-    label: 'Fecha',
+    label: 'FECHA',
   },
   {
     id: 'hour',
     numeric: true,
     disablePadding: false,
-    label: 'Horas',
+    label: 'HORAS',
   },
   {
     id: 'fullName',
     numeric: false,
     disablePadding: false,
-    label: 'Nombre y Apellido',
+    label: 'NOMBRE Y APELLIDO',
   },
   {
     id: 'identification',
     numeric: false,
     disablePadding: false,
-    label: 'Cedula',
+    label: 'CEDULA',
   },
   {
     id: 'age',
     numeric: true,
     disablePadding: false,
-    label: 'Edad',
+    label: 'EDAD',
   },
   {
     id: 'position',
     numeric: true,
     disablePadding: false,
-    label: 'Cargo',
+    label: 'CARGO',
   },
   {
     id: 'diagnosis',
     numeric: true,
     disablePadding: false,
-    label: 'Diagnostico',
+    label: 'DIAGNOSTICO',
   },
   {
     id: 'treatment',
     numeric: true,
     disablePadding: false,
-    label: 'Tratamiento',
+    label: 'TRATAMIENTO',
   },
   {
     id: 'amount',
     numeric: true,
     disablePadding: false,
-    label: 'Cantidad',
+    label: 'CANTIDAD',
   },
 ];
 
@@ -195,17 +195,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
       <TableRow>
         <TableCell padding='checkbox'>
           <Checkbox
-            sx={{
-              color: 'initial',
-              '&.Mui-checked': {
-                color: '#EF579A',
-              },
-            }}
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              'aria-label': 'select all desserts',
+              'aria-label': 'seleciona todas las consultas',
             }}
           />
         </TableCell>
@@ -214,6 +208,9 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             key={headCell.id}
             align={headCell.numeric ? 'center' : 'center'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
+            sx={{
+              fontWeight: 'bold',
+            }}
           >
             {headCell.label}
           </TableCell>
@@ -236,8 +233,9 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         pl: { sm: 2 },
         pr: { xs: 3.5, sm: 3.5 },
         ...(numSelected > 0 && {
-          bgcolor: (theme) => theme.palette.secondary.light,
+          bgcolor: (theme) => theme.palette.secondary.main,
         }),
+        borderBottom: '1px solid rgba(224, 224, 224, 1)',
       }}
     >
       {numSelected > 0 ? (
@@ -379,12 +377,6 @@ export function MorbidityTable() {
                   >
                     <TableCell padding='checkbox'>
                       <Checkbox
-                        sx={{
-                          color: 'initial',
-                          '&.Mui-checked': {
-                            color: '#EF579A',
-                          },
-                        }}
                         checked={isItemSelected}
                         inputProps={{
                           'aria-labelledby': labelId,
