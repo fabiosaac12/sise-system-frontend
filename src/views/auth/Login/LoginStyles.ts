@@ -38,6 +38,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(0.5),
     marginTop: `-${theme.spacing(1)}`,
+    transition: theme.transitions.create("background-color"),
     "&:hover": {
       backgroundColor: theme.palette.primary.light,
     },
