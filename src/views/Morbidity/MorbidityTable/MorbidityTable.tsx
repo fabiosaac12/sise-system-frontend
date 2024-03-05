@@ -1,28 +1,19 @@
 import { useMemo, useState } from 'react';
 
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import {
+  Box,
   IconButton,
-  TableSortLabel,
+  Paper,
   Toolbar,
   Tooltip,
   Typography,
 } from '@mui/material';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-// tables components
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-// icons
+
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { visuallyHidden } from '@mui/utils';
+import { useStyles } from './MorbidityTableStyles';
 
 interface Data {
   date: Date;
@@ -39,7 +30,7 @@ interface Data {
 const rows = [
   {
     id: 1,
-    date: new Date(),
+    date: new Date().toLocaleDateString(),
     hour: 75619,
     fullName: 'Kristi Mayer',
     identification: 93822759,
@@ -51,7 +42,7 @@ const rows = [
   },
   {
     id: 2,
-    date: new Date(),
+    date: new Date().toLocaleDateString(),
     hour: 37980,
     fullName: 'Tracy Rutherford MD',
     identification: 93828917,
@@ -63,7 +54,7 @@ const rows = [
   },
   {
     id: 3,
-    date: new Date(),
+    date: new Date().toLocaleDateString(),
     hour: 33348,
     fullName: 'Blanca Schmitt',
     identification: 93836829,
@@ -75,7 +66,7 @@ const rows = [
   },
   {
     id: 4,
-    date: new Date(),
+    date: new Date().toLocaleDateString(),
     hour: 66085,
     fullName: 'Pete Funk',
     identification: 93841335,
@@ -87,7 +78,7 @@ const rows = [
   },
   {
     id: 5,
-    date: new Date(),
+    date: new Date().toLocaleDateString(),
     hour: 88870,
     fullName: 'Jonathon Casper MD',
     identification: 93843735,
@@ -99,7 +90,7 @@ const rows = [
   },
   {
     id: 6,
-    date: new Date(),
+    date: new Date().toLocaleDateString(),
     hour: 98310,
     fullName: 'Jean Predovic',
     identification: 93846851,
@@ -111,7 +102,7 @@ const rows = [
   },
   {
     id: 7,
-    date: new Date(),
+    date: new Date().toLocaleDateString(),
     hour: 10627,
     fullName: 'Dr. Barry Waters',
     identification: 93850347,
@@ -123,142 +114,13 @@ const rows = [
   },
 ];
 
-interface HeadCell {
-  disablePadding: boolean;
-  id: keyof Data;
-  label: string;
-  numeric: boolean;
-}
-const headCells: readonly HeadCell[] = [
-  {
-    id: 'date',
-    numeric: false,
-    disablePadding: true,
-    label: 'FECHA',
-  },
-  {
-    id: 'hour',
-    numeric: true,
-    disablePadding: false,
-    label: 'HORA',
-  },
-  {
-    id: 'fullName',
-    numeric: false,
-    disablePadding: false,
-    label: 'NOMBRE Y APELLIDO',
-  },
-  {
-    id: 'identification',
-    numeric: true,
-    disablePadding: false,
-    label: 'CEDULA',
-  },
-  {
-    id: 'age',
-    numeric: true,
-    disablePadding: false,
-    label: 'EDAD',
-  },
-  {
-    id: 'position',
-    numeric: true,
-    disablePadding: false,
-    label: 'CARGO',
-  },
-  {
-    id: 'diagnosis',
-    numeric: true,
-    disablePadding: false,
-    label: 'DIAGNOSTICO',
-  },
-  {
-    id: 'treatment',
-    numeric: true,
-    disablePadding: false,
-    label: 'TRATAMIENTO',
-  },
-  {
-    id: 'amount',
-    numeric: true,
-    disablePadding: false,
-    label: 'CANTIDAD',
-  },
-];
-
-interface EnhancedTableProps {
-  numSelected: number;
-  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  rowCount: number;
-  order: Order;
-  orderBy: OrderBy;
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    property: keyof Data
-  ) => void;
-}
-
-function EnhancedTableHead(props: EnhancedTableProps) {
-  const {
-    onSelectAllClick,
-    numSelected,
-    rowCount,
-    order,
-    orderBy,
-    onRequestSort,
-  } = props;
-
-  const createSortHandler =
-    (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
-      onRequestSort(event, property);
-    };
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding='checkbox'>
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'seleciona todas las consultas',
-            }}
-          />
-        </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'left' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
-            sx={{
-              fontWeight: 'bold',
-            }}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component='span' sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
 interface EnhancedTableToolbarProps {
-  numSelected: number;
+  selected: string[];
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-  const { numSelected } = props;
+  const { selected } = props;
+  const numSelected = selected.length;
 
   return (
     <Toolbar
@@ -297,7 +159,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         <>
           <Tooltip
             title='Elminar'
-            onClick={() => alert('Funcionalidad en desarrollo')}
+            onClick={() => alert(`elementos seleccionados: ${selected}`)}
           >
             <IconButton>
               <DeleteIcon sx={{ color: 'white' }} />
@@ -328,173 +190,99 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
   );
 }
 
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
+export const MorbidityTable = () => {
+  const [rowsSelected, setRowSelected] = useState<string[]>([]);
+  const classes = useStyles();
 
-type Order = 'asc' | 'desc';
-type OrderBy = keyof Data;
-
-const getComparator = <Key extends keyof Data>(
-  order: Order,
-  orderBy: Key
-): ((
-  a: { [key in Key]: number | string | Date },
-  b: { [key in Key]: number | string | Date }
-) => number) => {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-};
-
-export function MorbidityTable() {
-  const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<OrderBy>('fullName');
-  const [selected, setSelected] = useState<readonly number[]>([]);
-  const [page, setPage] = useState(0);
-
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: keyof Data
-  ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
-  // const classes = useStyles();
-
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: readonly number[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
-  };
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const isSelected = (id: number) => selected.indexOf(id) !== -1;
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * 5 - rows.length) : 0;
-
-  const visibleRows = useMemo(
-    () =>
-      rows
-        .slice()
-        .sort(getComparator(order, orderBy))
-        .slice(page * 5, page * 5 + 5),
-    [page, order, orderBy]
-  );
-
+  const headCells: GridColDef[] = [
+    {
+      field: 'date',
+      headerName: 'FECHA',
+      description: 'FECHA',
+    },
+    {
+      field: 'hour',
+      headerName: 'HORA',
+      description: 'HORA',
+    },
+    {
+      field: 'fullName',
+      headerName: 'NOMBRE Y APELLIDO',
+      width: 180,
+      description: 'NOMBRE Y APELLIDO',
+    },
+    {
+      field: 'identification',
+      headerName: 'CEDULA',
+      description: 'CEDULA',
+    },
+    {
+      field: 'age',
+      headerName: 'EDAD',
+      description: 'EDAD',
+    },
+    {
+      field: 'position',
+      headerName: 'CARGO',
+      description: 'CARGO',
+    },
+    {
+      field: 'diagnosis',
+      headerName: 'DIAGNOSTICO',
+      width: 130,
+      description: 'DIAGNOSTICO',
+    },
+    {
+      field: 'treatment',
+      headerName: 'TRATAMIENTO',
+      width: 130,
+      description: 'TRATAMIENTO',
+    },
+    {
+      field: 'amount',
+      headerName: 'CANTIDAD',
+      description: 'CANTIDAD',
+    },
+  ];
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby='tableTitle'>
-            <EnhancedTableHead
-              numSelected={selected.length}
-              onSelectAllClick={handleSelectAllClick}
-              rowCount={rows.length}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-            />
-            <TableBody>
-              {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
-                const labelId = `enhanced-table-checkbox-${index}`;
-
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row.id)}
-                    role='checkbox'
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.id}
-                    selected={isItemSelected}
-                    sx={{ cursor: 'pointer' }}
-                  >
-                    <TableCell padding='checkbox'>
-                      <Checkbox
-                        checked={isItemSelected}
-                        inputProps={{
-                          'aria-labelledby': labelId,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      component='th'
-                      id={labelId}
-                      scope='row'
-                      padding='none'
-                      align='left'
-                    >
-                      {row.date.toLocaleDateString()}
-                    </TableCell>
-                    <TableCell align='left'>{row.hour}</TableCell>
-                    <TableCell align='left'>{row.fullName}</TableCell>
-                    <TableCell align='left'>{row.identification}</TableCell>
-                    <TableCell align='left'>{row.age}</TableCell>
-                    <TableCell align='left'>{row.position}</TableCell>
-                    <TableCell align='left'>{row.diagnosis}</TableCell>
-                    <TableCell align='left'>{row.treatment}</TableCell>
-                    <TableCell align='left'>{row.amount}</TableCell>
-                  </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: 53 * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={10} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5]}
-          component='div'
-          count={rows.length}
-          rowsPerPage={5}
-          page={page}
-          onPageChange={handleChangePage}
-        />
-      </Paper>
-    </Box>
+    <>
+      <Box>
+        <Paper className={classes.container}>
+          <EnhancedTableToolbar selected={rowsSelected} />
+          <DataGrid
+            sx={{
+              height: `390px`,
+              '.MuiDataGrid-columnSeparator': {
+                display: 'none',
+              },
+              '&.MuiDataGrid-root': {
+                border: 'none',
+              },
+              '.MuiDataGrid-columnHeaderTitle': {
+                fontWeight: 'bold',
+              },
+            }}
+            hideFooterSelectedRowCount
+            columns={headCells}
+            rows={rows}
+            disableColumnMenu
+            onRowSelectionModelChange={(idRow) => {
+              setRowSelected(idRow as string[]);
+            }}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  page: 0,
+                  pageSize: 5,
+                },
+              },
+            }}
+            pageSizeOptions={[5]}
+            checkboxSelection
+            sortingMode='server'
+          />
+        </Paper>
+      </Box>
+    </>
   );
-}
+};
