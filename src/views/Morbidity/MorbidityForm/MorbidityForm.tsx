@@ -10,6 +10,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import {
+  DatePicker,
+  LocalizationProvider,
+  TimePicker,
+} from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 export function MorbidityFormDialog({
   open,
@@ -76,18 +82,12 @@ export function MorbidityFormDialog({
             <Typography marginTop="10px" marginLeft="3px" fontWeight="600">
               Fecha
             </Typography>
-            <TextField
-              autoFocus
-              required
-              margin="dense"
-              id="date"
-              name="date"
-              placeholder="Seleccionar"
-              type="text"
-              sx={{ width: 250 }}
-              fullWidth
-              variant="outlined"
-            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                sx={{ paddingTop: "16.5px", paddingBottom: "14px" }}
+                disableFuture
+              />
+            </LocalizationProvider>
             <Typography marginTop="10px" marginLeft="3px" fontWeight="600">
               Cédula
             </Typography>
@@ -136,18 +136,12 @@ export function MorbidityFormDialog({
             <Typography marginTop="10px" marginLeft="3px" fontWeight="600">
               Hora
             </Typography>
-            <TextField
-              autoFocus
-              required
-              margin="dense"
-              id="time"
-              name="time"
-              placeholder="Describir..."
-              type="number"
-              fullWidth
-              variant="outlined"
-              sx={{ width: "250px" }}
-            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <TimePicker
+                sx={{ paddingTop: "16.5px", paddingBottom: "14px" }}
+                disableFuture
+              />
+            </LocalizationProvider>
             <Typography marginTop="10px" marginLeft="3px" fontWeight="600">
               Nombres
             </Typography>
