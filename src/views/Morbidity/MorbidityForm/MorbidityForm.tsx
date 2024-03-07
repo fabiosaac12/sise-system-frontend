@@ -11,7 +11,13 @@ import {
   Typography,
 } from "@mui/material";
 
-export function MorbidityFormDialog({ open, onClose }) {
+export function MorbidityFormDialog({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   return (
     <Dialog
       open={open}
