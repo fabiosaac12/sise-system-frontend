@@ -16,6 +16,7 @@ import {
   TimePicker,
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 export function MorbidityFormDialog({
   open,
@@ -52,6 +53,7 @@ export function MorbidityFormDialog({
             treatment,
             quantity
           );
+          onClose();
         },
         sx: { borderRadius: "25px" },
       }}
@@ -84,7 +86,8 @@ export function MorbidityFormDialog({
             </Typography>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
-                sx={{ paddingTop: "16.5px", paddingBottom: "14px" }}
+                minDate={dayjs("2010-01-01")}
+                maxDate={dayjs()}
                 disableFuture
               />
             </LocalizationProvider>
@@ -137,10 +140,7 @@ export function MorbidityFormDialog({
               Hora
             </Typography>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <TimePicker
-                sx={{ paddingTop: "16.5px", paddingBottom: "14px" }}
-                disableFuture
-              />
+              <TimePicker disableFuture />
             </LocalizationProvider>
             <Typography marginTop="10px" marginLeft="3px" fontWeight="600">
               Nombres
@@ -212,7 +212,6 @@ export function MorbidityFormDialog({
           </Button>
           <Button
             type="submit"
-            onClick={onClose}
             sx={{
               width: 250,
               height: 40,
