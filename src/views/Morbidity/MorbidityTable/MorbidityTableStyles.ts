@@ -3,10 +3,7 @@ import { makeStyles } from '@mui/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   container: {
-    minWidth: 'auto',
-    maxWidth: '1100px',
+    width:'100%',
   },
-  // headerCell: {
-  //   fontWeight: 'bold !important',
-  // },
+ 
 }));

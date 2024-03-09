@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import {
@@ -16,17 +16,17 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useStyles } from "./MorbidityTableStyles";
 import { MorbidityFormDialog } from "../MorbidityForm/MorbidityForm";
 
-interface Data {
-  date: Date;
-  hour: number;
-  fullName: string;
-  identification: number;
-  age: number;
-  position: string;
-  diagnosis: string;
-  treatment: string;
-  amount: number;
-}
+// interface Data {
+//   date: Date;
+//   hour: number;
+//   fullName: string;
+//   identification: number;
+//   age: number;
+//   position: string;
+//   diagnosis: string;
+//   treatment: string;
+//   amount: number;
+// }
 
 const rows = [
   {
@@ -205,59 +205,76 @@ export const MorbidityTable = () => {
       field: "date",
       headerName: "FECHA",
       description: "FECHA",
+      width:90,
     },
     {
       field: "hour",
       headerName: "HORA",
       description: "HORA",
+      width:90,
     },
     {
       field: "fullName",
       headerName: "NOMBRE Y APELLIDO",
-      width: 180,
+      
       description: "NOMBRE Y APELLIDO",
+      minWidth:190,
+      flex:1,
     },
     {
       field: "identification",
       headerName: "CEDULA",
       description: "CEDULA",
+      minWidth:100,
+      flex:1,
     },
     {
       field: "age",
       headerName: "EDAD",
       description: "EDAD",
+      width:90,
     },
     {
       field: "position",
       headerName: "CARGO",
       description: "CARGO",
+      minWidth:90,
+      flex:1,
     },
     {
       field: "diagnosis",
       headerName: "DIAGNOSTICO",
-      width: 130,
       description: "DIAGNOSTICO",
+      minWidth:140,
+      flex:1,
     },
     {
       field: "treatment",
       headerName: "TRATAMIENTO",
-      width: 130,
       description: "TRATAMIENTO",
+      minWidth:140,
+      flex:1,
     },
     {
       field: "amount",
       headerName: "CANTIDAD",
       description: "CANTIDAD",
+      minWidth:140,
+
+      flex:1,
+      
     },
   ];
   return (
     <>
-      <Box>
-        <Paper className={classes.container}>
+      <Box className={classes.container}>
+        <Paper sx={{width:'100%'}}>
           <EnhancedTableToolbar selected={rowsSelected} />
+          
           <DataGrid
+            
             sx={{
-              height: `390px`,
+              height: 390, width: '100%',
               ".MuiDataGrid-columnSeparator": {
                 display: "none",
               },
@@ -267,6 +284,21 @@ export const MorbidityTable = () => {
               ".MuiDataGrid-columnHeaderTitle": {
                 fontWeight: "bold",
               },
+              '& ::-webkit-scrollbar': {
+                
+                height: '0.6em',
+              },
+              
+              '& ::-webkit-scrollbar-thumb': {
+                backgroundColor: '#FCD8E7',
+                padding:'1px',
+                borderRadius:'40px'
+              },
+              '& ::-webkit-scrollbar-track': {
+                backgroundColor: '#cfcfcf',
+                // borderRadius:'20px'
+                
+              }
             }}
             hideFooterSelectedRowCount
             columns={headCells}
@@ -287,6 +319,8 @@ export const MorbidityTable = () => {
             checkboxSelection
             sortingMode="server"
           />
+         
+          
         </Paper>
       </Box>
     </>
