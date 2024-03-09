@@ -3,18 +3,24 @@ import {
   Theme,
   createTheme,
   ThemeProvider as ThemeProviderMui,
+  StyledEngineProvider,
 } from "@mui/material";
-import { components, palette, shape } from "@app/config/theme";
+import { esES } from "@mui/x-date-pickers/locales";
+import { typography, components, palette, shape } from "@app/config/theme";
 import { ThemeModeEnum } from "@app/enums/theme";
 import { ThemeState } from "@app/models/theme";
 import { ThemeContext } from "./ThemeContext";
 
 const generateTheme = (mode: ThemeModeEnum) =>
-  createTheme({
-    palette: palette(mode),
-    shape,
-    components: components(mode),
-  });
+  createTheme(
+    {
+      palette: palette(mode),
+      shape,
+      components: components(mode),
+      typography: typography(`'Poppins', sans-serif`),
+    },
+    esES
+  );
 
 export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   const defaultMode: ThemeModeEnum =
@@ -47,10 +53,11 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     changeTheme,
     switchTheme,
   };
-
   return (
     <ThemeContext.Provider value={state}>
-      <ThemeProviderMui theme={theme}>{children}</ThemeProviderMui>
+      <StyledEngineProvider injectFirst>
+        <ThemeProviderMui theme={theme}>{children}</ThemeProviderMui>
+      </StyledEngineProvider>
     </ThemeContext.Provider>
   );
 };

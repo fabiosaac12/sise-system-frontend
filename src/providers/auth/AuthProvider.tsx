@@ -40,7 +40,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
         setStatus(AuthStatusEnum.loggedOut);
       }
     })();
-  }, [_refresh]);
+  }, []);
 
   const login: AuthState["login"] = async (data: LoginData) => {
     const response = await _login({ data });

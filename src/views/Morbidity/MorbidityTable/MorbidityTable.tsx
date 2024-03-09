@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import {
@@ -250,18 +250,18 @@ export const MorbidityTable = () => {
         <Paper className={classes.container}>
           <EnhancedTableToolbar selected={rowsSelected} />
           <DataGrid
-            sx={{
-              height: `390px`,
-              '.MuiDataGrid-columnSeparator': {
-                display: 'none',
-              },
-              '&.MuiDataGrid-root': {
-                border: 'none',
-              },
-              '.MuiDataGrid-columnHeaderTitle': {
-                fontWeight: 'bold',
-              },
-            }}
+            // sx={{
+            //   height: `390px`,
+            //   '.MuiDataGrid-columnSeparator': {
+            //     display: 'none',
+            //   },
+            //   '&.MuiDataGrid-root': {
+            //     border: 'none',
+            //   },
+            //   '.MuiDataGrid-columnHeaderTitle': {
+            //     fontWeight: 'bold',
+            //   },
+            // }}
             hideFooterSelectedRowCount
             columns={headCells}
             rows={rows}
