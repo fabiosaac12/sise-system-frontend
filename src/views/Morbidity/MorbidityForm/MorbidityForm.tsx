@@ -34,7 +34,7 @@ export function MorbidityFormDialog({
         onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
           event.preventDefault();
           const formData = new FormData(event.currentTarget);
-          const formJson = Object.fromEntries((formData as any).entries());
+          const formJson = Object.fromEntries(formData.entries());
           const date = formJson.date;
           const time = formJson.time;
           const identification = formJson.identification;
