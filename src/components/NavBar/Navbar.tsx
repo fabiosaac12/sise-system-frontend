@@ -24,13 +24,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 // styles
 import { useStyles } from './NavBarStyles';
+import { AuthRoleEnum } from '@app/enums/auth';
 
 export const Navbar = () => {
   const classes = useStyles();
   const auth = useAuth();
 
   const linksList =
-    auth.role === 'admin'
+    auth.role === AuthRoleEnum.admin
       ? [
           {
             text: 'MORBILIDAD',
