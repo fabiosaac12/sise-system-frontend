@@ -286,16 +286,17 @@ export const MorbidityTable = () => {
               },
               '& ::-webkit-scrollbar': {
                 
-                height: '0.6em',
+                height: '0.8em',
               },
               
               '& ::-webkit-scrollbar-thumb': {
                 backgroundColor: '#FCD8E7',
-                padding:'1px',
-                borderRadius:'40px'
+               
+                borderRadius:'40px',
+                border:'1.5px solid white'
               },
               '& ::-webkit-scrollbar-track': {
-                backgroundColor: '#cfcfcf',
+                backgroundColor: 'white',
                 // borderRadius:'20px'
                 
               }
