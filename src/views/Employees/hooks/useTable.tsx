@@ -1,5 +1,5 @@
 import { EmployeeFilter, EmployeeForTable } from "@app/models/employee.model";
-import { Box, CSSObject, useMediaQuery, useTheme } from "@mui/material";
+import { Box, CSSObject } from "@mui/material";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import {
   SearchBarAppliedFilter,
@@ -9,8 +9,6 @@ import { useEmployees } from "@app/providers/employees";
 import { useState } from "react";
 
 export const useTable = () => {
-  const theme = useTheme();
-  const xlUp = useMediaQuery(theme.breakpoints.up("xl"));
   const { catalogues, applyFilters } = useEmployees();
 
   const [selectedEmployeeIds, setSelectedEmployeeIds] = useState<string[]>([]);
@@ -22,11 +20,18 @@ export const useTable = () => {
     whiteSpace: "nowrap",
   };
 
+  const commonColumnProps = {
+    disableColumnMenu: true,
+    disableReorder: true,
+    sortable: false,
+    width: 130,
+  };
+
   const columns: GridColDef[] = [
     {
       field: "department.client.name",
       headerName: "Cliente",
-      width: xlUp ? 200 : 150,
+      ...commonColumnProps,
       renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
         <Box sx={textEllipsisStyle}>{row.department.client.name}</Box>
       ),
@@ -34,7 +39,7 @@ export const useTable = () => {
     {
       field: "department.name",
       headerName: "Departamento",
-      width: xlUp ? 200 : 150,
+      ...commonColumnProps,
       renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
         <Box sx={textEllipsisStyle}>{row.department.name}</Box>
       ),
@@ -42,7 +47,7 @@ export const useTable = () => {
     {
       field: "firstNames",
       headerName: "Nombres",
-      width: xlUp ? 200 : 150,
+      ...commonColumnProps,
       renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
         <Box sx={textEllipsisStyle}>{row.firstNames}</Box>
       ),
@@ -50,7 +55,7 @@ export const useTable = () => {
     {
       field: "lastNames",
       headerName: "Apellidos",
-      width: xlUp ? 200 : 150,
+      ...commonColumnProps,
       renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
         <Box sx={textEllipsisStyle}>{row.lastNames}</Box>
       ),
@@ -58,7 +63,8 @@ export const useTable = () => {
     {
       field: "idCard",
       headerName: "Cédula",
-      width: xlUp ? 200 : 150,
+      ...commonColumnProps,
+      width: 110,
       renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
         <Box sx={textEllipsisStyle}>{row.idCard}</Box>
       ),
@@ -66,7 +72,8 @@ export const useTable = () => {
     {
       field: "status",
       headerName: "Estatus",
-      width: xlUp ? 200 : 150,
+      ...commonColumnProps,
+      width: 110,
       renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
         <Box sx={textEllipsisStyle}>{row.status}</Box>
       ),
@@ -74,9 +81,73 @@ export const useTable = () => {
     {
       field: "workPosition",
       headerName: "Cargo",
-      width: xlUp ? 200 : 150,
+      ...commonColumnProps,
+      width: 110,
       renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
         <Box sx={textEllipsisStyle}>{row.workPosition}</Box>
+      ),
+    },
+    {
+      field: "birthplace",
+      headerName: "Lugar de nacimiento",
+      ...commonColumnProps,
+      width: 150,
+      renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
+        <Box sx={textEllipsisStyle}>{row.birthplace}</Box>
+      ),
+    },
+    {
+      field: "birthdate",
+      headerName: "Fecha de nacimiento",
+      ...commonColumnProps,
+      width: 150,
+      renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
+        <Box sx={textEllipsisStyle}>
+          {new Date(row.birthdate).toLocaleDateString("es-VE")}
+        </Box>
+      ),
+    },
+    {
+      field: "address",
+      headerName: "Dirección",
+      ...commonColumnProps,
+      width: 150,
+      renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
+        <Box sx={textEllipsisStyle}>{row.address}</Box>
+      ),
+    },
+    {
+      field: "gender",
+      headerName: "Género",
+      ...commonColumnProps,
+      width: 90,
+      renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
+        <Box sx={textEllipsisStyle}>{row.gender}</Box>
+      ),
+    },
+    {
+      field: "civilStatus",
+      headerName: "Estado civil",
+      ...commonColumnProps,
+      width: 90,
+      renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
+        <Box sx={textEllipsisStyle}>{row.civilStatus}</Box>
+      ),
+    },
+    {
+      field: "dominantHand",
+      headerName: "Mano dominante",
+      ...commonColumnProps,
+      renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
+        <Box sx={textEllipsisStyle}>{row.dominantHand}</Box>
+      ),
+    },
+    {
+      field: "profession",
+      headerName: "Profesión",
+      ...commonColumnProps,
+      renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
+        <Box sx={textEllipsisStyle}>{row.profession}</Box>
       ),
     },
   ];
