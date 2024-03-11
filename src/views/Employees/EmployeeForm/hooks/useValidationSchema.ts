@@ -9,6 +9,7 @@ import * as yup from "yup";
 
 export const useValidationSchema = () => {
   const requiredError = "Este campo es requerido";
+  const validIdCardError = "Introduzca un número de cédula válido";
 
   const validationSchema = yup.object().shape({
     clientId: yup.string().required(requiredError),
@@ -20,7 +21,9 @@ export const useValidationSchema = () => {
       .transform((_, originalValue) =>
         originalValue === "" ? undefined : +originalValue
       )
-      .moreThan(0, "Introduzca un número de cédula válido")
+      .moreThan(0, validIdCardError)
+      .integer(validIdCardError)
+      .typeError(validIdCardError)
       .required(requiredError),
     status: yup
       .mixed<EmployeeStatusEnum>()

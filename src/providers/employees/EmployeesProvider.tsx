@@ -11,6 +11,8 @@ import { Pagination, initialPagination } from "@app/models/pagination";
 import { useRequest } from "@app/hooks/useRequest";
 import {
   createEmployee,
+  deleteEmployee,
+  editEmployee,
   getEmployees,
 } from "@app/config/api/backend/requests/employees";
 import {
@@ -30,6 +32,8 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
   const _getDepartmentsCatalogue = useRequest(getDepartmentsCatalogue);
   const _getAll = useRequest(getEmployees);
   const _createOne = useRequest(createEmployee);
+  const _editOne = useRequest(editEmployee);
+  const _deleteOne = useRequest(deleteEmployee);
 
   const getClients: EmployeeState["catalogues"]["getClients"] = async () => {
     const catalogue = await _getClientsCatalogue({});
@@ -59,16 +63,31 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const getAll: EmployeeState["getAll"] = async () => {
-    const response = await _getAll({ filter, pagination });
+  const getAll: EmployeeState["getAll"] = async ({
+    filter: _filter,
+    pagination: _pagination,
+  }: {
+    filter?: Partial<EmployeeFilter>;
+    pagination?: Partial<Pagination>;
+  } = {}) => {
+    if (!filter.clientId) {
+      setList([]);
+
+      return [];
+    }
+
+    const response = await _getAll({
+      filter: { ...filter, ..._filter },
+      pagination: { ...pagination, ..._pagination },
+    });
 
     if (response) {
-      const { employees, ...pagination } = response;
+      const { list: employees, ...pagination } = response;
 
       setList(employees);
       setPagination({
         ...pagination,
-        totalItems: pagination.totalEmployees,
+        totalItems: pagination.totalRows,
       });
 
       return employees;
@@ -89,7 +108,38 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  console.log(filter);
+  const editOne: EmployeeState["editOne"] = async (
+    id: string,
+    data: EmployeeFormData
+  ) => {
+    const done = await _editOne({ data, id });
+
+    if (done) {
+      await getAll();
+
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const deleteOne: EmployeeState["deleteOne"] = async (id: string) => {
+    const done = await _deleteOne({ id });
+
+    if (done) {
+      if (list?.length === 1) {
+        await getAll({
+          pagination: { currentPage: pagination.currentPage - 1 || 1 },
+        });
+      } else {
+        await getAll();
+      }
+
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const applyFilters = (newFilter: Partial<EmployeeFilter>) => {
     setFilter((filter) => ({
@@ -104,11 +154,14 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const state: EmployeeState = {
     createOne,
+    editOne,
+    deleteOne,
     getAll,
     applyFilters,
     filter,
     list,
     pagination,
+    setPagination,
     catalogues: {
       clients,
       departments,

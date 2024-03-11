@@ -1,20 +1,19 @@
 import { EmployeeFilter, EmployeeForTable } from "@app/models/employee.model";
-import { useModal } from "@app/providers/modal";
 import { Box, CSSObject, useMediaQuery, useTheme } from "@mui/material";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { EmployeeForm } from "../EmployeeForm/EmployeeForm";
 import {
   SearchBarAppliedFilter,
   SearchBarFilter,
 } from "@app/models/components";
 import { useEmployees } from "@app/providers/employees";
+import { useState } from "react";
 
 export const useTable = () => {
   const theme = useTheme();
   const xlUp = useMediaQuery(theme.breakpoints.up("xl"));
-  const modal = useModal();
-
   const { catalogues, applyFilters } = useEmployees();
+
+  const [selectedEmployeeIds, setSelectedEmployeeIds] = useState<string[]>([]);
 
   const textEllipsisStyle: CSSObject = {
     width: "100%",
@@ -25,19 +24,19 @@ export const useTable = () => {
 
   const columns: GridColDef[] = [
     {
-      field: "clientName",
+      field: "department.client.name",
       headerName: "Cliente",
       width: xlUp ? 200 : 150,
       renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
-        <Box sx={textEllipsisStyle}>{row.clientName}</Box>
+        <Box sx={textEllipsisStyle}>{row.department.client.name}</Box>
       ),
     },
     {
-      field: "departmentName",
+      field: "department.name",
       headerName: "Departamento",
       width: xlUp ? 200 : 150,
       renderCell: ({ row }: GridRenderCellParams<EmployeeForTable>) => (
-        <Box sx={textEllipsisStyle}>{row.departmentName}</Box>
+        <Box sx={textEllipsisStyle}>{row.department.name}</Box>
       ),
     },
     {
@@ -96,75 +95,9 @@ export const useTable = () => {
     { keyName: "idCard", text: "Cédula" },
   ];
 
-  const openDeleteModal = (id: string) => {
-    // const employee = items.find((item) => item._id === id);
-    // openModal(
-    //   <ConfirmModal
-    //     Icon={DeleteIcon}
-    //     color={PaletteEnum.error}
-    //     confirmButtonText={t("delete")}
-    //     title={t("employees.deleteModal.title")}
-    //     description={t("employees.deleteModal.description", {
-    //       employeeName: employee?.name,
-    //     })}
-    //     confirmButtonAction={() => employeeActions.deleteOne(id)}
-    //   />
-    // );
-  };
-
-  const openCreateModal = () => {
-    modal.open({
-      content: (
-        <EmployeeForm
-          handleSubmit={async (data) => {
-            console.log(data);
-          }}
-        />
-      ),
-    });
-  };
-
-  const openEditModal = async (employeeId: string) => {
-    // const employee = await employeeActions.selectOne(employeeId);
-    // if (employee) {
-    //   openModal(
-    //     <EmployeeForm
-    //       edit
-    //       handleSubmit={async (data) => {
-    //         const done = await employeeActions.updateOne(employeeId, data);
-    //         if (done) {
-    //           closeModal();
-    //         }
-    //       }}
-    //       initialValues={{
-    //         ...employee,
-    //         selectedRobotForPreview: {
-    //           es: "",
-    //           en: "",
-    //         },
-    //         tabs: {
-    //           en: !!employee.name.en,
-    //         },
-    //         category: employee.category._id,
-    //         subcategory: employee.subcategory._id,
-    //         images: employee.images.map((url) => ({
-    //           url,
-    //         })),
-    //         price: {
-    //           es: `${employee.price.es}`,
-    //           en: `${employee.price.en}`,
-    //         },
-    //       }}
-    //     />
-    //   );
-    // }
-  };
-
   const applySearchBarFilters = (
     appliedFilters: SearchBarAppliedFilter[] = []
   ) => {
-    console.log(appliedFilters);
-
     applyFilters(
       appliedFilters.reduce<Partial<EmployeeFilter>>(
         (filters, field) => ({
@@ -179,9 +112,8 @@ export const useTable = () => {
   return {
     columns,
     filters,
-    openCreateModal,
-    openEditModal,
-    openDeleteModal,
     applySearchBarFilters,
+    selectedEmployeeIds,
+    setSelectedEmployeeIds,
   };
 };

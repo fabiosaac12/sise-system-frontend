@@ -8,10 +8,10 @@ export interface Pagination {
 export type PaginatedResponse<T> = {
   response: {
     currentPage: number;
-    employees: T[];
+    list: T[];
     rowsPerPage: number;
     pages: number;
-    totalEmployees: number;
+    totalRows: number;
   };
 };
 

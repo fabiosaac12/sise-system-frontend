@@ -1,5 +1,7 @@
+import { Dayjs } from "dayjs";
 import { Catalogue } from "./catalogue.model";
 import { Pagination } from "./pagination";
+import { Dispatch } from "react";
 
 export enum GenderEnum {
   female = "F",
@@ -27,13 +29,26 @@ export enum DominantHandEnum {
 
 export type EmployeeForTable = {
   id: string;
-  clientName: string;
-  departmentName: string;
+  department: {
+    id: string;
+    name: string;
+    client: {
+      id: string;
+      name: string;
+    };
+  };
   firstNames: string;
   lastNames: string;
   idCard: number;
   status: EmployeeStatusEnum;
   workPosition: string;
+  birthplace: string;
+  birthdate: string;
+  address: string;
+  gender: GenderEnum;
+  civilStatus: CivilStatusEnum;
+  dominantHand: DominantHandEnum;
+  profession: string;
 };
 
 export type Employee = {
@@ -68,7 +83,7 @@ export type EmployeeFormData = {
   idCard: string;
   status: EmployeeStatusEnum;
   birthplace: string;
-  birthdate: Date;
+  birthdate: Dayjs;
   address: string;
   gender: GenderEnum;
   workPosition: string;
@@ -93,9 +108,15 @@ export type EmployeeState = {
   list?: EmployeeForTable[];
   filter: EmployeeFilter;
   pagination: Pagination;
-  getAll: () => Promise<EmployeeForTable[] | undefined>;
+  getAll: (props?: {
+    filter?: Partial<EmployeeFilter>;
+    pagination?: Partial<Pagination>;
+  }) => Promise<EmployeeForTable[] | undefined>;
   createOne: (data: EmployeeFormData) => Promise<boolean>;
+  editOne: (id: string, data: EmployeeFormData) => Promise<boolean>;
+  deleteOne: (id: string) => Promise<boolean>;
   applyFilters: (filter: Partial<EmployeeFilter>) => void;
+  setPagination: Dispatch<React.SetStateAction<Pagination>>;
   catalogues: {
     clients: Catalogue;
     departments: Catalogue;

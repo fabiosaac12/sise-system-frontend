@@ -18,6 +18,7 @@ import { useForm } from "./hooks/useForm";
 import { hexToRgba } from "@app/helpers/theme";
 import { Select, TextField } from "@app/components/form";
 import { DatePicker } from "@app/components/form/DatePicker";
+import { useEmployees } from "@app/providers/employees";
 
 interface Props {
   initialValues?: EmployeeFormData;
@@ -32,11 +33,14 @@ export const EmployeeForm: FC<Props> = ({
 }) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.only("xs"));
+  const { catalogues } = useEmployees();
 
   const formik = useForm({
     initialValues,
     handleSubmit,
   });
+
+  console.log(formik.values);
 
   return (
     <Box
@@ -85,10 +89,7 @@ export const EmployeeForm: FC<Props> = ({
               label="Cliente"
               placeholder="Seleccionar..."
               name="clientId"
-              options={[
-                { id: "c1", name: "SUNSOL" },
-                { id: "c2", name: "TERRANOVA" },
-              ]}
+              options={catalogues.clients}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -97,10 +98,8 @@ export const EmployeeForm: FC<Props> = ({
               label="Departamento"
               placeholder="Seleccionar..."
               name="departmentId"
-              options={[
-                { id: "d1", name: "EMPLEADOS" },
-                { id: "d2", name: "LIMPIEZA" },
-              ]}
+              options={catalogues.departments}
+              disabled={!formik.values.clientId}
             />
           </Grid>
           <Grid item xs={12} sm={6}>

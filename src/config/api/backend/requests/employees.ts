@@ -6,8 +6,32 @@ import {
 } from "@app/models/employee.model";
 import { PaginatedResponse, Pagination } from "@app/models/pagination";
 
+export const deleteEmployee = async ({ id }: { id: string }) => {
+  const response = await backend.delete(`employee/${id}`);
+
+  return response.status === 200;
+};
+
+export const editEmployee = async ({
+  data,
+  id,
+}: {
+  data: EmployeeFormData;
+  id: string;
+}) => {
+  const response = await backend.put(`employee/edit/${id}`, {
+    ...data,
+    idCard: +data.idCard,
+  });
+
+  return response.status === 200;
+};
+
 export const createEmployee = async ({ data }: { data: EmployeeFormData }) => {
-  const response = await backend.post("employee/create", data);
+  const response = await backend.post("employee/create", {
+    ...data,
+    idCard: +data.idCard,
+  });
 
   return response.status === 201;
 };

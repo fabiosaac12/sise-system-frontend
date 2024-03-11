@@ -117,7 +117,7 @@ export const Table: FC<Props> = ({
           getRowId={(row) => row.id}
           disableColumnFilter
           disableRowSelectionOnClick
-          pageSizeOptions={[5, 10, 15, 20, 25]}
+          pageSizeOptions={[2, 5, 10, 15, 20, 25]}
           initialState={{
             pagination: {
               paginationModel: {

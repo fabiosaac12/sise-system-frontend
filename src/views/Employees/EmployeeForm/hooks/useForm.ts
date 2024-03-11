@@ -7,6 +7,9 @@ import {
 } from "@app/models/employee.model";
 import { useValidationSchema } from "./useValidationSchema";
 import { useFormik, FormikProps } from "formik";
+import { useEffect, useRef } from "react";
+import { useEmployees } from "@app/providers/employees";
+import { Dayjs } from "dayjs";
 
 interface Props {
   initialValues?: EmployeeFormData;
@@ -21,7 +24,7 @@ const defaultInitialValues: EmployeeFormData = {
   idCard: "",
   status: "" as EmployeeStatusEnum,
   birthplace: "",
-  birthdate: null as unknown as Date,
+  birthdate: null as unknown as Dayjs,
   address: "",
   gender: "" as GenderEnum,
   workPosition: "",
@@ -34,6 +37,7 @@ export const useForm = ({
   initialValues = defaultInitialValues,
   handleSubmit,
 }: Props): FormikProps<EmployeeFormData> => {
+  const { catalogues } = useEmployees();
   const validationSchema = useValidationSchema();
 
   const formik = useFormik<EmployeeFormData>({
@@ -41,6 +45,20 @@ export const useForm = ({
     validationSchema,
     onSubmit: handleSubmit,
   });
+
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    if (formik.values.clientId) {
+      catalogues.getDepartments(formik.values.clientId);
+
+      if (mounted.current) {
+        formik.setFieldValue("department", "");
+      }
+    }
+
+    mounted.current = true;
+  }, [formik.values.clientId]);
 
   return formik;
 };
