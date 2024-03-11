@@ -71,9 +71,9 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
     pagination?: Partial<Pagination>;
   } = {}) => {
     if (!filter.clientId) {
-      setList([]);
+      setList(undefined);
 
-      return [];
+      return undefined;
     }
 
     const response = await _getAll({

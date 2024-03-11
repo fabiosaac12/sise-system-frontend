@@ -19,6 +19,7 @@ import { hexToRgba } from "@app/helpers/theme";
 import { Select, TextField } from "@app/components/form";
 import { DatePicker } from "@app/components/form/DatePicker";
 import { useEmployees } from "@app/providers/employees";
+import { useModal } from "@app/providers/modal";
 
 interface Props {
   initialValues?: EmployeeFormData;
@@ -31,6 +32,7 @@ export const EmployeeForm: FC<Props> = ({
   handleSubmit,
   edit,
 }) => {
+  const modal = useModal();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.only("xs"));
   const { catalogues } = useEmployees();
@@ -39,8 +41,6 @@ export const EmployeeForm: FC<Props> = ({
     initialValues,
     handleSubmit,
   });
-
-  console.log(formik.values);
 
   return (
     <Box
@@ -224,7 +224,7 @@ export const EmployeeForm: FC<Props> = ({
         <Grid container spacing={2} mt={0}>
           <Grid item xs={12} mt={2} textAlign="right">
             <Button
-              // onClick={closeModal}
+              onClick={modal.close}
               color="error"
               variant="text"
               sx={{ mr: 2 }}
