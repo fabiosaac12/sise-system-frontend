@@ -4,11 +4,10 @@ import {
   Button,
   SvgIconTypeMap,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { useModal } from "@app/providers/modal";
-import { hexToRgba } from "@app/helpers/theme";
+import { useStyles } from "./ConfirmModalStyles";
 interface Props {
   Icon: OverridableComponent<SvgIconTypeMap<object, "svg">> & {
     muiName: string;
@@ -30,29 +29,12 @@ export const ConfirmModal: FC<Props> = ({
   confirmButtonAction,
   hideCancelButton,
 }) => {
-  const theme = useTheme();
   const modal = useModal();
+  const classes = useStyles({ color, hideCancelButton });
 
   return (
-    <Box
-      width={460}
-      maxWidth={"100%"}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        textAlign: "center",
-        padding: theme.spacing(4),
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: hexToRgba(theme.palette[color].main, 0.1),
-          padding: theme.spacing(2),
-          display: "flex",
-          borderRadius: 50,
-        }}
-      >
+    <Box className={classes.container}>
+      <div className={classes.iconWrapper}>
         <Icon color={color} fontSize="large" />
       </div>
       <Typography mt={3} variant="h4">
@@ -61,14 +43,11 @@ export const ConfirmModal: FC<Props> = ({
       <Typography mt={3} variant="body1">
         {description}
       </Typography>
-      <Box
-        mt={3}
-        style={{ display: "flex", width: "100%", justifyContent: "center" }}
-      >
+      <Box className={classes.buttonContainer}>
         {!hideCancelButton && (
           <Button
             onClick={modal.close}
-            style={{ marginRight: theme.spacing(2) }}
+            className={classes.cancelButton}
             fullWidth
             color={color}
             variant="outlined"
@@ -82,9 +61,7 @@ export const ConfirmModal: FC<Props> = ({
             modal.close();
           }}
           fullWidth={!hideCancelButton}
-          style={{
-            width: hideCancelButton ? "50%" : undefined,
-          }}
+          className={classes.confirmButton}
           color={color}
         >
           {confirmButtonText}

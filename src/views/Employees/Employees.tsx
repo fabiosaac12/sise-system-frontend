@@ -1,13 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { SearchBar } from "@app/components/SearchBar";
 import { Table } from "@app/components/Table";
-import {
-  Box,
-  Card,
-  Container,
-  IconButton,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Card, Container, IconButton, Typography } from "@mui/material";
 import CreateIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -18,9 +12,9 @@ import { useModal } from "@app/providers/modal";
 import { EmployeeForm } from "./EmployeeForm/EmployeeForm";
 import dayjs from "dayjs";
 import { ConfirmModal } from "@app/components/ConfirmModal";
+import { useStyles } from "./EmployeesStyles";
 
 export const Employees = () => {
-  const theme = useTheme();
   const {
     catalogues,
     filter,
@@ -33,8 +27,10 @@ export const Employees = () => {
     setPagination,
   } = useEmployees();
   const modal = useModal();
-
   const table = useTable();
+  const classes = useStyles({
+    selectedLength: table.selectedEmployeeIds.length,
+  });
 
   useEffect(() => {
     catalogues.getClients();
@@ -130,22 +126,8 @@ export const Employees = () => {
   };
 
   return (
-    <Container
-      sx={{
-        py: theme.spacing(4),
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-      }}
-      maxWidth="xl"
-    >
-      <Card
-        sx={{
-          padding: theme.spacing(4),
-          minHeight: "100%",
-          flexGrow: 1,
-        }}
-      >
+    <Container className={classes.container} maxWidth="xl">
+      <Card className={classes.card}>
         <Box mb={3}>
           <Typography variant="h1" fontWeight={500}>
             Empleados
@@ -156,20 +138,7 @@ export const Employees = () => {
           </Typography>
         </Box>
 
-        <Box
-          p={2}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{
-            backgroundColor: table.selectedEmployeeIds.length
-              ? "primary.dark"
-              : "background.paper",
-            border: "1px solid",
-            borderColor: "divider",
-            borderRadius: 1,
-          }}
-        >
+        <Box className={classes.tableHeader}>
           {table.selectedEmployeeIds.length ? (
             <>
               <Box pl={0.5}>
@@ -181,11 +150,8 @@ export const Employees = () => {
                 </Typography>
               </Box>
               <Box display="flex" alignItems="center">
-                <IconButton
-                  sx={{ width: 0, px: 0, pointerEvents: "none" }}
-                  size="small"
-                >
-                  <CreateIcon sx={{ width: 0 }} fontSize="large" />
+                <IconButton className={classes.invisibleButton} size="small">
+                  <CreateIcon fontSize="large" />
                 </IconButton>
                 {table.selectedEmployeeIds.length === 1 && (
                   <IconButton size="medium" onClick={openEditModal}>

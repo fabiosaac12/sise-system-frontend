@@ -5,21 +5,14 @@ import {
   EmployeeStatusEnum,
   GenderEnum,
 } from "@app/models/employee.model";
-import {
-  Box,
-  Button,
-  Grid,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { FC } from "react";
 import { useForm } from "./hooks/useForm";
-import { hexToRgba } from "@app/helpers/theme";
 import { Select, TextField } from "@app/components/form";
 import { DatePicker } from "@app/components/form/DatePicker";
 import { useEmployees } from "@app/providers/employees";
 import { useModal } from "@app/providers/modal";
+import { useStyles } from "./EmployeeFormStyles";
 
 interface Props {
   initialValues?: EmployeeFormData;
@@ -33,8 +26,8 @@ export const EmployeeForm: FC<Props> = ({
   edit,
 }) => {
   const modal = useModal();
-  const theme = useTheme();
-  const xs = useMediaQuery(theme.breakpoints.only("xs"));
+  const classes = useStyles();
+
   const { catalogues } = useEmployees();
 
   const formik = useForm({
@@ -43,26 +36,8 @@ export const EmployeeForm: FC<Props> = ({
   });
 
   return (
-    <Box
-      sx={{
-        maxHeight: `calc(100vh - ${theme.spacing(6)})`,
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-        width: 650,
-        maxWidth: "100%",
-      }}
-    >
-      <Box
-        sx={{
-          py: 2,
-          px: xs ? 2 : 6,
-          borderBottom: `1px solid ${hexToRgba(
-            theme.palette.text.primary,
-            0.1
-          )}`,
-        }}
-      >
+    <Box className={classes.container}>
+      <Box className={classes.header}>
         <Typography variant="h6" fontSize="1rem">
           {edit ? "Editar empleado" : "Crear empleado"}
         </Typography>
@@ -72,16 +47,7 @@ export const EmployeeForm: FC<Props> = ({
             : "Introduzca la información del empleado"}
         </Typography>
       </Box>
-      <Box
-        sx={{
-          backgroundColor: "background.paper",
-          maxHeight: "90%",
-          pt: 3,
-          pb: 6,
-          px: xs ? 2 : 6,
-          overflowY: "auto",
-        }}
-      >
+      <Box className={classes.body}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <Select
@@ -160,12 +126,6 @@ export const EmployeeForm: FC<Props> = ({
               label="Fecha de nacimiento"
               name="birthdate"
             />
-            {/* <TextField
-              formik={formik}
-              label="Fecha de nacimiento"
-              placeholder="Escribir..."
-              name="birthdate"
-            /> */}
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
