@@ -5,6 +5,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
   container: {
     minHeight: '100vh',
     backgroundColor: theme.palette.background.default,
-    display: 'flex',
+    display: 'grid',
+    gridTemplateColumns: '1fr calc(100vw - 250px)',
+    gridTemplateRows: '1fr',
+    gridTemplateAreas: `
+      "header" "content"
+    `,
   },
 }));
