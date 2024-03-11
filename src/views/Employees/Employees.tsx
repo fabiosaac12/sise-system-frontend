@@ -151,7 +151,8 @@ export const Employees = () => {
             Empleados
           </Typography>
           <Typography mt={1} variant="body1">
-            Aki se agregaran y kitaran empleados
+            En este apartado se pueden ver los empleados registrados en el
+            sistema, así como editarlos, crear nuevos y eliminar
           </Typography>
         </Box>
 
@@ -219,6 +220,13 @@ export const Employees = () => {
           columns={table.columns}
           rows={list || []}
           multiselect
+          noDataMessage={
+            !filter.clientId
+              ? "Seleccione un cliente para poder ver sus empleados"
+              : list
+              ? "No hay empleados registrados que coincidan con el filtrado"
+              : "Cargando..."
+          }
           onRowSelectionChange={(ids) =>
             table.setSelectedEmployeeIds(ids as string[])
           }

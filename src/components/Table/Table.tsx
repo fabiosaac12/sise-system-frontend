@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import {
   DataGrid,
   GridColDef,
@@ -31,6 +31,7 @@ interface Props extends DataGridProps {
   onPaginationChange?: (pagination: GridPaginationModel) => void;
   variant?: "primary" | "secondary";
   title?: string;
+  noDataMessage?: string;
 }
 
 export const Table: FC<Props> = ({
@@ -46,6 +47,7 @@ export const Table: FC<Props> = ({
   columnGroupingModel,
   onRowSelectionChange,
   onPaginationChange,
+  noDataMessage,
   ...props
 }) => {
   const actions: TableAction[] = [
@@ -107,7 +109,9 @@ export const Table: FC<Props> = ({
           alignItems="center"
           height="200px"
         >
-          No hay datos para mostrar
+          <Typography>
+            {noDataMessage ? noDataMessage : "No hay datos para mostrar"}
+          </Typography>
         </Box>
       ) : (
         <DataGrid
@@ -141,8 +145,12 @@ export const Table: FC<Props> = ({
           }
           columnGroupingModel={columnGroupingModel}
           onPaginationModelChange={onPaginationChange}
-          componentsProps={{
-            pagination: {
+          localeText={{
+            footerRowSelected: (count) =>
+              `${count} ${
+                count > 1 ? "elementos seleccionados" : "elemento seleccionado"
+              }`,
+            MuiTablePagination: {
               labelRowsPerPage: "Filas por página",
               labelDisplayedRows(paginationInfo) {
                 const { from, to, count } = paginationInfo;
