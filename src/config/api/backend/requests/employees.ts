@@ -7,7 +7,7 @@ import {
 import { PaginatedResponse, Pagination } from "@app/models/pagination";
 
 export const deleteEmployee = async ({ id }: { id: string }) => {
-  const response = await backend.delete(`employee/${id}`);
+  const response = await backend.delete(`employee/delete/${id}`);
 
   return response.status === 200;
 };

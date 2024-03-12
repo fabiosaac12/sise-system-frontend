@@ -22,6 +22,7 @@ export const useValidationSchema = () => {
         originalValue === "" ? undefined : +originalValue
       )
       .moreThan(0, validIdCardError)
+      .lessThan(100000000, validIdCardError)
       .integer(validIdCardError)
       .typeError(validIdCardError)
       .required(requiredError),

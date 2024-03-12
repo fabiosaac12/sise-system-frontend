@@ -53,7 +53,7 @@ export const useForm = ({
       catalogues.getDepartments(formik.values.clientId);
 
       if (mounted.current) {
-        formik.setFieldValue("department", "");
+        formik.setFieldValue("departmentId", "");
       }
     }
 
