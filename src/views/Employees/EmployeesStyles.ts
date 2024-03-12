@@ -9,14 +9,14 @@ export const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
-    minHeight: "100vh",
     display: "flex",
     flexDirection: "column",
+    overflowY: "auto",
   },
   card: {
     padding: theme.spacing(4),
-    minHeight: "100%",
     flexGrow: 1,
+    overflow: "auto",
   },
   tableHeader: ({ selectedLength }) => ({
     backgroundColor: selectedLength
