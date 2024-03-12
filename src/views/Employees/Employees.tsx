@@ -22,6 +22,7 @@ export const Employees = () => {
     getAll,
     createOne,
     deleteOne,
+    deleteMany,
     editOne,
     pagination,
     setPagination,
@@ -100,7 +101,20 @@ export const Employees = () => {
 
   const openDeleteModal = () => {
     if (table.selectedEmployeeIds.length > 1) {
-      // TODO
+      modal.open({
+        content: (
+          <ConfirmModal
+            Icon={DeleteIcon}
+            color="error"
+            confirmButtonText="Eliminar"
+            title={`¿Está seguro de eliminar los ${table.selectedEmployeeIds.length} empleados seleccionados?`}
+            description={
+              "Esta acción es irreversible. Le recomendamos que considere cuidadosamente las consecuencias antes de proceder."
+            }
+            confirmButtonAction={() => deleteMany(table.selectedEmployeeIds)}
+          />
+        ),
+      });
     } else {
       const employee = list?.find(
         ({ id }) => id === table.selectedEmployeeIds[0]

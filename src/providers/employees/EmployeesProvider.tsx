@@ -12,6 +12,7 @@ import { useRequest } from "@app/hooks/useRequest";
 import {
   createEmployee,
   deleteEmployee,
+  deleteEmployees,
   editEmployee,
   getEmployees,
 } from "@app/config/api/backend/requests/employees";
@@ -34,6 +35,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
   const _createOne = useRequest(createEmployee);
   const _editOne = useRequest(editEmployee);
   const _deleteOne = useRequest(deleteEmployee);
+  const _deleteMany = useRequest(deleteEmployees);
 
   const getClients: EmployeeState["catalogues"]["getClients"] = async () => {
     const catalogue = await _getClientsCatalogue({});
@@ -141,6 +143,24 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const deleteMany: EmployeeState["deleteMany"] = async (ids: string[]) => {
+    const done = await _deleteMany({ ids });
+
+    if (done) {
+      if (list?.length === ids.length) {
+        await getAll({
+          pagination: { currentPage: pagination.currentPage - 1 || 1 },
+        });
+      } else {
+        await getAll();
+      }
+
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const applyFilters = (newFilter: Partial<EmployeeFilter>) => {
     setFilter((filter) => ({
       ...initialEmployeeFilter,
@@ -156,6 +176,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
     createOne,
     editOne,
     deleteOne,
+    deleteMany,
     getAll,
     applyFilters,
     filter,

@@ -12,6 +12,14 @@ export const deleteEmployee = async ({ id }: { id: string }) => {
   return response.status === 200;
 };
 
+export const deleteEmployees = async ({ ids }: { ids: string[] }) => {
+  const response = await backend.delete("employee/deleteMany", {
+    params: { ids },
+  });
+
+  return response.status === 200;
+};
+
 export const editEmployee = async ({
   data,
   id,

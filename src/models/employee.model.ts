@@ -115,6 +115,7 @@ export type EmployeeState = {
   createOne: (data: EmployeeFormData) => Promise<boolean>;
   editOne: (id: string, data: EmployeeFormData) => Promise<boolean>;
   deleteOne: (id: string) => Promise<boolean>;
+  deleteMany: (ids: string[]) => Promise<boolean>;
   applyFilters: (filter: Partial<EmployeeFilter>) => void;
   setPagination: Dispatch<React.SetStateAction<Pagination>>;
   catalogues: {
