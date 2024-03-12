@@ -1,6 +1,7 @@
-import { ReactNode } from "react";
-import { useStyles } from "./BaseLayoutStyles";
-import { Modal } from "@app/components/Modal";
+import { ReactNode } from 'react';
+import { useStyles } from './BaseLayoutStyles';
+import { Navbar } from '@app/components/NavBar';
+import { Modal } from '@app/components/Modal';
 
 interface Props {
   children: ReactNode;
@@ -12,7 +13,10 @@ const BaseLayout = ({ children }: Props) => {
   return (
     <>
       <Modal />
-      <div className={classes.container}>{children}</div>
+      <div className={classes.container}>
+        <Navbar />
+        {children}
+      </div>
     </>
   );
 };

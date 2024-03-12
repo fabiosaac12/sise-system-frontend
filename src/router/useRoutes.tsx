@@ -1,8 +1,10 @@
 import { AuthRoleEnum, AuthStatusEnum } from "@app/enums/auth";
 import { BaseLayout } from "@app/layouts";
+import { LoginLayout } from '@app/layouts/LoginLayout';
 import { useAuth } from "@app/providers/auth";
 import { Employees } from "@app/views/Employees";
 import { Morbidity } from "@app/views/Morbidity";
+import { Reports } from '@app/views/Reports';
 import { Login } from "@app/views/auth/Login/Login";
 import { RouteProps, Navigate } from "react-router-dom";
 
@@ -13,9 +15,9 @@ export const useRoutes = () => {
     {
       path: "/login",
       element: (
-        <BaseLayout>
+        <LoginLayout>
           <Login />
-        </BaseLayout>
+        </LoginLayout>
       ),
     },
     {
@@ -30,6 +32,14 @@ export const useRoutes = () => {
       element: (
         <BaseLayout>
           <Morbidity />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: '/reports',
+      element: (
+        <BaseLayout>
+          <Reports />
         </BaseLayout>
       ),
     },
@@ -53,6 +63,22 @@ export const useRoutes = () => {
       element: (
         <BaseLayout>
           <Morbidity />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: '/reports',
+      element: (
+        <BaseLayout>
+          <Reports />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/employees",
+      element: (
+        <BaseLayout>
+          <Employees />
         </BaseLayout>
       ),
     },
