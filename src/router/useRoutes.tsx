@@ -1,18 +1,19 @@
-import { AuthRoleEnum, AuthStatusEnum } from '@app/enums/auth';
-import { BaseLayout } from '@app/layouts';
+import { AuthRoleEnum, AuthStatusEnum } from "@app/enums/auth";
+import { BaseLayout } from "@app/layouts";
 import { LoginLayout } from '@app/layouts/LoginLayout';
-import { useAuth } from '@app/providers/auth';
-import { Morbidity } from '@app/views/Morbidity';
+import { useAuth } from "@app/providers/auth";
+import { Employees } from "@app/views/Employees";
+import { Morbidity } from "@app/views/Morbidity";
 import { Reports } from '@app/views/Reports';
-import { Login } from '@app/views/auth/Login/Login';
-import { RouteProps, Navigate } from 'react-router-dom';
+import { Login } from "@app/views/auth/Login/Login";
+import { RouteProps, Navigate } from "react-router-dom";
 
 export const useRoutes = () => {
   const auth = useAuth();
 
   const loggedOutRoutes: RouteProps[] = [
     {
-      path: '/login',
+      path: "/login",
       element: (
         <LoginLayout>
           <Login />
@@ -20,14 +21,14 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/*',
-      element: <Navigate to='/login' replace={true} />,
+      path: "/*",
+      element: <Navigate to="/login" replace={true} />,
     },
   ];
 
   const adminRoutes: RouteProps[] = [
     {
-      path: '/',
+      path: "/",
       element: (
         <BaseLayout>
           <Morbidity />
@@ -43,14 +44,22 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/*',
-      element: <Navigate to='/' replace={true} />,
+      path: "/employees",
+      element: (
+        <BaseLayout>
+          <Employees />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/*",
+      element: <Navigate to="/" replace={true} />,
     },
   ];
 
   const userRoutes: RouteProps[] = [
     {
-      path: '/',
+      path: "/",
       element: (
         <BaseLayout>
           <Morbidity />
@@ -66,8 +75,16 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/*',
-      element: <Navigate to='/' replace={true} />,
+      path: "/employees",
+      element: (
+        <BaseLayout>
+          <Employees />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/*",
+      element: <Navigate to="/" replace={true} />,
     },
   ];
 

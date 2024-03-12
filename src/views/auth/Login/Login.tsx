@@ -35,6 +35,8 @@ export const Login = () => {
             className={classes.input}
             label="Correo electronico"
             placeholder="Correo electronico"
+            variant="filled"
+            fullWidth={false}
             {...formik.getFieldProps("email")}
             error={!!formik.submitCount && !!formik.errors.email}
             helperText={!!formik.submitCount && formik.errors.email}
@@ -51,6 +53,8 @@ export const Login = () => {
             type="password"
             label="Contraseña"
             placeholder="Contraseña"
+            variant="filled"
+            fullWidth={false}
             {...formik.getFieldProps("password")}
             error={!!formik.submitCount && !!formik.errors.password}
             helperText={!!formik.submitCount && formik.errors.password}
