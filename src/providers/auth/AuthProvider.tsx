@@ -58,7 +58,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const logout: AuthState["logout"] = async () => {
-    localStorage.removeItem("role");
+    localStorage.removeItem("token");
 
     setStatus(AuthStatusEnum.loggedOut);
     setRole(undefined);
