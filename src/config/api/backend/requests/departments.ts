@@ -6,7 +6,11 @@ import {
 } from '@app/models/department.model';
 import { PaginatedResponse, Pagination } from '@app/models/pagination';
 
-export const createDeparment = async (data: DepartmentFormData) => {
+export const createDeparment = async ({
+  data,
+}: {
+  data: DepartmentFormData;
+}) => {
   const response = await backend.post('department/create', {
     ...data,
   });
@@ -53,13 +57,13 @@ export const editDepartment = async ({
   return response.status === 200;
 };
 
-export const deleteDepartment = async (id: string) => {
+export const deleteDepartment = async ({ id }: { id: string }) => {
   const response = await backend.delete(`department/delete/${id}`);
 
   return response.status === 200;
 };
 
-export const deleteDepartments = async (ids: string[]) => {
+export const deleteDepartments = async ({ ids }: { ids: string[] }) => {
   const response = await backend.delete('department/delete/', {
     params: {
       ids,
