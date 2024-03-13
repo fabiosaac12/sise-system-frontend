@@ -1,10 +1,11 @@
 import { AuthRoleEnum, AuthStatusEnum } from "@app/enums/auth";
 import { BaseLayout } from "@app/layouts";
-import { LoginLayout } from '@app/layouts/LoginLayout';
+import { LoginLayout } from "@app/layouts/LoginLayout";
 import { useAuth } from "@app/providers/auth";
+import { Clients } from "@app/views/Clients";
 import { Employees } from "@app/views/Employees";
 import { Morbidity } from "@app/views/Morbidity";
-import { Reports } from '@app/views/Reports';
+import { Reports } from "@app/views/Reports";
 import { Login } from "@app/views/auth/Login/Login";
 import { RouteProps, Navigate } from "react-router-dom";
 
@@ -36,7 +37,7 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/reports',
+      path: "/reports",
       element: (
         <BaseLayout>
           <Reports />
@@ -48,6 +49,14 @@ export const useRoutes = () => {
       element: (
         <BaseLayout>
           <Employees />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/clients",
+      element: (
+        <BaseLayout>
+          <Clients />
         </BaseLayout>
       ),
     },
@@ -67,7 +76,7 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/reports',
+      path: "/reports",
       element: (
         <BaseLayout>
           <Reports />
@@ -79,6 +88,14 @@ export const useRoutes = () => {
       element: (
         <BaseLayout>
           <Employees />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/clients",
+      element: (
+        <BaseLayout>
+          <Clients />
         </BaseLayout>
       ),
     },
