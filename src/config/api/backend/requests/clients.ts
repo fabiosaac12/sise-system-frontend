@@ -27,7 +27,7 @@ export const editClient = async ({
   data: ClientFormData;
   id: string;
 }) => {
-  const response = await backend.put(`client/edit/${id}`, {
+  const response = await backend.patch(`client/edit/${id}`, {
     ...data,
   });
 
@@ -54,6 +54,7 @@ export const getClients = async ({
     {
       params: {
         ...filter,
+        order: "asc",
         limit: pagination.rowsPerPage,
         page: pagination.currentPage,
       },

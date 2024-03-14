@@ -44,13 +44,13 @@ export const useTable = () => {
     },
   ];
 
-  // const filters: SearchBarFilter[] = [
-  //   {
-  //     keyName: "clientId",
-  //     text: "Cliente",
-  //     options: catalogues.clients,
-  //   },
-  // ];
+  const filters: SearchBarFilter[] = [
+    {
+      keyName: "clientId",
+      text: "Cliente",
+      options: catalogues.clients,
+    },
+  ];
 
   const applySearchBarFilters = (
     appliedFilters: SearchBarAppliedFilter[] = []
@@ -70,7 +70,7 @@ export const useTable = () => {
     columns,
     selectedClientIds,
     setSelectedClientIds,
-    // filters,
+    filters,
     applySearchBarFilters,
   };
 };
