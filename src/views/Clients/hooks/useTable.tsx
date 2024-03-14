@@ -29,7 +29,7 @@ export const useTable = () => {
 
   const columns: GridColDef[] = [
     {
-      field: "client",
+      field: "name",
       headerName: "Cliente",
       ...commonColumnProps,
       renderCell: ({ row }: GridRenderCellParams<ClientForTable>) => (
@@ -44,13 +44,13 @@ export const useTable = () => {
     },
   ];
 
-  const filters: SearchBarFilter[] = [
-    {
-      keyName: "clientId",
-      text: "Cliente",
-      options: catalogues.clients,
-    },
-  ];
+  // const filters: SearchBarFilter[] = [
+  //   {
+  //     keyName: "clientId",
+  //     text: "Cliente",
+  //     options: catalogues.clients,
+  //   },
+  // ];
 
   const applySearchBarFilters = (
     appliedFilters: SearchBarAppliedFilter[] = []
@@ -70,7 +70,7 @@ export const useTable = () => {
     columns,
     selectedClientIds,
     setSelectedClientIds,
-    filters,
+    // filters,
     applySearchBarFilters,
   };
 };
