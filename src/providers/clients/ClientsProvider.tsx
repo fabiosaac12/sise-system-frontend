@@ -84,15 +84,15 @@ export const ClientsProvider: FC<PropsWithChildren> = ({ children }) => {
     });
 
     if (response) {
-      const { list: employees, ...pagination } = response;
+      const { list: clients, ...pagination } = response;
 
-      setList(employees);
+      setList(clients);
       setPagination({
         ...pagination,
         totalItems: pagination.totalRows,
       });
 
-      return employees;
+      return clients;
     }
   };
 
