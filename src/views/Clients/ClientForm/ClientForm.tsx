@@ -42,7 +42,7 @@ export const ClientForm: FC<Props> = ({
       </Box>
       <Box className={classes.body}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <Select
               formik={formik}
               label="Departamento"
@@ -50,7 +50,7 @@ export const ClientForm: FC<Props> = ({
               name="departments"
               options={catalogues.departments}
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} sm={6}>
             <TextField
               formik={formik}
