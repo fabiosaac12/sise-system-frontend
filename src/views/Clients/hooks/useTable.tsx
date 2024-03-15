@@ -24,7 +24,7 @@ export const useTable = () => {
     disableColumnMenu: true,
     disableReorder: true,
     sortable: false,
-    width: 130,
+    width: 150,
   };
 
   const columns: GridColDef[] = [
@@ -32,6 +32,8 @@ export const useTable = () => {
       field: "name",
       headerName: "Cliente",
       ...commonColumnProps,
+      flex: 1,
+      minWidth: 100,
       renderCell: ({ row }: GridRenderCellParams<ClientForTable>) => (
         <Box sx={textEllipsisStyle}>{row.name}</Box>
       ),
@@ -40,6 +42,8 @@ export const useTable = () => {
       field: "departments",
       headerName: "Departamento",
       ...commonColumnProps,
+      flex: 1,
+      minWidth: 150,
       renderCell: () => <Box sx={textEllipsisStyle}>{`Ver Departamentos`}</Box>,
     },
   ];

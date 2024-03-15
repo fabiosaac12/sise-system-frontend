@@ -41,7 +41,7 @@ export const ClientForm: FC<Props> = ({
         </Typography>
       </Box>
       <Box className={classes.body}>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} justifyContent="center" alignItems="center">
           {/* <Grid item xs={12} sm={6}>
             <Select
               formik={formik}
