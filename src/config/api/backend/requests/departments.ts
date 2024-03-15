@@ -19,27 +19,25 @@ export const createDeparment = async ({
 };
 
 export const getDepartments = async ({
-  id,
   filter,
   pagination,
 }: {
   filter: DepartmentFilter;
   pagination: Pagination;
-  id: string;
 }) => {
   const response = await backend.get<PaginatedResponse<DepartmentForTable>>(
-    `department/${id}`,
+    `department/${filter.clientId}`,
     {
       params: {
-        ...filter,
         limit: pagination.rowsPerPage,
         page: pagination.currentPage,
+        order: 'asc',
       },
     }
   );
 
   const { data } = response;
-
+  console.log(data.response);
   return data.response;
 };
 
@@ -64,7 +62,7 @@ export const deleteDepartment = async ({ id }: { id: string }) => {
 };
 
 export const deleteDepartments = async ({ ids }: { ids: string[] }) => {
-  const response = await backend.delete('department/delete/', {
+  const response = await backend.delete('department/deleteMany/', {
     params: {
       ids,
     },
