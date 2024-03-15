@@ -29,7 +29,6 @@ export const Departmets = () => {
   const classes = useStyles({
     selectedLength: table.selectedDeparmentsIds.length,
   });
-  console.log(filter);
 
   useEffect(() => {
     catalogues.getClients();
@@ -37,7 +36,6 @@ export const Departmets = () => {
 
   useEffect(() => {
     getAll();
-    console.log(`la lista es: ${list}`);
   }, [filter.clientId, pagination.currentPage, pagination.rowsPerPage]);
 
   const openCreateModal = () => {
@@ -45,7 +43,6 @@ export const Departmets = () => {
       content: (
         <DepartmentForm
           handleSubmit={async (data) => {
-            console.log('manejador del crear departamento');
             const done = await createOne(data);
 
             if (done) {
@@ -74,8 +71,6 @@ export const Departmets = () => {
               clientId: _deparment.clientId,
             }}
             handleSubmit={async (data) => {
-              console.log('manejador del editar departamento');
-
               const done = await editOne(data, _deparment.id);
 
               if (done) {

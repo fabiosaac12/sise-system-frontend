@@ -68,10 +68,10 @@ export const DeparmentsProvider: FC<PropsWithChildren> = ({ children }) => {
   const getAll: DepartmentState['getAll'] = async (props) => {
     if (!filter.clientId) {
       setList(undefined);
-      console.log('puto');
+
       return undefined;
     }
-    console.log('esta pasando');
+
     const response = await _getAll({
       filter: {
         ...filter,

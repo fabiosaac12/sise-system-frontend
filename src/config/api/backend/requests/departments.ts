@@ -37,7 +37,7 @@ export const getDepartments = async ({
   );
 
   const { data } = response;
-  console.log(data.response);
+
   return data.response;
 };
 
