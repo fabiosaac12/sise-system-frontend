@@ -34,6 +34,7 @@ export const Clients = () => {
 
   useEffect(() => {
     catalogues.getClientsF();
+    console.log(catalogues.departments);
   }, []);
 
   useEffect(() => {
@@ -182,13 +183,13 @@ export const Clients = () => {
           columns={table.columns}
           rows={list || []}
           multiselect
-          noDataMessage={
-            !filter.clientId
-              ? "Seleccione un cliente para poder ver sus empleados"
-              : list
-              ? "No hay empleados registrados que coincidan con el filtrado"
-              : "Cargando..."
-          }
+          // noDataMessage={
+          //   !filter.clientId
+          //     ? "Seleccione un cliente para poder ver sus empleados"
+          //     : list
+          //     ? "No hay empleados registrados que coincidan con el filtrado"
+          //     : "Cargando..."
+          // }
           onRowSelectionChange={(ids) =>
             table.setSelectedClientIds(ids as string[])
           }
