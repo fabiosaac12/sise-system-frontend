@@ -21,8 +21,8 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
   formik.handleBlur;
 
   return (
-    <Box className={classes.container}>
-      <Box className={classes.header}>
+    <Box className={classes.container} m={0}>
+      <Box className={classes.header} width="100%" mt={-5}>
         <Typography variant="h4" fontSize="1rem">
           Consulta
         </Typography>
@@ -317,7 +317,7 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           </Grid>
         </Grid>
 
-        <Grid container spacing={2} mt={0}>
+        <Grid container spacing={2} mt={0} mb={-5}>
           <Grid item xs={12} mt={2} textAlign="right">
             <Button color="error" variant="text" sx={{ mr: 2 }}>
               Limpiar
