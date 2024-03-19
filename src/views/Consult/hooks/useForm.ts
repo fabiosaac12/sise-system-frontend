@@ -22,7 +22,7 @@ const defaultInitialValues: ConsultFormData = {
   toxicHabits: "",
   workHistory: "",
   labTestReport: "",
-  TABResult: "",
+  TAResult: "",
   FCResult: "",
   SPO2Result: "",
   FRResult: "",

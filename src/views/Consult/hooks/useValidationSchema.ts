@@ -36,7 +36,7 @@ export const useValidationSchema = () => {
     toxicHabits: yup.string().required(requiredError),
     workHistory: yup.string().required(requiredError),
     labTestReport: yup.string().required(requiredError),
-    TABResult: yup
+    TAResult: yup
       .number()
       .transform((_, originalValue) =>
         originalValue === "" ? undefined : +originalValue

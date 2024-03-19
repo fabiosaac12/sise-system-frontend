@@ -26,7 +26,7 @@ export type ConsultFormData = {
   toxicHabits: string;
   workHistory: string;
   labTestReport: string;
-  TABResult: string;
+  TAResult: string;
   FCResult: string;
   SPO2Result: string;
   FRResult: string;
@@ -66,7 +66,7 @@ export type Consult = {
   toxicHabits: string;
   workHistory: string;
   labTestReport: string;
-  TABresult: number;
+  TAResult: number;
   FCResult: number;
   SPO2Result: number;
   FRResult: number;
