@@ -6,6 +6,7 @@ import { AuthProvider } from "./providers/auth";
 import { Router } from "./router/Router";
 import { ModalProvider } from "./providers/modal";
 import { EmployeesProvider } from "./providers/employees";
+import { ConsultProvider } from "./providers/consult";
 
 function App() {
   return (
@@ -13,9 +14,11 @@ function App() {
       <ThemeProvider>
         <AuthProvider>
           <ModalProvider>
-            <EmployeesProvider>
-              <Router />
-            </EmployeesProvider>
+            <ConsultProvider>
+              <EmployeesProvider>
+                <Router />
+              </EmployeesProvider>
+            </ConsultProvider>
           </ModalProvider>
         </AuthProvider>
       </ThemeProvider>
