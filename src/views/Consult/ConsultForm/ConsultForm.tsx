@@ -133,7 +133,7 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
                   <TextField
                     formik={formik}
                     label=""
-                    placeholder="Escribir"
+                    placeholder="Escribir..."
                     name="TAResult"
                   />
                 </Grid>
@@ -142,7 +142,7 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
                   <TextField
                     formik={formik}
                     label=""
-                    placeholder="Escribir"
+                    placeholder="Escribir..."
                     name="FCResult"
                   />
                 </Grid>
@@ -151,7 +151,7 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
                   <TextField
                     formik={formik}
                     label=""
-                    placeholder="Escribir"
+                    placeholder="Escribir..."
                     name="SPO2Result"
                   />
                 </Grid>
@@ -160,7 +160,7 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
                   <TextField
                     formik={formik}
                     label=""
-                    placeholder="Escribir"
+                    placeholder="Escribir..."
                     name="FRResult"
                   />
                 </Grid>
@@ -169,7 +169,7 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
                   <TextField
                     formik={formik}
                     label=""
-                    placeholder="Escribir"
+                    placeholder="Escribir..."
                     name="weight"
                   />
                 </Grid>
@@ -178,7 +178,7 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
                   <TextField
                     formik={formik}
                     label=""
-                    placeholder="Escribir"
+                    placeholder="Escribir..."
                     name="size"
                   />
                 </Grid>
@@ -187,7 +187,7 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
                   <TextField
                     formik={formik}
                     label=""
-                    placeholder="Escribir"
+                    placeholder="Escribir..."
                     name="IMCResult"
                   />
                 </Grid>
@@ -196,7 +196,7 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
                   <TextField
                     formik={formik}
                     label=""
-                    placeholder="Escribir"
+                    placeholder="Escribir..."
                     name="temperature"
                   />
                 </Grid>
