@@ -8,7 +8,6 @@ import * as yup from 'yup';
 export const useValidationSchema = () => {
   const requiredError = 'Este campo es requerido';
   const validIdCardError = 'Introduzca un número de cédula válido';
-  const validDateError = 'Introduzca una fecha válida';
 
   const validationSchema = yup
     .object()
@@ -23,12 +22,13 @@ export const useValidationSchema = () => {
         .integer(validIdCardError)
         .typeError(validIdCardError)
         .required(requiredError),
-      eventDefinition: yup.mixed().oneOf(Object.values(EventDefinitionEnum)),
-      eventPlace: yup.string().required(requiredError),
-      eventDatetime: yup
-        .date()
-        .max(Date(), validDateError)
+      eventDefinition: yup
+        .mixed()
+        .oneOf(Object.values(EventDefinitionEnum))
         .required(requiredError),
+      eventPlace: yup.string().required(requiredError),
+      eventDatetime: yup.date().required(requiredError),
+      eventDate: yup.date().required(requiredError),
       superiorStatement: yup.string(),
       superiorEventDefinition: yup
         .mixed()
@@ -57,7 +57,7 @@ export const useValidationSchema = () => {
           otherwise: (schema) => schema.notRequired(),
         }),
       typeOfInjury: yup.string().required(),
-      injuredBodyPart: yup.string().required(),
+      injuredBodyPart: yup.string().required(requiredError),
     }) as unknown as yup.ObjectSchema<EventualityFormData>;
 
   return validationSchema;

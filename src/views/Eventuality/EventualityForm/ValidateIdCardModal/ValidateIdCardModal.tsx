@@ -1,43 +1,22 @@
 import { useEventuality } from '@app/providers/eventuality';
-import { Box, CircularProgress, Theme, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { FormikProps } from 'formik';
 import { FC, useEffect, useState } from 'react';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { EmployeeData } from '@app/models/eventuality.model';
+import ErrorIcon from '@mui/icons-material/Error';
+import { useStyles } from './validateIdCardModalStyles';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    padding: theme.spacing(4),
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-    },
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing(1.5),
-      paddingRight: theme.spacing(1.5),
-      width: '250px',
-    },
-    display: 'flex',
-    flexDirection: 'column',
-
-    width: '400px',
-  },
-  loaderWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  descriptionContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-}));
 type Props = {
   idCard: number;
   formik: FormikProps<'idCard'>;
+  setIdValidate: (valor: boolean) => void;
 };
-export const ValidateIdCardModal: FC<Props> = ({ idCard, formik }) => {
+export const ValidateIdCardModal: FC<Props> = ({
+  idCard,
+  formik,
+  setIdValidate,
+}) => {
   const classes = useStyles();
   const { getEmployee } = useEventuality();
   const [employee, setEmployee] = useState<EmployeeData>();
@@ -59,20 +38,22 @@ export const ValidateIdCardModal: FC<Props> = ({ idCard, formik }) => {
       }
     }, 500);
 
-    setTimeout(async () => {
+    (async () => {
       const apiResponse = await getEmployee(idCard);
 
       if (apiResponse) {
         setResponse(`El empleado a sido encontrado satisfactoriamente.`);
         setEmployee(apiResponse);
         setState('succesfully');
+        setIdValidate(true);
       } else {
         setResponse('No se ha podido encontrar el usuario solicitado');
         setState('fail');
         formik.setFieldValue('idCard', '');
+        setIdValidate(false);
       }
       clearInterval(intervalId);
-    }, 4000);
+    })();
   }, []);
 
   return (
@@ -88,24 +69,47 @@ export const ValidateIdCardModal: FC<Props> = ({ idCard, formik }) => {
         ) : state === 'succesfully' ? (
           <>
             <CheckCircleOutlineIcon
-              sx={{ color: 'green', fontSize: '4.5rem' }}
+              sx={{ color: '#4caf50', fontSize: '4.5rem' }}
             />
             <Typography variant='h6' fontSize={'1.3rem'}>
-              SE CONSIGUIO!!!
+              SE CONSIGUIO!
             </Typography>
           </>
         ) : (
-          <Typography>Error...</Typography>
+          <>
+            <ErrorIcon sx={{ color: '#ef5350', fontSize: '4.5rem' }} />
+            <Typography variant='h6' fontSize={'1.3rem'}>
+              Error...
+            </Typography>
+          </>
         )}
       </Box>
 
       <Box className={classes.descriptionContainer}>
-        <Typography>{response}</Typography>
+        <Typography align='center'>{response}</Typography>
 
         {employee && (
           <>
-            <Typography>Nombres: {employee?.firstNames}</Typography>
-            <Typography>Apellidos: {employee?.lastNames}</Typography>
+            <Typography>
+              <Typography
+                variant='caption'
+                fontWeight={'bold'}
+                fontSize={'.9rem'}
+              >
+                Nombres:
+              </Typography>{' '}
+              {employee?.firstNames}
+            </Typography>
+            <Typography>
+              <Typography
+                variant='caption'
+                fontWeight={'bold'}
+                fontSize={'.9rem'}
+              >
+                Apellidos:
+              </Typography>{' '}
+              {employee?.lastNames}
+            </Typography>
           </>
         )}
       </Box>

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useStyles } from './eventualityFormStyles';
 import { Box, Button, Divider, Grid } from '@mui/material';
 import { DatePicker, Select, TextField } from '@app/components/form';
@@ -20,7 +20,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
   const classes = useStyles();
   const formik = useForm({ initialValues, handleSubmit });
   const modal = useModal();
-  formik.handleBlur;
+  const [idValidate, setIdValidate] = useState(false);
   return (
     <Box className={classes.container}>
       <Box className={classes.body}>
@@ -35,6 +35,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
                       <ValidateIdCardModal
                         idCard={formik.getFieldProps('idCard').value}
                         formik={formik as unknown as FormikProps<'idCard'>}
+                        setIdValidate={setIdValidate}
                       />
                     ),
                   });
@@ -50,6 +51,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             <Select
               formik={formik}
               label='Tipo de eventualidad'
+              disabled={!idValidate}
               name='eventDefinition'
               placeholder='seleccionar'
               options={Object.values(EventDefinitionEnum).map((value) => ({
@@ -62,6 +64,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             <TextField
               formik={formik}
               label='Lugar del suceso'
+              textFieldProps={{ disabled: !idValidate }}
               name='eventPlace'
               placeholder='Describir...'
             />
@@ -69,7 +72,8 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           <Grid item xs={12} sm={6}>
             <DatePicker
               formik={formik}
-              label='Hora del suceso'
+              label='fecha del suceso'
+              datePickerProps={{ disabled: !idValidate }}
               name='eventDatetime'
             ></DatePicker>
           </Grid>
@@ -77,13 +81,15 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             <TimePicker
               formik={formik}
               label='Hora del suceso'
-              name='eventDatetime'
+              timePickerProps={{ disabled: !idValidate }}
+              name='eventDate'
             ></TimePicker>
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               formik={formik}
               label='tipo de lesion'
+              textFieldProps={{ disabled: !idValidate }}
               name='typeOfInjury'
               placeholder='Describir...'
             />
@@ -92,6 +98,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             <TextField
               formik={formik}
               label='Parte del cuerpo lesionada'
+              textFieldProps={{ disabled: !idValidate }}
               name='injuredBodyPart'
               placeholder='Describir...'
             />
@@ -105,7 +112,11 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
               label='Declaracion del trabajador'
               name='workerStatement'
               placeholder='Describir..'
-              textFieldProps={{ multiline: true, rows: 3 }}
+              textFieldProps={{
+                multiline: true,
+                rows: 3,
+                disabled: !idValidate,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -127,7 +138,11 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
               label='Declaracion del del Testigo'
               name='witnessStatement'
               placeholder='Describir..'
-              textFieldProps={{ multiline: true, rows: 3 }}
+              textFieldProps={{
+                multiline: true,
+                rows: 3,
+                disabled: !idValidate,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -149,7 +164,11 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
               label='Declaracion del sel Superior'
               name='superiorStatement'
               placeholder='Describir..'
-              textFieldProps={{ multiline: true, rows: 3 }}
+              textFieldProps={{
+                multiline: true,
+                rows: 3,
+                disabled: !idValidate,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
