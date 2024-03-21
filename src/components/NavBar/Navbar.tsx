@@ -43,7 +43,7 @@ export const Navbar = () => {
           { text: 'USUARIOS', icon: <PeopleAltIcon />, path: '/' },
           { text: 'CLIENTES', icon: <StoreIcon />, path: '/' },
           { text: 'EMPLEADOS', icon: <BadgeIcon />, path: '/' },
-          { text: 'EVENTUALIDAD', icon: <MoodBadIcon />, path: '/' },
+          { text: 'EVENTUALIDAD', icon: <MoodBadIcon />, path: '/eventuality' },
           { text: 'PERFIL', icon: <AccountCircleIcon />, path: '/' },
         ]
       : [
@@ -55,7 +55,7 @@ export const Navbar = () => {
           { text: 'INFORMES', icon: <ArticleIcon />, path: '/reports' },
           { text: 'CONSULTAS', icon: <MedicalServicesIcon />, path: '/' },
           { text: 'EMPLEADOS', icon: <BadgeIcon />, path: '/' },
-          { text: 'EVENTUALIDAD', icon: <MoodBadIcon />, path: '/' },
+          { text: 'EVENTUALIDAD', icon: <MoodBadIcon />, path: '/eventuality' },
           { text: 'PERFIL', icon: <AccountCircleIcon />, path: '/' },
         ];
 
