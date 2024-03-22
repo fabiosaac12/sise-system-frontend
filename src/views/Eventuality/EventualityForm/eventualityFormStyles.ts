@@ -16,14 +16,16 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: 'column',
     gap: '1rem',
     maxHeight: '90%',
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3),
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-    },
+
     overflowY: 'auto',
+  },
+  statementWrapper: {
+    padding: '1rem',
+    [theme.breakpoints.down('lg')]: {
+      padding: '.5rem',
+    },
+    [theme.breakpoints.up('xl')]: {
+      padding: '1rem',
+    },
   },
 }));

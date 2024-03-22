@@ -1,26 +1,28 @@
-import { FC, PropsWithChildren, useState } from "react";
-import { EmployeesContext } from "./EmployeesContext";
+import { FC, PropsWithChildren, useState } from 'react';
+import { EmployeesContext } from './EmployeesContext';
 import {
+  EmployeeData,
   EmployeeFilter,
   EmployeeForTable,
   EmployeeFormData,
   EmployeeState,
   initialEmployeeFilter,
-} from "@app/models/employee.model";
-import { Pagination, initialPagination } from "@app/models/pagination";
-import { useRequest } from "@app/hooks/useRequest";
+} from '@app/models/employee.model';
+import { Pagination, initialPagination } from '@app/models/pagination';
+import { useRequest } from '@app/hooks/useRequest';
 import {
   createEmployee,
   deleteEmployee,
   deleteEmployees,
   editEmployee,
   getEmployees,
-} from "@app/config/api/backend/requests/employees";
+  getEmployee as getEmployeeApi,
+} from '@app/config/api/backend/requests/employees';
 import {
   getClientsCatalogue,
   getDepartmentsCatalogue,
-} from "@app/config/api/backend/requests/catalogues";
-import { Catalogue } from "@app/models/catalogue.model";
+} from '@app/config/api/backend/requests/catalogues';
+import { Catalogue } from '@app/models/catalogue.model';
 
 export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
   const [clients, setClients] = useState<Catalogue>([]);
@@ -28,6 +30,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
   const [list, setList] = useState<EmployeeForTable[]>();
   const [pagination, setPagination] = useState<Pagination>(initialPagination);
   const [filter, setFilter] = useState<EmployeeFilter>(initialEmployeeFilter);
+  const [employee, setEmployee] = useState<EmployeeData>();
 
   const _getClientsCatalogue = useRequest(getClientsCatalogue);
   const _getDepartmentsCatalogue = useRequest(getDepartmentsCatalogue);
@@ -36,8 +39,9 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
   const _editOne = useRequest(editEmployee);
   const _deleteOne = useRequest(deleteEmployee);
   const _deleteMany = useRequest(deleteEmployees);
+  const _getEmployee = useRequest(getEmployeeApi);
 
-  const getClients: EmployeeState["catalogues"]["getClients"] = async () => {
+  const getClients: EmployeeState['catalogues']['getClients'] = async () => {
     const catalogue = await _getClientsCatalogue({});
 
     if (catalogue) {
@@ -47,7 +51,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const getDepartments: EmployeeState["catalogues"]["getDepartments"] = async (
+  const getDepartments: EmployeeState['catalogues']['getDepartments'] = async (
     clientId
   ) => {
     if (clientId) {
@@ -65,7 +69,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const getAll: EmployeeState["getAll"] = async ({
+  const getAll: EmployeeState['getAll'] = async ({
     filter: _filter,
     pagination: _pagination,
   }: {
@@ -96,7 +100,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const createOne: EmployeeState["createOne"] = async (
+  const createOne: EmployeeState['createOne'] = async (
     data: EmployeeFormData
   ) => {
     const done = await _createOne({ data });
@@ -110,7 +114,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const editOne: EmployeeState["editOne"] = async (
+  const editOne: EmployeeState['editOne'] = async (
     id: string,
     data: EmployeeFormData
   ) => {
@@ -125,7 +129,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const deleteOne: EmployeeState["deleteOne"] = async (id: string) => {
+  const deleteOne: EmployeeState['deleteOne'] = async (id: string) => {
     const done = await _deleteOne({ id });
 
     if (done) {
@@ -143,7 +147,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const deleteMany: EmployeeState["deleteMany"] = async (ids: string[]) => {
+  const deleteMany: EmployeeState['deleteMany'] = async (ids: string[]) => {
     const done = await _deleteMany({ ids });
 
     if (done) {
@@ -167,9 +171,18 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
       ...newFilter,
       departmentId:
         filter.clientId !== newFilter.clientId
-          ? ""
-          : newFilter.departmentId || "",
+          ? ''
+          : newFilter.departmentId || '',
     }));
+  };
+
+  const getEmployee: EmployeeState['getEmployee'] = async (idCard) => {
+    const response = await _getEmployee({ idCard });
+
+    if (response) {
+      setEmployee(response);
+      return response;
+    }
   };
 
   const state: EmployeeState = {
@@ -189,6 +202,8 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
       getClients,
       getDepartments,
     },
+    getEmployee,
+    employee,
   };
 
   return (

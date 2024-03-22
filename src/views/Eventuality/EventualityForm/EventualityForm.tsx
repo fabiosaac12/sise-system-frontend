@@ -1,6 +1,14 @@
 import { FC, useState } from 'react';
 import { useStyles } from './eventualityFormStyles';
-import { Box, Button, Divider, Grid } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  IconButton,
+  Paper,
+  Typography,
+} from '@mui/material';
 import { DatePicker, Select, TextField } from '@app/components/form';
 import { useForm } from './hooks';
 import {
@@ -8,9 +16,9 @@ import {
   EventualityFormData,
 } from '@app/models/eventuality.model';
 import { useModal } from '@app/providers/modal';
-import { ValidateIdCardModal } from './ValidateIdCardModal';
-import { FormikProps } from 'formik';
+import { ValidateIdCardModal } from '../../../components/ValidateIdCardModal';
 import { TimePicker } from '@app/components/form/TimePicker';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 type Props = {
   initialValues?: EventualityFormData;
@@ -21,33 +29,54 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
   const formik = useForm({ initialValues, handleSubmit });
   const modal = useModal();
   const [idValidate, setIdValidate] = useState(false);
+
+  const gridItemsCommonProps = { xs: 12, sm: 12, md: 6, lg: 4, item: true };
   return (
     <Box className={classes.container}>
       <Box className={classes.body}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+        <Typography variant='h3' fontWeight={500}>
+          Cedula del empleado
+        </Typography>
+        <Grid
+          container
+          display={'flex'}
+          alignItems={'flex-end'}
+          {...gridItemsCommonProps}
+        >
+          <Box sx={{ flexGrow: 1, mr: 1 }}>
             <TextField
               formik={{
                 ...formik,
-                handleBlur: () => {
-                  modal.open({
-                    content: (
-                      <ValidateIdCardModal
-                        idCard={formik.getFieldProps('idCard').value}
-                        formik={formik as unknown as FormikProps<'idCard'>}
-                        setIdValidate={setIdValidate}
-                      />
-                    ),
-                  });
-                },
               }}
-              label='Cedula del usuario'
+              label=''
               name='idCard'
               placeholder='cedula del empleado'
             />
-          </Grid>
+          </Box>
 
-          <Grid item xs={12} sm={6}>
+          <IconButton
+            size='medium'
+            onClick={() => {
+              modal.open({
+                content: (
+                  <ValidateIdCardModal
+                    idCard={formik.getFieldProps('idCard').value}
+                    setIdValidate={setIdValidate}
+                  />
+                ),
+              });
+            }}
+          >
+            <PersonSearchIcon fontSize='large' />
+          </IconButton>
+        </Grid>
+        <Divider />
+        <Typography variant='h3' fontWeight={500}>
+          Datos Generales
+        </Typography>
+        <Grid container spacing={3}>
+          <Paper></Paper>
+          <Grid {...gridItemsCommonProps}>
             <Select
               formik={formik}
               label='Tipo de eventualidad'
@@ -60,7 +89,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
               }))}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid {...gridItemsCommonProps}>
             <TextField
               formik={formik}
               label='Lugar del suceso'
@@ -69,7 +98,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
               placeholder='Describir...'
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid {...gridItemsCommonProps}>
             <DatePicker
               formik={formik}
               label='fecha del suceso'
@@ -77,7 +106,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
               name='eventDatetime'
             ></DatePicker>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid {...gridItemsCommonProps}>
             <TimePicker
               formik={formik}
               label='Hora del suceso'
@@ -85,7 +114,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
               name='eventDate'
             ></TimePicker>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid {...gridItemsCommonProps}>
             <TextField
               formik={formik}
               label='tipo de lesion'
@@ -94,7 +123,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
               placeholder='Describir...'
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid {...gridItemsCommonProps}>
             <TextField
               formik={formik}
               label='Parte del cuerpo lesionada'
@@ -105,93 +134,170 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           </Grid>
         </Grid>
         <Divider />
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              formik={formik}
-              label='Declaracion del trabajador'
-              name='workerStatement'
-              placeholder='Describir..'
-              textFieldProps={{
-                multiline: true,
-                rows: 3,
-                disabled: !idValidate,
-              }}
-            />
+        <Typography variant='h3' fontWeight={500} marginBottom={1}>
+          Declaraciones
+        </Typography>
+
+        <Paper variant='outlined' sx={{ paddingTop: 3, position: 'relative' }}>
+          <Typography
+            variant='h4'
+            fontWeight={500}
+            sx={{
+              paddingRight: 1,
+              position: 'absolute',
+              top: '-15px',
+              left: '10px',
+              backgroundColor: 'white',
+            }}
+          >
+            Trabajador
+          </Typography>
+          <Grid container spacing={3} className={classes.statementWrapper}>
+            <Grid {...gridItemsCommonProps} lg={4}>
+              <Select
+                formik={formik}
+                label='Tipo de evento'
+                disabled={!idValidate}
+                name='workerEventDefinition'
+                placeholder='Seleccionar'
+                options={Object.values(EventDefinitionEnum).map((value) => ({
+                  id: value,
+                  name: value,
+                }))}
+              />
+            </Grid>
+            <Grid {...gridItemsCommonProps} lg={8}>
+              <TextField
+                formik={formik}
+                label='Declaracion del trabajador'
+                name='workerStatement'
+                placeholder='Describir..'
+                textFieldProps={{
+                  multiline: true,
+                  rows: 3,
+                  disabled: !idValidate,
+                }}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Select
-              formik={formik}
-              label='Tipo de evento'
-              disabled={!formik.values.workerStatement}
-              name='workerEventDefinition'
-              placeholder='Seleccionar'
-              options={Object.values(EventDefinitionEnum).map((value) => ({
-                id: value,
-                name: value,
-              }))}
-            />
+        </Paper>
+
+        <Paper variant='outlined' sx={{ paddingTop: 3, position: 'relative' }}>
+          <Typography
+            variant='h4'
+            fontWeight={500}
+            sx={{
+              paddingRight: 1,
+              position: 'absolute',
+              top: '-15px',
+              left: '10px',
+              backgroundColor: 'white',
+            }}
+          >
+            Testigo
+          </Typography>
+          <Grid
+            container
+            spacing={3}
+            padding={1}
+            className={classes.statementWrapper}
+          >
+            <Grid {...gridItemsCommonProps} lg={4}>
+              <Select
+                formik={formik}
+                label='Tipo de evento'
+                disabled={!idValidate}
+                name='witnessEventDefinition'
+                placeholder='Seleccionar'
+                options={Object.values(EventDefinitionEnum).map((value) => ({
+                  id: value,
+                  name: value,
+                }))}
+              />
+            </Grid>
+            <Grid {...gridItemsCommonProps} lg={8}>
+              <TextField
+                formik={formik}
+                label='Declaracion del del Testigo'
+                name='witnessStatement'
+                placeholder='Describir..'
+                textFieldProps={{
+                  multiline: true,
+                  rows: 3,
+                  disabled: !idValidate,
+                }}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              formik={formik}
-              label='Declaracion del del Testigo'
-              name='witnessStatement'
-              placeholder='Describir..'
-              textFieldProps={{
-                multiline: true,
-                rows: 3,
-                disabled: !idValidate,
-              }}
-            />
+        </Paper>
+
+        <Paper variant='outlined' sx={{ paddingTop: 3, position: 'relative' }}>
+          <Typography
+            variant='h4'
+            fontWeight={500}
+            sx={{
+              paddingRight: 1,
+              position: 'absolute',
+              top: '-15px',
+              left: '10px',
+              backgroundColor: 'white',
+            }}
+          >
+            Superior
+          </Typography>
+          <Grid
+            container
+            spacing={3}
+            padding={1}
+            className={classes.statementWrapper}
+          >
+            <Grid {...gridItemsCommonProps} lg={4}>
+              <Select
+                formik={formik}
+                disabled={!idValidate}
+                label='Tipo de evento'
+                name='superiorEventDefinition'
+                placeholder='Seleccionar'
+                options={Object.values(EventDefinitionEnum).map((value) => ({
+                  id: value,
+                  name: value,
+                }))}
+              />
+            </Grid>
+            <Grid {...gridItemsCommonProps} lg={8}>
+              <TextField
+                formik={formik}
+                label='Declaracion del sel Superior'
+                name='superiorStatement'
+                placeholder='Describir..'
+                textFieldProps={{
+                  multiline: true,
+                  rows: 3,
+                  disabled: !idValidate,
+                }}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Select
-              formik={formik}
-              label='Tipo de evento'
-              disabled={!formik.values.witnessStatement}
-              name='witnessEventDefinition'
-              placeholder='Seleccionar'
-              options={Object.values(EventDefinitionEnum).map((value) => ({
-                id: value,
-                name: value,
-              }))}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              formik={formik}
-              label='Declaracion del sel Superior'
-              name='superiorStatement'
-              placeholder='Describir..'
-              textFieldProps={{
-                multiline: true,
-                rows: 3,
-                disabled: !idValidate,
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Select
-              formik={formik}
-              disabled={!formik.values.superiorStatement}
-              label='Tipo de evento'
-              name='superiorEventDefinition'
-              placeholder='Seleccionar'
-              options={Object.values(EventDefinitionEnum).map((value) => ({
-                id: value,
-                name: value,
-              }))}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} mt={0}>
-          <Grid item xs={12} mt={2} textAlign='right'>
-            <Button color='primary' onClick={formik.submitForm}>
-              Crear
-            </Button>
-          </Grid>
-        </Grid>
+        </Paper>
+
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+          <Button
+            color='inherit'
+            variant='text'
+            onClick={() => {
+              formik.setValues(formik.initialValues);
+            }}
+          >
+            limpiar
+          </Button>
+          <Button
+            color='primary'
+            onClick={formik.submitForm}
+            disabled={!idValidate}
+          >
+            Crear
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

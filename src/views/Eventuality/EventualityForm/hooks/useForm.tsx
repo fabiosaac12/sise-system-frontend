@@ -14,11 +14,11 @@ const defaultInitialValues: EventualityFormData = {
   eventPlace: '',
   typeOfInjury: '',
   eventDefinition: '' as EventDefinitionEnum,
-  superiorEventDefinition: null,
+  superiorEventDefinition: '' as EventDefinitionEnum,
   superiorStatement: '',
-  witnessEventDefinition: null,
+  witnessEventDefinition: '' as EventDefinitionEnum,
   witnessStatement: '',
-  workerEventDefinition: null,
+  workerEventDefinition: '' as EventDefinitionEnum,
   workerStatement: '',
 };
 

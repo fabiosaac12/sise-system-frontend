@@ -34,14 +34,6 @@ export type Eventuality = {
   superiorEventDefinition: EventDefinitionEnum | null;
 };
 
-export type EmployeeData = {
-  idcard: number;
-  firstNames: string;
-  lastNames: string;
-};
-
 export type EventualityState = {
-  employee?: EmployeeData;
-  getEmployee: (idCard: number) => Promise<EmployeeData | undefined>;
   createOne: (data: Eventuality) => Promise<boolean>;
 };

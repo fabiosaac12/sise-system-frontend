@@ -11,6 +11,12 @@ export const useStyles = makeStyles<Theme>((theme: Theme) => ({
   },
   card: {
     padding: theme.spacing(4),
+    [theme.breakpoints.up('xl')]: {
+      padding: theme.spacing(7),
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(2),
+    },
     flexGrow: 1,
     overflow: 'auto',
   },

@@ -38,6 +38,15 @@ export const Eventuality = () => {
 
             const done = await createOne({
               ...data,
+              superiorEventDefinition: data.superiorEventDefinition
+                ? data.superiorEventDefinition
+                : null,
+              witnessEventDefinition: data.witnessEventDefinition
+                ? data.witnessEventDefinition
+                : null,
+              workerEventDefinition: data.workerEventDefinition
+                ? data.workerEventDefinition
+                : null,
               eventDatetime: dayjs(date),
             });
             // console.log(`${year}, ${month}, ${day}, ${hours}, ${minutes}`);
