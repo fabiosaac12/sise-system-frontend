@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useStyles } from './eventualityFormStyles';
 import {
   Box,
@@ -31,11 +31,17 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
   const [idValidate, setIdValidate] = useState(false);
 
   const gridItemsCommonProps = { xs: 12, sm: 12, md: 6, lg: 4, item: true };
+
+  useEffect(() => {
+    if (idValidate) {
+      setIdValidate(false);
+    }
+  }, [formik.values.idCard]);
   return (
     <Box className={classes.container}>
       <Box className={classes.body}>
         <Typography variant='h3' fontWeight={500}>
-          Cedula del empleado
+          Cédula del empleado
         </Typography>
         <Grid
           container
@@ -285,7 +291,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             color='inherit'
             variant='text'
             onClick={() => {
-              formik.setValues(formik.initialValues);
+              formik.resetForm();
             }}
           >
             limpiar
