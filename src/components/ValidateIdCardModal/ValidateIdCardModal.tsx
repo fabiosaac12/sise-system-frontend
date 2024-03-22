@@ -19,8 +19,8 @@ export const ValidateIdCardModal: FC<Props> = ({ idCard, setIdValidate }) => {
   const [response, setResponse] = useState(
     'Espere unos segundo mientras comprobamos le cedula del usuario'
   );
-  let index = 0;
   useEffect(() => {
+    let index = 0;
     const intervalId = setInterval(() => {
       const etapas = ['Cargando.', 'Cargando..', 'Cargando...'];
       setCarga(etapas[index]);
