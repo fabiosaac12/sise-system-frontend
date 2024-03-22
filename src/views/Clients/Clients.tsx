@@ -15,7 +15,6 @@ import { useStyles } from "./ClientsStyles";
 
 export const Clients = () => {
   const {
-    catalogues,
     filter,
     list,
     getAll,
@@ -33,13 +32,8 @@ export const Clients = () => {
   });
 
   useEffect(() => {
-    catalogues.getClientsF();
-    console.log(catalogues.departments);
-  }, []);
-
-  useEffect(() => {
     getAll();
-  }, [filter.clientId, pagination.currentPage, pagination.rowsPerPage]);
+  }, [filter.name, pagination.currentPage, pagination.rowsPerPage]);
 
   const openCreateModal = () => {
     modal.open({
@@ -83,7 +77,7 @@ export const Clients = () => {
       });
     }
   };
-
+  console.log(filter);
   const openDeleteModal = () => {
     if (table.selectedClientIds.length > 1) {
       modal.open({
@@ -183,13 +177,11 @@ export const Clients = () => {
           columns={table.columns}
           rows={list || []}
           multiselect
-          // noDataMessage={
-          //   !filter.clientId
-          //     ? "Seleccione un cliente para poder ver sus empleados"
-          //     : list
-          //     ? "No hay empleados registrados que coincidan con el filtrado"
-          //     : "Cargando..."
-          // }
+          noDataMessage={
+            !list
+              ? "Cargando..."
+              : "No hay clients registrados que coincidan con el filtrado"
+          }
           onRowSelectionChange={(ids) =>
             table.setSelectedClientIds(ids as string[])
           }

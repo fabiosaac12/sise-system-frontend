@@ -16,54 +16,17 @@ import {
   deleteClients,
   editClient,
 } from "@app/config/api/backend/requests/clients";
-import {
-  getDepartmentsCatalogue,
-  getClientsCatalogue,
-} from "@app/config/api/backend/requests/catalogues";
-import { Catalogue } from "@app/models/catalogue.model";
 
 export const ClientsProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [clients, setClients] = useState<Catalogue>([]);
-  const [departments, setDepartments] = useState<Catalogue>([]);
   const [list, setList] = useState<ClientForTable[]>();
   const [pagination, setPagination] = useState<Pagination>(initialPagination);
   const [filter, setFilter] = useState<ClientFilter>(initialClientFilter);
 
-  const _getClientsCatalogue = useRequest(getClientsCatalogue);
-  const _getDepartmentsCatalogue = useRequest(getDepartmentsCatalogue);
   const _getAll = useRequest(getClients);
   const _createOne = useRequest(createClient);
   const _editOne = useRequest(editClient);
   const _deleteOne = useRequest(deleteClient);
   const _deleteMany = useRequest(deleteClients);
-
-  const getClientsF: ClientState["catalogues"]["getClientsF"] = async () => {
-    const catalogue = await _getClientsCatalogue({});
-
-    if (catalogue) {
-      setClients(catalogue);
-
-      return catalogue;
-    }
-  };
-
-  const getDepartments: ClientState["catalogues"]["getDepartments"] = async (
-    clientId
-  ) => {
-    if (clientId) {
-      const catalogue = await _getDepartmentsCatalogue(clientId);
-
-      if (catalogue) {
-        setDepartments(catalogue);
-
-        return catalogue;
-      }
-    } else {
-      setDepartments([]);
-
-      return [];
-    }
-  };
 
   const getAll: ClientState["getAll"] = async ({
     filter: _filter,
@@ -177,12 +140,6 @@ export const ClientsProvider: FC<PropsWithChildren> = ({ children }) => {
     list,
     pagination,
     setPagination,
-    catalogues: {
-      clients,
-      getClientsF,
-      departments,
-      getDepartments,
-    },
   };
 
   return (

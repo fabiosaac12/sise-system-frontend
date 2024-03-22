@@ -1,6 +1,5 @@
 import { Dispatch } from "react";
 import { Pagination } from "./pagination";
-import { Catalogue } from "./catalogue.model";
 
 export type ClientForTable = {
   id: string;
@@ -14,11 +13,11 @@ export type ClientFormData = {
 };
 
 export type ClientFilter = {
-  clientId: string;
+  name: string;
 };
 
 export const initialClientFilter = {
-  clientId: "",
+  name: "",
 };
 
 export type ClientState = {
@@ -35,10 +34,4 @@ export type ClientState = {
   deleteMany: (ids: string[]) => Promise<boolean>;
   applyFilters: (filter: Partial<ClientFilter>) => void;
   setPagination: Dispatch<React.SetStateAction<Pagination>>;
-  catalogues: {
-    clients: Catalogue;
-    departments: Catalogue;
-    getClientsF: () => Promise<Catalogue | undefined>;
-    getDepartments: (clientId?: string) => Promise<Catalogue | undefined>;
-  };
 };

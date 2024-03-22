@@ -9,7 +9,7 @@ import { useClients } from "@app/providers/clients";
 import { useState } from "react";
 
 export const useTable = () => {
-  const { catalogues, applyFilters } = useClients();
+  const { applyFilters } = useClients();
 
   const [selectedClientIds, setSelectedClientIds] = useState<string[]>([]);
 
@@ -50,9 +50,8 @@ export const useTable = () => {
 
   const filters: SearchBarFilter[] = [
     {
-      keyName: "clientId",
-      text: "Cliente",
-      options: catalogues.clients,
+      keyName: "name",
+      text: "Nombre",
     },
   ];
 
