@@ -32,31 +32,16 @@ export const useValidationSchema = () => {
       superiorStatement: yup.string(),
       superiorEventDefinition: yup
         .mixed()
-        .oneOf(Object.values(EventDefinitionEnum))
-        .when('superiorStatement', {
-          is: (value: string) => !!value == true,
-          then: (schema) => schema.required('no especifico el tipo de evento'),
-          otherwise: (schema) => schema.notRequired(),
-        }),
+        .oneOf(Object.values(EventDefinitionEnum)),
       witnessStatement: yup.string(),
       witnessEventDefinition: yup
         .mixed()
-        .oneOf(Object.values(EventDefinitionEnum))
-        .when('witnessStatement', {
-          is: (value: string) => !!value == true,
-          then: (schema) => schema.required('no especifico el tipo de evento'),
-          otherwise: (schema) => schema.notRequired(),
-        }),
+        .oneOf(Object.values(EventDefinitionEnum)),
       workerStatement: yup.string(),
       workerEventDefinition: yup
         .mixed()
-        .oneOf(Object.values(EventDefinitionEnum))
-        .when('workerStatement', {
-          is: (value: string) => !!value == true,
-          then: (schema) => schema.required('no especifico el tipo de evento'),
-          otherwise: (schema) => schema.notRequired(),
-        }),
-      typeOfInjury: yup.string().required(),
+        .oneOf(Object.values(EventDefinitionEnum)),
+      typeOfInjury: yup.string().required(requiredError),
       injuredBodyPart: yup.string().required(requiredError),
     }) as unknown as yup.ObjectSchema<EventualityFormData>;
 
