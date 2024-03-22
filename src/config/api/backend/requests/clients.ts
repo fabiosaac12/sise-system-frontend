@@ -46,7 +46,7 @@ export const getClients = async ({
   filter,
   pagination,
 }: {
-  filter: ClientFilter;
+  filter?: ClientFilter;
   pagination: Pagination;
 }) => {
   const response = await backend.get<PaginatedResponse<ClientForTable>>(

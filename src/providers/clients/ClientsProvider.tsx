@@ -35,13 +35,17 @@ export const ClientsProvider: FC<PropsWithChildren> = ({ children }) => {
     filter?: Partial<ClientFilter>;
     pagination?: Partial<Pagination>;
   } = {}) => {
-    // if (!filter.clientId) {
-    //   setList(undefined);
+    let response;
+    if (filter.name === "") {
+      response = await _getAll({
+        pagination: { ...pagination, ..._pagination },
+      });
 
-    //   return undefined;
-    // }
+      setList(response?.list);
+      return response?.list;
+    }
 
-    const response = await _getAll({
+    response = await _getAll({
       filter: { ...filter, ..._filter },
       pagination: { ...pagination, ..._pagination },
     });
