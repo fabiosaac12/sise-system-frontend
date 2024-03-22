@@ -43,7 +43,59 @@ export const useValidationSchema = () => {
         .oneOf(Object.values(EventDefinitionEnum)),
       typeOfInjury: yup.string().required(requiredError),
       injuredBodyPart: yup.string().required(requiredError),
-    }) as unknown as yup.ObjectSchema<EventualityFormData>;
+    })
+    .test(
+      'campos-dependientes',
+      'campo1 y campo2 son dependientes entre sí',
+      function (value) {
+        const {
+          workerStatement,
+          workerEventDefinition,
+          witnessStatement,
+          witnessEventDefinition,
+          superiorStatement,
+          superiorEventDefinition,
+        } = value;
+        if (workerEventDefinition && !workerStatement) {
+          return this.createError({
+            path: 'workerStatement',
+            message: 'Haga su declaración',
+          });
+        }
+        if (!workerEventDefinition && workerStatement) {
+          return this.createError({
+            path: 'workerEventDefinition',
+            message: 'Declare el tipo de evento',
+          });
+        }
+        if (witnessEventDefinition && !witnessStatement) {
+          return this.createError({
+            path: 'witnessStatement',
+            message: 'Haga su declaración',
+          });
+        }
+        if (!witnessEventDefinition && witnessStatement) {
+          return this.createError({
+            path: 'witnessEventDefinition',
+            message: 'Declare el tipo de evento',
+          });
+        }
+        if (superiorEventDefinition && !superiorStatement) {
+          return this.createError({
+            path: 'superiorStatement',
+            message: 'Haga su declaración',
+          });
+        }
+        if (!superiorEventDefinition && superiorStatement) {
+          return this.createError({
+            path: 'superiorEventDefinition',
+            message: 'Declare el tipo de evento',
+          });
+        }
+
+        return true;
+      }
+    ) as unknown as yup.ObjectSchema<EventualityFormData>;
 
   return validationSchema;
 };
