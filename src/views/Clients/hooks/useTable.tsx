@@ -1,5 +1,5 @@
 import { ClientFilter, ClientForTable } from "@app/models/client.model";
-import { Box, CSSObject } from "@mui/material";
+import { Box, Button, CSSObject, Typography } from "@mui/material";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import {
   SearchBarAppliedFilter,
@@ -7,6 +7,7 @@ import {
 } from "@app/models/components";
 import { useClients } from "@app/providers/clients";
 import { useState } from "react";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 export const useTable = () => {
   const { applyFilters } = useClients();
@@ -44,7 +45,14 @@ export const useTable = () => {
       ...commonColumnProps,
       flex: 1,
       minWidth: 150,
-      renderCell: () => <Box sx={textEllipsisStyle}>{`Ver Departamentos`}</Box>,
+      renderCell: () => (
+        <Box sx={textEllipsisStyle}>
+          <Button variant="text" sx={{ display: "flex", gap: 1 }}>
+            <Typography color="secondary">Ver Departamentos</Typography>{" "}
+            <VisibilityIcon color="secondary" />
+          </Button>
+        </Box>
+      ),
     },
   ];
 

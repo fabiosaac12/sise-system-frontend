@@ -180,7 +180,7 @@ export const Clients = () => {
           noDataMessage={
             !list
               ? "Cargando..."
-              : "No hay clients registrados que coincidan con el filtrado"
+              : "No hay clientes registrados que coincidan con el filtrado"
           }
           onRowSelectionChange={(ids) =>
             table.setSelectedClientIds(ids as string[])
