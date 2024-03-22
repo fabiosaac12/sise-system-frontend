@@ -8,6 +8,7 @@ import {
 import { useClients } from "@app/providers/clients";
 import { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Link } from "react-router-dom";
 
 export const useTable = () => {
   const { applyFilters } = useClients();
@@ -45,12 +46,21 @@ export const useTable = () => {
       ...commonColumnProps,
       flex: 1,
       minWidth: 150,
-      renderCell: () => (
+      renderCell: ({ row }: GridRenderCellParams<ClientForTable>) => (
         <Box sx={textEllipsisStyle}>
-          <Button variant="text" sx={{ display: "flex", gap: 1 }}>
-            <Typography color="secondary">Ver Departamentos</Typography>{" "}
-            <VisibilityIcon color="secondary" />
-          </Button>
+          <Link
+            style={{ textDecoration: "none" }}
+            to={`/departments?clientid=${row.id}`}
+          >
+            <Button
+              variant="text"
+              sx={{ display: "flex", gap: 1 }}
+              onClick={() => console.log(row.id)}
+            >
+              <Typography color="secondary">Ver Departamentos</Typography>{" "}
+              <VisibilityIcon color="secondary" />
+            </Button>
+          </Link>
         </Box>
       ),
     },
