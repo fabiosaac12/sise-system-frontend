@@ -59,7 +59,7 @@ export const Eventuality = () => {
                     color={'success'}
                     title={'EXITO'}
                     description={
-                      'La eventualidad a sido registrada satisfactoriamente'
+                      'La eventualidad ha sido registrada satisfactoriamente'
                     }
                     confirmButtonText={'aceptar'}
                   ></ConfirmModal>
