@@ -3,7 +3,7 @@ import { Dayjs } from "dayjs";
 export enum TestEnum {
   preEmployee = "preEmpleo",
   preVacational = "preVacacional",
-  postVacational = "postVacaional",
+  postVacational = "postVacacional",
   egrese = "egreso",
   periodic = "periodico",
   preventive = "preventivo",

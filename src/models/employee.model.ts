@@ -104,6 +104,12 @@ export const initialEmployeeFilter: EmployeeFilter = {
   idCard: "",
 };
 
+export type EmployeeData = {
+  idcard: number;
+  firstNames: string;
+  lastNames: string;
+};
+
 export type EmployeeState = {
   list?: EmployeeForTable[];
   filter: EmployeeFilter;
@@ -118,6 +124,8 @@ export type EmployeeState = {
   deleteMany: (ids: string[]) => Promise<boolean>;
   applyFilters: (filter: Partial<EmployeeFilter>) => void;
   setPagination: Dispatch<React.SetStateAction<Pagination>>;
+  employee?: EmployeeData;
+  getEmployee: (idCard: number) => Promise<EmployeeData | undefined>;
   catalogues: {
     clients: Catalogue;
     departments: Catalogue;

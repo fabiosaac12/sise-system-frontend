@@ -16,13 +16,7 @@ export const ConsultProvider: FC<PropsWithChildren> = ({ children }) => {
   ) => {
     const done = await _createOne({ data });
 
-    if (done) {
-      await getAll();
-
-      return true;
-    } else {
-      return false;
-    }
+    return !!done;
   };
 
   const editOne: ConsultState["editOne"] = async (
@@ -32,9 +26,7 @@ export const ConsultProvider: FC<PropsWithChildren> = ({ children }) => {
     const done = await _editOne({ data, id });
 
     if (done) {
-      await getAll();
-
-      return true;
+      return done;
     } else {
       return false;
     }

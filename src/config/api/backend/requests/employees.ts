@@ -1,5 +1,6 @@
 import { backend } from "../instance";
 import {
+  EmployeeData,
   EmployeeFilter,
   EmployeeForTable,
   EmployeeFormData,
@@ -65,4 +66,16 @@ export const getEmployees = async ({
   const { data } = response;
 
   return data.response;
+};
+
+export const getEmployee = async ({
+  idCard,
+}: {
+  idCard: number;
+}): Promise<EmployeeData | undefined> => {
+  const response = await backend.get<{ employee: EmployeeData }>(
+    `employee/${idCard}`
+  );
+
+  return response.data.employee;
 };
