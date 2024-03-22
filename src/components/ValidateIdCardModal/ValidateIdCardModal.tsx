@@ -1,24 +1,18 @@
-import { useEventuality } from '@app/providers/eventuality';
 import { Box, CircularProgress, Typography } from '@mui/material';
-import { FormikProps } from 'formik';
 import { FC, useEffect, useState } from 'react';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { EmployeeData } from '@app/models/eventuality.model';
 import ErrorIcon from '@mui/icons-material/Error';
 import { useStyles } from './validateIdCardModalStyles';
+import { useEmployees } from '@app/providers/employees';
+import { EmployeeData } from '@app/models/employee.model';
 
 type Props = {
   idCard: number;
-  formik: FormikProps<'idCard'>;
   setIdValidate: (valor: boolean) => void;
 };
-export const ValidateIdCardModal: FC<Props> = ({
-  idCard,
-  formik,
-  setIdValidate,
-}) => {
+export const ValidateIdCardModal: FC<Props> = ({ idCard, setIdValidate }) => {
   const classes = useStyles();
-  const { getEmployee } = useEventuality();
+  const { getEmployee } = useEmployees();
   const [employee, setEmployee] = useState<EmployeeData>();
   const [state, setState] = useState('pending');
   const [carga, setCarga] = useState('Cargando');
@@ -49,7 +43,6 @@ export const ValidateIdCardModal: FC<Props> = ({
       } else {
         setResponse('No se ha podido encontrar el usuario solicitado');
         setState('fail');
-        formik.setFieldValue('idCard', '');
         setIdValidate(false);
       }
       clearInterval(intervalId);
