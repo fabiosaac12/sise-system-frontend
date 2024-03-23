@@ -12,6 +12,7 @@ export type EventualityFormData = {
   eventDate: Dayjs;
   typeOfInjury: string;
   injuredBodyPart: string;
+  daysOfRest: number;
   workerStatement: string;
   workerEventDefinition: EventDefinitionEnum | null;
   witnessStatement: string;
@@ -26,6 +27,7 @@ export type Eventuality = {
   eventDatetime: Dayjs;
   typeOfInjury: string;
   injuredBodyPart: string;
+  daysOfRest: number;
   workerStatement: string;
   workerEventDefinition: EventDefinitionEnum | null;
   witnessStatement: string;

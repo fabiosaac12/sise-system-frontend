@@ -138,6 +138,15 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
               placeholder='Describir...'
             />
           </Grid>
+          <Grid {...gridItemsCommonProps}>
+            <TextField
+              formik={formik}
+              label='Dias de descanso'
+              textFieldProps={{ disabled: !idValidate }}
+              name='daysOfRest'
+              placeholder='Ingrese...'
+            />
+          </Grid>
         </Grid>
         <Divider />
         <Typography variant='h3' fontWeight={500} marginBottom={1}>

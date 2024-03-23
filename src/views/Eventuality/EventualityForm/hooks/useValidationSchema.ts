@@ -8,6 +8,7 @@ import * as yup from 'yup';
 export const useValidationSchema = () => {
   const requiredError = 'Este campo es requerido';
   const validIdCardError = 'Introduzca un número de cédula válido';
+  const validNumberError = 'Introduzca un número válido';
 
   const validationSchema = yup
     .object()
@@ -29,6 +30,15 @@ export const useValidationSchema = () => {
       eventPlace: yup.string().required(requiredError),
       eventDatetime: yup.date().required(requiredError),
       eventDate: yup.date().required(requiredError),
+      daysOfRest: yup
+        .number()
+        .transform((_, originalValue) =>
+          originalValue === '' ? undefined : +originalValue
+        )
+        .moreThan(0, validNumberError)
+        .integer(validNumberError)
+        .typeError(validNumberError)
+        .required(requiredError),
       superiorStatement: yup.string(),
       superiorEventDefinition: yup
         .mixed()
@@ -46,7 +56,7 @@ export const useValidationSchema = () => {
     })
     .test(
       'campos-dependientes',
-      'campo1 y campo2 son dependientes entre sí',
+      'las declaraciones y el tipo de evento son dependientes entre sí',
       function (value) {
         const {
           workerStatement,

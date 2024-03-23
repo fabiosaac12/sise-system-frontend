@@ -9,6 +9,7 @@ export const createEventuality = async ({
   const response = await backend.post('event/create', {
     ...data,
     idCard: +data.idCard,
+    daysOfRest: +data.daysOfRest,
   });
 
   return response.status === 201;
