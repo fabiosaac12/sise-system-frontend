@@ -2,7 +2,7 @@ import { Table } from '@app/components/Table';
 import { useDeparments } from '@app/providers/deparments';
 import { useModal } from '@app/providers/modal';
 import { Box, Card, Container, IconButton, Typography } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useStyles } from './departmentsStyles';
 import CreateIcon from '@mui/icons-material/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,7 +11,11 @@ import { DepartmentForm } from './DepartmentsForm';
 import { useTable } from './hooks/useTable';
 import { SearchBar } from '@app/components/SearchBar';
 import { ConfirmModal } from '@app/components/ConfirmModal';
+import { useLocation } from 'react-router-dom';
 export const Departmets = () => {
+  const query = new URLSearchParams(useLocation().search);
+  const [clientId, setClientId] = useState(query.get('clientId'));
+
   const {
     catalogues,
     filter,
@@ -23,6 +27,7 @@ export const Departmets = () => {
     editOne,
     pagination,
     setPagination,
+    applyFilters,
   } = useDeparments();
   const modal = useModal();
   const table = useTable();
@@ -34,8 +39,16 @@ export const Departmets = () => {
     catalogues.getClients();
   }, []);
 
+  // if (clientId) {
+  //   applyFilters({ clientId });
+  // }
   useEffect(() => {
-    getAll();
+    if (clientId) {
+      applyFilters({ clientId });
+      setClientId('');
+    } else {
+      getAll();
+    }
   }, [filter.clientId, pagination.currentPage, pagination.rowsPerPage]);
 
   const openCreateModal = () => {
@@ -177,7 +190,7 @@ export const Departmets = () => {
               <SearchBar
                 searchBy={table.filters}
                 onSearch={table.applySearchBarFilters}
-                values={filter}
+                values={{ ...filter }}
               />
               <Box display='flex' gap={2}>
                 <IconButton edge='end' size='small' onClick={openCreateModal}>

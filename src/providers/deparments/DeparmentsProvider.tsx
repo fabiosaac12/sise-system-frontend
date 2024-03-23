@@ -89,7 +89,6 @@ export const DeparmentsProvider: FC<PropsWithChildren> = ({ children }) => {
       setPagination({ ...pagination, totalItems: pagination.totalRows });
 
       setList(departments);
-
       return departments;
     }
   };
