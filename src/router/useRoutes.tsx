@@ -1,13 +1,15 @@
-import { AuthRoleEnum, AuthStatusEnum } from '@app/enums/auth';
-import { BaseLayout } from '@app/layouts';
-import { LoginLayout } from '@app/layouts/LoginLayout';
-import { useAuth } from '@app/providers/auth';
+import { AuthRoleEnum, AuthStatusEnum } from "@app/enums/auth";
+import { BaseLayout } from "@app/layouts";
+import { LoginLayout } from "@app/layouts/LoginLayout";
+import { useAuth } from "@app/providers/auth";
+import { Clients } from "@app/views/Clients";
 import { Departmets } from '@app/views/Departments/Departmets';
-import { Employees } from '@app/views/Employees';
-import { Morbidity } from '@app/views/Morbidity';
-import { Reports } from '@app/views/Reports';
-import { Login } from '@app/views/auth/Login/Login';
-import { RouteProps, Navigate } from 'react-router-dom';
+import { Employees } from "@app/views/Employees";
+import { Morbidity } from "@app/views/Morbidity";
+import { Reports } from "@app/views/Reports";
+import { Login } from "@app/views/auth/Login/Login";
+import { RouteProps, Navigate } from "react-router-dom";
+
 
 export const useRoutes = () => {
   const auth = useAuth();
@@ -37,7 +39,7 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/reports',
+      path: "/reports",
       element: (
         <BaseLayout>
           <Reports />
@@ -53,6 +55,7 @@ export const useRoutes = () => {
       ),
     },
     {
+
       path: '/departments',
       element: (
         <BaseLayout>
@@ -61,8 +64,18 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/*',
-      element: <Navigate to='/' replace={true} />,
+      path: "/clients",
+      element: (
+        <BaseLayout>
+          <Clients />
+        </BaseLayout>
+      ),
+    },
+    {
+
+      path: "/*",
+      element: <Navigate to="/" replace={true} />,
+
     },
   ];
 
@@ -76,7 +89,7 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/reports',
+      path: "/reports",
       element: (
         <BaseLayout>
           <Reports />
@@ -92,8 +105,18 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/*',
-      element: <Navigate to='/' replace={true} />,
+
+      path: "/clients",
+      element: (
+        <BaseLayout>
+          <Clients />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/*",
+      element: <Navigate to="/" replace={true} />,
+
     },
   ];
 

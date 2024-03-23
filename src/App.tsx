@@ -1,12 +1,14 @@
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import 'dayjs/locale/es';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { ThemeProvider } from './providers/theme';
-import { AuthProvider } from './providers/auth';
-import { Router } from './router/Router';
-import { ModalProvider } from './providers/modal';
-import { EmployeesProvider } from './providers/employees';
+
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import "dayjs/locale/es";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { ThemeProvider } from "./providers/theme";
+import { AuthProvider } from "./providers/auth";
+import { Router } from "./router/Router";
+import { ModalProvider } from "./providers/modal";
+import { EmployeesProvider } from "./providers/employees";
 import { DeparmentsProvider } from './providers/deparments';
+import { ClientsProvider } from "./providers/clients";
 
 function App() {
   return (
@@ -14,11 +16,14 @@ function App() {
       <ThemeProvider>
         <AuthProvider>
           <ModalProvider>
-            <EmployeesProvider>
+
+            <ClientsProvider>
               <DeparmentsProvider>
+              <EmployeesProvider>
                 <Router />
-              </DeparmentsProvider>
-            </EmployeesProvider>
+              </EmployeesProvider>
+                </DeparmentsProvider>
+            </ClientsProvider>
           </ModalProvider>
         </AuthProvider>
       </ThemeProvider>
