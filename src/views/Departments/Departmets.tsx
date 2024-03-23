@@ -14,7 +14,7 @@ import { ConfirmModal } from '@app/components/ConfirmModal';
 import { useLocation } from 'react-router-dom';
 export const Departmets = () => {
   const query = new URLSearchParams(useLocation().search);
-  const [clientId, setClientId] = useState(query.get('clientId'));
+  const [clientId, setClientId] = useState(query.get('clientid'));
 
   const {
     catalogues,
