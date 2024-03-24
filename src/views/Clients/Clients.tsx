@@ -6,17 +6,15 @@ import CreateIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useEffect } from "react";
-import { useEmployees } from "@app/providers/employees";
+import { useClients } from "@app/providers/clients";
 import { useTable } from "./hooks/useTable";
 import { useModal } from "@app/providers/modal";
-import { EmployeeForm } from "./EmployeeForm/EmployeeForm";
-import dayjs from "dayjs";
+import { ClientForm } from "./ClientForm";
 import { ConfirmModal } from "@app/components/ConfirmModal";
-import { useStyles } from "./EmployeesStyles";
+import { useStyles } from "./ClientsStyles";
 
-export const Employees = () => {
+export const Clients = () => {
   const {
-    catalogues,
     filter,
     list,
     getAll,
@@ -26,35 +24,21 @@ export const Employees = () => {
     editOne,
     pagination,
     setPagination,
-  } = useEmployees();
+  } = useClients();
   const modal = useModal();
   const table = useTable();
   const classes = useStyles({
-    selectedLength: table.selectedEmployeeIds.length,
+    selectedLength: table.selectedClientIds.length,
   });
 
   useEffect(() => {
-    catalogues.getClients();
-  }, []);
-
-  useEffect(() => {
     getAll();
-  }, [
-    filter.clientId,
-    filter.departmentId,
-    filter.idCard,
-    pagination.currentPage,
-    pagination.rowsPerPage,
-  ]);
-
-  useEffect(() => {
-    catalogues.getDepartments(filter.clientId);
-  }, [filter.clientId]);
+  }, [filter.name, pagination.currentPage, pagination.rowsPerPage]);
 
   const openCreateModal = () => {
     modal.open({
       content: (
-        <EmployeeForm
+        <ClientForm
           handleSubmit={async (data) => {
             const done = await createOne(data);
 
@@ -68,26 +52,21 @@ export const Employees = () => {
   };
 
   const openEditModal = async () => {
-    const _employee = list?.find(
-      ({ id }) => id === table.selectedEmployeeIds[0],
-    );
+    const _client = list?.find(({ id }) => id === table.selectedClientIds[0]);
 
-    if (_employee) {
-      const { department, ...employee } = _employee;
+    if (_client) {
+      const { ...client } = _client;
 
       modal.open({
         content: (
-          <EmployeeForm
+          <ClientForm
             edit
             initialValues={{
-              ...employee,
-              clientId: department.client.id,
-              departmentId: department.id,
-              birthdate: dayjs(employee.birthdate),
-              idCard: `${employee.idCard}`,
+              ...client,
+              name: client.name,
             }}
             handleSubmit={async (data) => {
-              const done = await editOne(employee.id, data);
+              const done = await editOne(client.id, data);
 
               if (done) {
                 modal.close();
@@ -98,40 +77,38 @@ export const Employees = () => {
       });
     }
   };
-
+  console.log(filter);
   const openDeleteModal = () => {
-    if (table.selectedEmployeeIds.length > 1) {
+    if (table.selectedClientIds.length > 1) {
       modal.open({
         content: (
           <ConfirmModal
             Icon={DeleteIcon}
             color="error"
             confirmButtonText="Eliminar"
-            title={`¿Está seguro de eliminar los ${table.selectedEmployeeIds.length} empleados seleccionados?`}
+            title={`¿Está seguro de eliminar los ${table.selectedClientIds.length} clientes seleccionados?`}
             description={
               "Esta acción es irreversible. Le recomendamos que considere cuidadosamente las consecuencias antes de proceder."
             }
-            confirmButtonAction={() => deleteMany(table.selectedEmployeeIds)}
+            confirmButtonAction={() => deleteMany(table.selectedClientIds)}
           />
         ),
       });
     } else {
-      const employee = list?.find(
-        ({ id }) => id === table.selectedEmployeeIds[0],
-      );
+      const client = list?.find(({ id }) => id === table.selectedClientIds[0]);
 
-      if (employee) {
+      if (client) {
         modal.open({
           content: (
             <ConfirmModal
               Icon={DeleteIcon}
               color="error"
               confirmButtonText="Eliminar"
-              title={`¿Está seguro de eliminar el empleado ${employee?.firstNames}?`}
+              title={`¿Está seguro de eliminar el clientes ${client?.name}?`}
               description={
                 "Esta acción es irreversible. Le recomendamos que considere cuidadosamente las consecuencias antes de proceder."
               }
-              confirmButtonAction={() => deleteOne(employee.id)}
+              confirmButtonAction={() => deleteOne(client.id)}
             />
           ),
         });
@@ -144,21 +121,21 @@ export const Employees = () => {
       <Card className={classes.card}>
         <Box mb={3}>
           <Typography variant="h2" fontWeight={500}>
-            Empleados
+            Clientes
           </Typography>
           <Typography mt={1} variant="body1">
-            En este apartado se pueden ver los empleados registrados en el
+            En este apartado se pueden ver los clientes registrados en el
             sistema, así como editarlos, crear nuevos y eliminar
           </Typography>
         </Box>
 
         <Box className={classes.tableHeader}>
-          {table.selectedEmployeeIds.length ? (
+          {table.selectedClientIds.length ? (
             <>
               <Box pl={0.5}>
                 <Typography variant="h6" color="common.white">
-                  {table.selectedEmployeeIds.length}{" "}
-                  {table.selectedEmployeeIds.length > 1
+                  {table.selectedClientIds.length}{" "}
+                  {table.selectedClientIds.length > 1
                     ? "elementos seleccionados"
                     : "elemento seleccionado"}
                 </Typography>
@@ -167,7 +144,7 @@ export const Employees = () => {
                 <IconButton className={classes.invisibleButton} size="small">
                   <CreateIcon fontSize="large" />
                 </IconButton>
-                {table.selectedEmployeeIds.length === 1 && (
+                {table.selectedClientIds.length === 1 && (
                   <IconButton size="medium" onClick={openEditModal}>
                     <EditIcon
                       sx={{ color: "common.white" }}
@@ -201,14 +178,12 @@ export const Employees = () => {
           rows={list || []}
           multiselect
           noDataMessage={
-            !filter.clientId
-              ? "Seleccione un cliente para poder ver sus empleados"
-              : list
-              ? "No hay empleados registrados que coincidan con el filtrado"
-              : "Cargando..."
+            !list
+              ? "Cargando..."
+              : "No hay clientes registrados que coincidan con el filtrado"
           }
           onRowSelectionChange={(ids) =>
-            table.setSelectedEmployeeIds(ids as string[])
+            table.setSelectedClientIds(ids as string[])
           }
           paginationMode="server"
           rowCount={pagination.totalItems}

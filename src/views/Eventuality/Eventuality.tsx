@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Card, Container, Typography } from '@mui/material';
+import { Box, Card, Container, Typography } from "@mui/material";
 
-import { useStyles } from './EventualityStyles';
-import { EventualityForm } from './EventualityForm';
-import { useEventuality } from '@app/providers/eventuality';
-import dayjs from 'dayjs';
-import { useModal } from '@app/providers/modal';
-import { ConfirmModal } from '@app/components/ConfirmModal';
-import ErrorIcon from '@mui/icons-material/Error';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { useStyles } from "./EventualityStyles";
+import { EventualityForm } from "./EventualityForm";
+import { useEventuality } from "@app/providers/eventuality";
+import dayjs from "dayjs";
+import { useModal } from "@app/providers/modal";
+import { ConfirmModal } from "@app/components/ConfirmModal";
+import ErrorIcon from "@mui/icons-material/Error";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 export const Eventuality = () => {
   const { createOne } = useEventuality();
@@ -16,13 +16,13 @@ export const Eventuality = () => {
   const modal = useModal();
 
   return (
-    <Container className={classes.container} maxWidth='xl'>
+    <Container className={classes.container} maxWidth="xl">
       <Card className={classes.card}>
         <Box mb={3}>
-          <Typography variant='h1' fontWeight={500}>
+          <Typography variant="h2" fontWeight={500}>
             Eventualidad
           </Typography>
-          <Typography mt={1} variant='body1'>
+          <Typography mt={1} variant="body1">
             En este apartado se crean las eventualidades de los empleados
           </Typography>
         </Box>
@@ -56,12 +56,12 @@ export const Eventuality = () => {
                 content: (
                   <ConfirmModal
                     Icon={CheckCircleOutlineIcon}
-                    color={'success'}
-                    title={'EXITO'}
+                    color={"success"}
+                    title={"EXITO"}
                     description={
-                      'La eventualidad ha sido registrada satisfactoriamente'
+                      "La eventualidad ha sido registrada satisfactoriamente"
                     }
-                    confirmButtonText={'aceptar'}
+                    confirmButtonText={"aceptar"}
                   ></ConfirmModal>
                 ),
               });
@@ -70,10 +70,10 @@ export const Eventuality = () => {
                 content: (
                   <ConfirmModal
                     Icon={ErrorIcon}
-                    color={'error'}
-                    title={'ERROR'}
-                    description={'no se ha podido generar la eventualidad...'}
-                    confirmButtonText={'aceptar'}
+                    color={"error"}
+                    title={"ERROR"}
+                    description={"no se ha podido generar la eventualidad..."}
+                    confirmButtonText={"aceptar"}
                   ></ConfirmModal>
                 ),
               });

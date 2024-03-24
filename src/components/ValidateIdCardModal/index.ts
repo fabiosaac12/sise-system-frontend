@@ -1,1 +1,1 @@
-export * from './ValidateIdCardModal';
+export * from "./ValidateIdCardModal";

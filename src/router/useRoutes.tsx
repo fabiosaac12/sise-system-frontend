@@ -1,20 +1,23 @@
-import { AuthRoleEnum, AuthStatusEnum } from '@app/enums/auth';
-import { BaseLayout } from '@app/layouts';
-import { LoginLayout } from '@app/layouts/LoginLayout';
-import { useAuth } from '@app/providers/auth';
-import { Employees } from '@app/views/Employees';
-import { Eventuality } from '@app/views/Eventuality/Eventuality';
-import { Morbidity } from '@app/views/Morbidity';
-import { Reports } from '@app/views/Reports';
-import { Login } from '@app/views/auth/Login/Login';
-import { RouteProps, Navigate } from 'react-router-dom';
+import { Eventuality } from "@app/views/Eventuality/Eventuality";
+import { AuthRoleEnum, AuthStatusEnum } from "@app/enums/auth";
+import { BaseLayout } from "@app/layouts";
+import { LoginLayout } from "@app/layouts/LoginLayout";
+import { useAuth } from "@app/providers/auth";
+import { Consult } from "@app/views/Consult";
+import { Clients } from "@app/views/Clients";
+import { Departmets } from "@app/views/Departments/Departmets";
+import { Employees } from "@app/views/Employees";
+import { Morbidity } from "@app/views/Morbidity";
+import { Reports } from "@app/views/Reports";
+import { Login } from "@app/views/auth/Login/Login";
+import { RouteProps, Navigate } from "react-router-dom";
 
 export const useRoutes = () => {
   const auth = useAuth();
 
   const loggedOutRoutes: RouteProps[] = [
     {
-      path: '/login',
+      path: "/login",
       element: (
         <LoginLayout>
           <Login />
@@ -22,14 +25,14 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/*',
-      element: <Navigate to='/login' replace={true} />,
+      path: "/*",
+      element: <Navigate to="/login" replace={true} />,
     },
   ];
 
   const adminRoutes: RouteProps[] = [
     {
-      path: '/',
+      path: "/",
       element: (
         <BaseLayout>
           <Morbidity />
@@ -37,7 +40,15 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/reports',
+      path: "/consult",
+      element: (
+        <BaseLayout>
+          <Consult />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/reports",
       element: (
         <BaseLayout>
           <Reports />
@@ -45,7 +56,7 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/employees',
+      path: "/employees",
       element: (
         <BaseLayout>
           <Employees />
@@ -53,7 +64,7 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/eventuality',
+      path: "/eventuality",
       element: (
         <BaseLayout>
           <Eventuality />
@@ -61,14 +72,30 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/*',
-      element: <Navigate to='/' replace={true} />,
+      path: "/departments",
+      element: (
+        <BaseLayout>
+          <Departmets />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/clients",
+      element: (
+        <BaseLayout>
+          <Clients />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/*",
+      element: <Navigate to="/" replace={true} />,
     },
   ];
 
   const userRoutes: RouteProps[] = [
     {
-      path: '/',
+      path: "/",
       element: (
         <BaseLayout>
           <Morbidity />
@@ -76,7 +103,7 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/reports',
+      path: "/reports",
       element: (
         <BaseLayout>
           <Reports />
@@ -84,7 +111,7 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/employees',
+      path: "/employees",
       element: (
         <BaseLayout>
           <Employees />
@@ -92,8 +119,16 @@ export const useRoutes = () => {
       ),
     },
     {
-      path: '/*',
-      element: <Navigate to='/' replace={true} />,
+      path: "/clients",
+      element: (
+        <BaseLayout>
+          <Clients />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/*",
+      element: <Navigate to="/" replace={true} />,
     },
   ];
 

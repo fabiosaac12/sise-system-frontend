@@ -110,6 +110,12 @@ export type EmployeeData = {
   lastNames: string;
 };
 
+export type EmployeeData = {
+  idcard: number;
+  firstNames: string;
+  lastNames: string;
+};
+
 export type EmployeeState = {
   list?: EmployeeForTable[];
   filter: EmployeeFilter;

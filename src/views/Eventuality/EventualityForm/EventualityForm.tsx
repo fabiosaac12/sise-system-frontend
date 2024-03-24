@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from 'react';
-import { useStyles } from './eventualityFormStyles';
+import { FC, useEffect, useState } from "react";
+import { useStyles } from "./eventualityFormStyles";
 import {
   Box,
   Button,
@@ -8,17 +8,17 @@ import {
   IconButton,
   Paper,
   Typography,
-} from '@mui/material';
-import { DatePicker, Select, TextField } from '@app/components/form';
-import { useForm } from './hooks';
+} from "@mui/material";
+import { DatePicker, Select, TextField } from "@app/components/form";
+import { useForm } from "./hooks";
 import {
   EventDefinitionEnum,
   EventualityFormData,
-} from '@app/models/eventuality.model';
-import { useModal } from '@app/providers/modal';
-import { ValidateIdCardModal } from '../../../components/ValidateIdCardModal';
-import { TimePicker } from '@app/components/form/TimePicker';
-import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+} from "@app/models/eventuality.model";
+import { useModal } from "@app/providers/modal";
+import { ValidateIdCardModal } from "../../../components/ValidateIdCardModal";
+import { TimePicker } from "@app/components/form/TimePicker";
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 
 type Props = {
   initialValues?: EventualityFormData;
@@ -40,13 +40,13 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
   return (
     <Box className={classes.container}>
       <Box className={classes.body}>
-        <Typography variant='h3' fontWeight={500}>
+        <Typography variant="h4" fontWeight={500}>
           Cédula del empleado
         </Typography>
         <Grid
           container
-          display={'flex'}
-          alignItems={'flex-end'}
+          display={"flex"}
+          alignItems={"flex-end"}
           {...gridItemsCommonProps}
         >
           <Box sx={{ flexGrow: 1, mr: 1 }}>
@@ -54,30 +54,30 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
               formik={{
                 ...formik,
               }}
-              label=''
-              name='idCard'
-              placeholder='cedula del empleado'
+              label=""
+              name="idCard"
+              placeholder="cedula del empleado"
             />
           </Box>
 
           <IconButton
-            size='medium'
+            size="medium"
             onClick={() => {
               modal.open({
                 content: (
                   <ValidateIdCardModal
-                    idCard={formik.getFieldProps('idCard').value}
+                    idCard={formik.getFieldProps("idCard").value}
                     setIdValidate={setIdValidate}
                   />
                 ),
               });
             }}
           >
-            <PersonSearchIcon fontSize='large' />
+            <PersonSearchIcon fontSize="large" />
           </IconButton>
         </Grid>
         <Divider />
-        <Typography variant='h3' fontWeight={500}>
+        <Typography variant="h4" fontWeight={500}>
           Datos Generales
         </Typography>
         <Grid container spacing={3}>
@@ -85,10 +85,10 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           <Grid {...gridItemsCommonProps}>
             <Select
               formik={formik}
-              label='Tipo de eventualidad'
+              label="Tipo de eventualidad"
               disabled={!idValidate}
-              name='eventDefinition'
-              placeholder='seleccionar'
+              name="eventDefinition"
+              placeholder="seleccionar"
               options={Object.values(EventDefinitionEnum).map((value) => ({
                 id: value,
                 name: value,
@@ -98,71 +98,71 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           <Grid {...gridItemsCommonProps}>
             <TextField
               formik={formik}
-              label='Lugar del suceso'
+              label="Lugar del suceso"
               textFieldProps={{ disabled: !idValidate }}
-              name='eventPlace'
-              placeholder='Describir...'
+              name="eventPlace"
+              placeholder="Describir..."
             />
           </Grid>
           <Grid {...gridItemsCommonProps}>
             <DatePicker
               formik={formik}
-              label='fecha del suceso'
+              label="fecha del suceso"
               datePickerProps={{ disabled: !idValidate }}
-              name='eventDatetime'
+              name="eventDatetime"
             ></DatePicker>
           </Grid>
           <Grid {...gridItemsCommonProps}>
             <TimePicker
               formik={formik}
-              label='Hora del suceso'
+              label="Hora del suceso"
               timePickerProps={{ disabled: !idValidate }}
-              name='eventDate'
+              name="eventDate"
             ></TimePicker>
           </Grid>
           <Grid {...gridItemsCommonProps}>
             <TextField
               formik={formik}
-              label='tipo de lesion'
+              label="tipo de lesion"
               textFieldProps={{ disabled: !idValidate }}
-              name='typeOfInjury'
-              placeholder='Describir...'
+              name="typeOfInjury"
+              placeholder="Describir..."
             />
           </Grid>
           <Grid {...gridItemsCommonProps}>
             <TextField
               formik={formik}
-              label='Parte del cuerpo lesionada'
+              label="Parte del cuerpo lesionada"
               textFieldProps={{ disabled: !idValidate }}
-              name='injuredBodyPart'
-              placeholder='Describir...'
+              name="injuredBodyPart"
+              placeholder="Describir..."
             />
           </Grid>
           <Grid {...gridItemsCommonProps}>
             <TextField
               formik={formik}
-              label='Dias de descanso'
+              label="Dias de descanso"
               textFieldProps={{ disabled: !idValidate }}
-              name='daysOfRest'
-              placeholder='Ingrese...'
+              name="daysOfRest"
+              placeholder="Ingrese..."
             />
           </Grid>
         </Grid>
         <Divider />
-        <Typography variant='h3' fontWeight={500} marginBottom={1}>
+        <Typography variant="h4" fontWeight={500} marginBottom={1}>
           Declaraciones
         </Typography>
 
-        <Paper variant='outlined' sx={{ paddingTop: 3, position: 'relative' }}>
+        <Paper variant="outlined" sx={{ paddingTop: 3, position: "relative" }}>
           <Typography
-            variant='h4'
+            variant="h4"
             fontWeight={500}
             sx={{
               paddingRight: 1,
-              position: 'absolute',
-              top: '-15px',
-              left: '10px',
-              backgroundColor: 'white',
+              position: "absolute",
+              top: "-15px",
+              left: "10px",
+              backgroundColor: "white",
             }}
           >
             Trabajador
@@ -171,10 +171,10 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             <Grid {...gridItemsCommonProps} lg={4}>
               <Select
                 formik={formik}
-                label='Tipo de evento'
+                label="Tipo de evento"
                 disabled={!idValidate}
-                name='workerEventDefinition'
-                placeholder='Seleccionar'
+                name="workerEventDefinition"
+                placeholder="Seleccionar"
                 options={Object.values(EventDefinitionEnum).map((value) => ({
                   id: value,
                   name: value,
@@ -184,9 +184,9 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             <Grid {...gridItemsCommonProps} lg={8}>
               <TextField
                 formik={formik}
-                label='Declaracion del trabajador'
-                name='workerStatement'
-                placeholder='Describir..'
+                label="Declaracion del trabajador"
+                name="workerStatement"
+                placeholder="Describir.."
                 textFieldProps={{
                   multiline: true,
                   rows: 3,
@@ -197,16 +197,16 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           </Grid>
         </Paper>
 
-        <Paper variant='outlined' sx={{ paddingTop: 3, position: 'relative' }}>
+        <Paper variant="outlined" sx={{ paddingTop: 3, position: "relative" }}>
           <Typography
-            variant='h4'
+            variant="h4"
             fontWeight={500}
             sx={{
               paddingRight: 1,
-              position: 'absolute',
-              top: '-15px',
-              left: '10px',
-              backgroundColor: 'white',
+              position: "absolute",
+              top: "-15px",
+              left: "10px",
+              backgroundColor: "white",
             }}
           >
             Testigo
@@ -220,10 +220,10 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             <Grid {...gridItemsCommonProps} lg={4}>
               <Select
                 formik={formik}
-                label='Tipo de evento'
+                label="Tipo de evento"
                 disabled={!idValidate}
-                name='witnessEventDefinition'
-                placeholder='Seleccionar'
+                name="witnessEventDefinition"
+                placeholder="Seleccionar"
                 options={Object.values(EventDefinitionEnum).map((value) => ({
                   id: value,
                   name: value,
@@ -233,9 +233,9 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             <Grid {...gridItemsCommonProps} lg={8}>
               <TextField
                 formik={formik}
-                label='Declaracion del del Testigo'
-                name='witnessStatement'
-                placeholder='Describir..'
+                label="Declaracion del del Testigo"
+                name="witnessStatement"
+                placeholder="Describir.."
                 textFieldProps={{
                   multiline: true,
                   rows: 3,
@@ -246,16 +246,16 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           </Grid>
         </Paper>
 
-        <Paper variant='outlined' sx={{ paddingTop: 3, position: 'relative' }}>
+        <Paper variant="outlined" sx={{ paddingTop: 3, position: "relative" }}>
           <Typography
-            variant='h4'
+            variant="h4"
             fontWeight={500}
             sx={{
               paddingRight: 1,
-              position: 'absolute',
-              top: '-15px',
-              left: '10px',
-              backgroundColor: 'white',
+              position: "absolute",
+              top: "-15px",
+              left: "10px",
+              backgroundColor: "white",
             }}
           >
             Superior
@@ -270,9 +270,9 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
               <Select
                 formik={formik}
                 disabled={!idValidate}
-                label='Tipo de evento'
-                name='superiorEventDefinition'
-                placeholder='Seleccionar'
+                label="Tipo de evento"
+                name="superiorEventDefinition"
+                placeholder="Seleccionar"
                 options={Object.values(EventDefinitionEnum).map((value) => ({
                   id: value,
                   name: value,
@@ -282,9 +282,9 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             <Grid {...gridItemsCommonProps} lg={8}>
               <TextField
                 formik={formik}
-                label='Declaracion del sel Superior'
-                name='superiorStatement'
-                placeholder='Describir..'
+                label="Declaracion del sel Superior"
+                name="superiorStatement"
+                placeholder="Describir.."
                 textFieldProps={{
                   multiline: true,
                   rows: 3,
@@ -295,10 +295,10 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           </Grid>
         </Paper>
 
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
           <Button
-            color='inherit'
-            variant='text'
+            color="inherit"
+            variant="text"
             onClick={() => {
               formik.resetForm();
             }}
@@ -306,7 +306,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             limpiar
           </Button>
           <Button
-            color='primary'
+            color="primary"
             onClick={formik.submitForm}
             disabled={!idValidate}
           >

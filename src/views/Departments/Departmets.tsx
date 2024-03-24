@@ -1,20 +1,21 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { SearchBar } from "@app/components/SearchBar";
 import { Table } from "@app/components/Table";
+import { useDeparments } from "@app/providers/deparments";
+import { useModal } from "@app/providers/modal";
 import { Box, Card, Container, IconButton, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useStyles } from "./departmentsStyles";
 import CreateIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useEffect } from "react";
-import { useEmployees } from "@app/providers/employees";
+import { DepartmentForm } from "./DepartmentsForm";
 import { useTable } from "./hooks/useTable";
-import { useModal } from "@app/providers/modal";
-import { EmployeeForm } from "./EmployeeForm/EmployeeForm";
-import dayjs from "dayjs";
+import { SearchBar } from "@app/components/SearchBar";
 import { ConfirmModal } from "@app/components/ConfirmModal";
-import { useStyles } from "./EmployeesStyles";
+import { useLocation } from "react-router-dom";
+export const Departmets = () => {
+  const query = new URLSearchParams(useLocation().search);
+  const [clientId, setClientId] = useState(query.get("clientid"));
 
-export const Employees = () => {
   const {
     catalogues,
     filter,
@@ -26,35 +27,34 @@ export const Employees = () => {
     editOne,
     pagination,
     setPagination,
-  } = useEmployees();
+    applyFilters,
+  } = useDeparments();
   const modal = useModal();
   const table = useTable();
   const classes = useStyles({
-    selectedLength: table.selectedEmployeeIds.length,
+    selectedLength: table.selectedDeparmentsIds.length,
   });
 
   useEffect(() => {
     catalogues.getClients();
   }, []);
 
+  // if (clientId) {
+  //   applyFilters({ clientId });
+  // }
   useEffect(() => {
-    getAll();
-  }, [
-    filter.clientId,
-    filter.departmentId,
-    filter.idCard,
-    pagination.currentPage,
-    pagination.rowsPerPage,
-  ]);
-
-  useEffect(() => {
-    catalogues.getDepartments(filter.clientId);
-  }, [filter.clientId]);
+    if (clientId) {
+      applyFilters({ clientId });
+      setClientId("");
+    } else {
+      getAll();
+    }
+  }, [filter.clientId, pagination.currentPage, pagination.rowsPerPage]);
 
   const openCreateModal = () => {
     modal.open({
       content: (
-        <EmployeeForm
+        <DepartmentForm
           handleSubmit={async (data) => {
             const done = await createOne(data);
 
@@ -68,26 +68,23 @@ export const Employees = () => {
   };
 
   const openEditModal = async () => {
-    const _employee = list?.find(
-      ({ id }) => id === table.selectedEmployeeIds[0],
+    const _deparment = list?.find(
+      ({ id }) => id === table.selectedDeparmentsIds[0],
     );
 
-    if (_employee) {
-      const { department, ...employee } = _employee;
+    if (_deparment) {
+      // const { department } = _deparment;
 
       modal.open({
         content: (
-          <EmployeeForm
+          <DepartmentForm
             edit
             initialValues={{
-              ...employee,
-              clientId: department.client.id,
-              departmentId: department.id,
-              birthdate: dayjs(employee.birthdate),
-              idCard: `${employee.idCard}`,
+              name: _deparment.name,
+              clientId: _deparment.clientId,
             }}
             handleSubmit={async (data) => {
-              const done = await editOne(employee.id, data);
+              const done = await editOne(data, _deparment.id);
 
               if (done) {
                 modal.close();
@@ -100,38 +97,46 @@ export const Employees = () => {
   };
 
   const openDeleteModal = () => {
-    if (table.selectedEmployeeIds.length > 1) {
+    if (table.selectedDeparmentsIds.length > 1) {
+      const departments = list
+        ?.filter(({ id }) => table.selectedDeparmentsIds.includes(id))
+        ?.map(({ name }) => name);
+
+      console.log(departments);
       modal.open({
         content: (
           <ConfirmModal
             Icon={DeleteIcon}
             color="error"
             confirmButtonText="Eliminar"
-            title={`¿Está seguro de eliminar los ${table.selectedEmployeeIds.length} empleados seleccionados?`}
-            description={
-              "Esta acción es irreversible. Le recomendamos que considere cuidadosamente las consecuencias antes de proceder."
-            }
-            confirmButtonAction={() => deleteMany(table.selectedEmployeeIds)}
+            title={`¿Está seguro de eliminar los ${table.selectedDeparmentsIds.length} departamentos seleccionados?`}
+            description={`Los departamentos ${
+              table.selectedDeparmentsIds.length > 2
+                ? departments?.slice(0, -1).join(", ") +
+                  ` y ${departments?.slice(-1)}`
+                : departments?.join(" y ")
+            } seran eliminados. Esta acción es irreversible. Le recomendamos que considere cuidadosamente las consecuencias antes de proceder.`}
+            confirmButtonAction={() => deleteMany(table.selectedDeparmentsIds)}
           />
         ),
       });
     } else {
-      const employee = list?.find(
-        ({ id }) => id === table.selectedEmployeeIds[0],
+      const department = list?.find(
+        ({ id }) => id === table.selectedDeparmentsIds[0],
       );
 
-      if (employee) {
+      if (department) {
         modal.open({
           content: (
             <ConfirmModal
               Icon={DeleteIcon}
               color="error"
               confirmButtonText="Eliminar"
-              title={`¿Está seguro de eliminar el empleado ${employee?.firstNames}?`}
+              title={`¿Está seguro de eliminar el departamento '${department.name}'?`}
               description={
                 "Esta acción es irreversible. Le recomendamos que considere cuidadosamente las consecuencias antes de proceder."
               }
-              confirmButtonAction={() => deleteOne(employee.id)}
+              confirmButtonAction={() => deleteOne(department.id)}
             />
           ),
         });
@@ -144,21 +149,21 @@ export const Employees = () => {
       <Card className={classes.card}>
         <Box mb={3}>
           <Typography variant="h2" fontWeight={500}>
-            Empleados
+            Departamentos
           </Typography>
           <Typography mt={1} variant="body1">
-            En este apartado se pueden ver los empleados registrados en el
+            En este apartado se pueden ver los departamentos registrados en el
             sistema, así como editarlos, crear nuevos y eliminar
           </Typography>
         </Box>
 
         <Box className={classes.tableHeader}>
-          {table.selectedEmployeeIds.length ? (
+          {table.selectedDeparmentsIds.length ? (
             <>
               <Box pl={0.5}>
                 <Typography variant="h6" color="common.white">
-                  {table.selectedEmployeeIds.length}{" "}
-                  {table.selectedEmployeeIds.length > 1
+                  {table.selectedDeparmentsIds.length}{" "}
+                  {table.selectedDeparmentsIds.length > 1
                     ? "elementos seleccionados"
                     : "elemento seleccionado"}
                 </Typography>
@@ -167,7 +172,7 @@ export const Employees = () => {
                 <IconButton className={classes.invisibleButton} size="small">
                   <CreateIcon fontSize="large" />
                 </IconButton>
-                {table.selectedEmployeeIds.length === 1 && (
+                {table.selectedDeparmentsIds.length === 1 && (
                   <IconButton size="medium" onClick={openEditModal}>
                     <EditIcon
                       sx={{ color: "common.white" }}
@@ -185,7 +190,7 @@ export const Employees = () => {
               <SearchBar
                 searchBy={table.filters}
                 onSearch={table.applySearchBarFilters}
-                values={filter}
+                values={{ ...filter }}
               />
               <Box display="flex" gap={2}>
                 <IconButton edge="end" size="small" onClick={openCreateModal}>
@@ -202,13 +207,13 @@ export const Employees = () => {
           multiselect
           noDataMessage={
             !filter.clientId
-              ? "Seleccione un cliente para poder ver sus empleados"
+              ? "Seleccione un cliente para poder ver sus departamentos"
               : list
-              ? "No hay empleados registrados que coincidan con el filtrado"
+              ? "No hay departamentos registrados que coincidan con el filtrado"
               : "Cargando..."
           }
           onRowSelectionChange={(ids) =>
-            table.setSelectedEmployeeIds(ids as string[])
+            table.setSelectedDeparmentsIds(ids as string[])
           }
           paginationMode="server"
           rowCount={pagination.totalItems}

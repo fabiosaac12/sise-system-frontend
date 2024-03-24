@@ -1,24 +1,33 @@
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import 'dayjs/locale/es';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { ThemeProvider } from './providers/theme';
-import { AuthProvider } from './providers/auth';
-import { Router } from './router/Router';
-import { ModalProvider } from './providers/modal';
-import { EmployeesProvider } from './providers/employees';
-import { EventualityProvider } from './providers/eventuality';
+import "dayjs/locale/es";
+import { EventualityProvider } from "./providers/eventuality";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { ThemeProvider } from "./providers/theme";
+import { AuthProvider } from "./providers/auth";
+import { Router } from "./router/Router";
+import { ModalProvider } from "./providers/modal";
+import { EmployeesProvider } from "./providers/employees";
+import { ConsultProvider } from "./providers/consult";
+import { DeparmentsProvider } from "./providers/deparments";
+import { ClientsProvider } from "./providers/clients";
 
 function App() {
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='es'>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
       <ThemeProvider>
         <AuthProvider>
           <ModalProvider>
-            <EmployeesProvider>
-              <EventualityProvider>
-                <Router />
-              </EventualityProvider>
-            </EmployeesProvider>
+            <ClientsProvider>
+              <DeparmentsProvider>
+                <EmployeesProvider>
+                  <EventualityProvider>
+                    <ConsultProvider>
+                      <Router />
+                    </ConsultProvider>
+                  </EventualityProvider>
+                </EmployeesProvider>
+              </DeparmentsProvider>
+            </ClientsProvider>
           </ModalProvider>
         </AuthProvider>
       </ThemeProvider>
