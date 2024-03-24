@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren, useState } from "react";
 import { EmployeesContext } from "./EmployeesContext";
 import {
+  EmployeeData,
   EmployeeFilter,
   EmployeeForTable,
   EmployeeFormData,
@@ -15,6 +16,7 @@ import {
   deleteEmployees,
   editEmployee,
   getEmployees,
+  getEmployee as getEmployeeApi,
 } from "@app/config/api/backend/requests/employees";
 import {
   getClientsCatalogue,
@@ -28,6 +30,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
   const [list, setList] = useState<EmployeeForTable[]>();
   const [pagination, setPagination] = useState<Pagination>(initialPagination);
   const [filter, setFilter] = useState<EmployeeFilter>(initialEmployeeFilter);
+  const [employee, setEmployee] = useState<EmployeeData>();
 
   const _getClientsCatalogue = useRequest(getClientsCatalogue);
   const _getDepartmentsCatalogue = useRequest(getDepartmentsCatalogue);
@@ -36,6 +39,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
   const _editOne = useRequest(editEmployee);
   const _deleteOne = useRequest(deleteEmployee);
   const _deleteMany = useRequest(deleteEmployees);
+  const _getEmployee = useRequest(getEmployeeApi);
 
   const getClients: EmployeeState["catalogues"]["getClients"] = async () => {
     const catalogue = await _getClientsCatalogue({});
@@ -172,6 +176,15 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
     }));
   };
 
+  const getEmployee: EmployeeState["getEmployee"] = async (idCard) => {
+    const response = await _getEmployee({ idCard });
+
+    if (response) {
+      setEmployee(response);
+      return response;
+    }
+  };
+
   const state: EmployeeState = {
     createOne,
     editOne,
@@ -189,6 +202,8 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
       getClients,
       getDepartments,
     },
+    getEmployee,
+    employee,
   };
 
   return (

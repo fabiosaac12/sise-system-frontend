@@ -1,4 +1,3 @@
-
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import "dayjs/locale/es";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -7,22 +6,24 @@ import { AuthProvider } from "./providers/auth";
 import { Router } from "./router/Router";
 import { ModalProvider } from "./providers/modal";
 import { EmployeesProvider } from "./providers/employees";
-import { DeparmentsProvider } from './providers/deparments';
+import { ConsultProvider } from "./providers/consult";
+import { DeparmentsProvider } from "./providers/deparments";
 import { ClientsProvider } from "./providers/clients";
 
 function App() {
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='es'>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
       <ThemeProvider>
         <AuthProvider>
           <ModalProvider>
-
             <ClientsProvider>
               <DeparmentsProvider>
-              <EmployeesProvider>
-                <Router />
-              </EmployeesProvider>
-                </DeparmentsProvider>
+                <EmployeesProvider>
+                  <ConsultProvider>
+                    <Router />
+                  </ConsultProvider>
+                </EmployeesProvider>
+              </DeparmentsProvider>
             </ClientsProvider>
           </ModalProvider>
         </AuthProvider>
