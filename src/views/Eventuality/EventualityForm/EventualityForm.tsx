@@ -56,7 +56,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
               }}
               label=""
               name="idCard"
-              placeholder="cedula del empleado"
+              placeholder="Cédula del empleado"
             />
           </Box>
 
@@ -88,7 +88,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
               label="Tipo de eventualidad"
               disabled={!idValidate}
               name="eventDefinition"
-              placeholder="seleccionar"
+              placeholder="Seleccionar"
               options={Object.values(EventDefinitionEnum).map((value) => ({
                 id: value,
                 name: value,
@@ -107,7 +107,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           <Grid {...gridItemsCommonProps}>
             <DatePicker
               formik={formik}
-              label="fecha del suceso"
+              label="Fecha del suceso"
               datePickerProps={{ disabled: !idValidate }}
               name="eventDatetime"
             ></DatePicker>
@@ -123,7 +123,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           <Grid {...gridItemsCommonProps}>
             <TextField
               formik={formik}
-              label="tipo de lesion"
+              label="Tipo de lesión"
               textFieldProps={{ disabled: !idValidate }}
               name="typeOfInjury"
               placeholder="Describir..."
@@ -141,7 +141,7 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           <Grid {...gridItemsCommonProps}>
             <TextField
               formik={formik}
-              label="Dias de descanso"
+              label="Días de descanso"
               textFieldProps={{ disabled: !idValidate }}
               name="daysOfRest"
               placeholder="Ingrese..."
@@ -184,9 +184,9 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             <Grid {...gridItemsCommonProps} lg={8}>
               <TextField
                 formik={formik}
-                label="Declaracion del trabajador"
+                label="Declaración del trabajador"
                 name="workerStatement"
-                placeholder="Describir.."
+                placeholder="Describir..."
                 textFieldProps={{
                   multiline: true,
                   rows: 3,
@@ -233,9 +233,9 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             <Grid {...gridItemsCommonProps} lg={8}>
               <TextField
                 formik={formik}
-                label="Declaracion del del Testigo"
+                label="Declaración del Testigo"
                 name="witnessStatement"
-                placeholder="Describir.."
+                placeholder="Describir..."
                 textFieldProps={{
                   multiline: true,
                   rows: 3,
@@ -282,9 +282,9 @@ export const EventualityForm: FC<Props> = ({ initialValues, handleSubmit }) => {
             <Grid {...gridItemsCommonProps} lg={8}>
               <TextField
                 formik={formik}
-                label="Declaracion del sel Superior"
+                label="Declaración del Superior"
                 name="superiorStatement"
-                placeholder="Describir.."
+                placeholder="Describir..."
                 textFieldProps={{
                   multiline: true,
                   rows: 3,
