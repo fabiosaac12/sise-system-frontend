@@ -52,7 +52,7 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           {...gridItemsBasics}
         >
           <Box sx={{ flexGrow: 1, mr: 1 }}>
-            <Typography variant="h3" fontWeight={500}>
+            <Typography variant="h6" fontWeight={500}>
               Cédula del Paciente
             </Typography>
             <TextField
@@ -82,7 +82,7 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           </IconButton>
         </Grid>
         <Divider />
-        <Typography variant="h3" fontWeight={500}>
+        <Typography variant="h4" fontWeight={500}>
           Datos preliminares
         </Typography>
         <Grid container spacing={3}>
@@ -205,7 +205,7 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           </Grid>
         </Grid>
         <Divider />
-        <Typography variant="h3" fontWeight={500} textAlign="initial">
+        <Typography variant="h4" fontWeight={500} textAlign="initial">
           Examen físico
         </Typography>
         <Grid container display={"flex"}>
@@ -315,7 +315,7 @@ export const ConsultForm: FC<Props> = ({ initialValues, handleSubmit }) => {
           </Grid>
         </Grid>
         <Divider />
-        <Typography variant="h3" fontWeight={500}>
+        <Typography variant="h4" fontWeight={500}>
           Examinación
         </Typography>
         <Grid container spacing={3}>

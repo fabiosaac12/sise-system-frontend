@@ -7,6 +7,8 @@ import { Router } from "./router/Router";
 import { ModalProvider } from "./providers/modal";
 import { EmployeesProvider } from "./providers/employees";
 import { ConsultProvider } from "./providers/consult";
+import { DeparmentsProvider } from "./providers/deparments";
+import { ClientsProvider } from "./providers/clients";
 
 function App() {
   return (
@@ -14,11 +16,15 @@ function App() {
       <ThemeProvider>
         <AuthProvider>
           <ModalProvider>
-            <ConsultProvider>
-              <EmployeesProvider>
-                <Router />
-              </EmployeesProvider>
-            </ConsultProvider>
+            <ClientsProvider>
+              <DeparmentsProvider>
+                <EmployeesProvider>
+                  <ConsultProvider>
+                    <Router />
+                  </ConsultProvider>
+                </EmployeesProvider>
+              </DeparmentsProvider>
+            </ClientsProvider>
           </ModalProvider>
         </AuthProvider>
       </ThemeProvider>

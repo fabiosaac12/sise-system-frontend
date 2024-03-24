@@ -22,6 +22,7 @@ import BadgeIcon from "@mui/icons-material/Badge";
 import MoodBadIcon from "@mui/icons-material/MoodBad";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
+import DomainIcon from "@mui/icons-material/Domain";
 // styles
 import { useStyles } from "./NavBarStyles";
 import { AuthRoleEnum } from "@app/enums/auth";
@@ -42,11 +43,12 @@ export const Navbar = () => {
           {
             text: "CONSULTAS",
             icon: <MedicalServicesIcon />,
-            path: "/Consult",
+            path: "/consult",
           },
           { text: "USUARIOS", icon: <PeopleAltIcon />, path: "/" },
-          { text: "CLIENTES", icon: <StoreIcon />, path: "/" },
-          { text: "EMPLEADOS", icon: <BadgeIcon />, path: "/" },
+          { text: "CLIENTES", icon: <StoreIcon />, path: "/clients" },
+          { text: "DEPARTAMENTOS", icon: <DomainIcon />, path: "/departments" },
+          { text: "EMPLEADOS", icon: <BadgeIcon />, path: "/employees" },
           { text: "EVENTUALIDAD", icon: <MoodBadIcon />, path: "/" },
           { text: "PERFIL", icon: <AccountCircleIcon />, path: "/" },
         ]

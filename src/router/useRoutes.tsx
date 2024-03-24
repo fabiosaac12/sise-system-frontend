@@ -3,6 +3,8 @@ import { BaseLayout } from "@app/layouts";
 import { LoginLayout } from "@app/layouts/LoginLayout";
 import { useAuth } from "@app/providers/auth";
 import { Consult } from "@app/views/Consult";
+import { Clients } from "@app/views/Clients";
+import { Departmets } from "@app/views/Departments/Departmets";
 import { Employees } from "@app/views/Employees";
 import { Morbidity } from "@app/views/Morbidity";
 import { Reports } from "@app/views/Reports";
@@ -61,6 +63,22 @@ export const useRoutes = () => {
       ),
     },
     {
+      path: "/departments",
+      element: (
+        <BaseLayout>
+          <Departmets />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/clients",
+      element: (
+        <BaseLayout>
+          <Clients />
+        </BaseLayout>
+      ),
+    },
+    {
       path: "/*",
       element: <Navigate to="/" replace={true} />,
     },
@@ -88,6 +106,14 @@ export const useRoutes = () => {
       element: (
         <BaseLayout>
           <Employees />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/clients",
+      element: (
+        <BaseLayout>
+          <Clients />
         </BaseLayout>
       ),
     },

@@ -16,7 +16,7 @@ export const Consult = () => {
     <Container className={classes.container} maxWidth="lg">
       <Card className={classes.card}>
         <Box mb={3}>
-          <Typography variant="h1" fontWeight={500}>
+          <Typography variant="h2" fontWeight={500}>
             Consulta
           </Typography>
           <Typography mt={1} variant="body1">
