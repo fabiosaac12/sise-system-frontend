@@ -69,7 +69,7 @@ export const Employees = () => {
 
   const openEditModal = async () => {
     const _employee = list?.find(
-      ({ id }) => id === table.selectedEmployeeIds[0]
+      ({ id }) => id === table.selectedEmployeeIds[0],
     );
 
     if (_employee) {
@@ -117,7 +117,7 @@ export const Employees = () => {
       });
     } else {
       const employee = list?.find(
-        ({ id }) => id === table.selectedEmployeeIds[0]
+        ({ id }) => id === table.selectedEmployeeIds[0],
       );
 
       if (employee) {
@@ -143,7 +143,7 @@ export const Employees = () => {
     <Container className={classes.container} maxWidth="xl">
       <Card className={classes.card}>
         <Box mb={3}>
-          <Typography variant="h1" fontWeight={500}>
+          <Typography variant="h2" fontWeight={500}>
             Empleados
           </Typography>
           <Typography mt={1} variant="body1">

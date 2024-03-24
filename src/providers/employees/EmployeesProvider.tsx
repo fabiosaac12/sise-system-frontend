@@ -52,7 +52,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const getDepartments: EmployeeState["catalogues"]["getDepartments"] = async (
-    clientId
+    clientId,
   ) => {
     if (clientId) {
       const catalogue = await _getDepartmentsCatalogue(clientId);
@@ -101,7 +101,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const createOne: EmployeeState["createOne"] = async (
-    data: EmployeeFormData
+    data: EmployeeFormData,
   ) => {
     const done = await _createOne({ data });
 
@@ -116,7 +116,7 @@ export const EmployeesProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const editOne: EmployeeState["editOne"] = async (
     id: string,
-    data: EmployeeFormData
+    data: EmployeeFormData,
   ) => {
     const done = await _editOne({ data, id });
 

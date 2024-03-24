@@ -12,7 +12,6 @@ export const useStyles = makeStyles<Theme>((theme: Theme) => ({
   },
   card: {
     ...predefinedStyles.containerPadding(theme),
-
     flexGrow: 1,
     overflow: "auto",
   },

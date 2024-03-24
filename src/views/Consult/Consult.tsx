@@ -13,7 +13,7 @@ export const Consult = () => {
   const modal = useModal();
 
   return (
-    <Container className={classes.container} maxWidth="lg">
+    <Container className={classes.container} maxWidth="xl">
       <Card className={classes.card}>
         <Box mb={3}>
           <Typography variant="h2" fontWeight={500}>

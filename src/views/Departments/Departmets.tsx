@@ -1,20 +1,20 @@
-import { Table } from '@app/components/Table';
-import { useDeparments } from '@app/providers/deparments';
-import { useModal } from '@app/providers/modal';
-import { Box, Card, Container, IconButton, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useStyles } from './departmentsStyles';
-import CreateIcon from '@mui/icons-material/AddCircle';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { DepartmentForm } from './DepartmentsForm';
-import { useTable } from './hooks/useTable';
-import { SearchBar } from '@app/components/SearchBar';
-import { ConfirmModal } from '@app/components/ConfirmModal';
-import { useLocation } from 'react-router-dom';
+import { Table } from "@app/components/Table";
+import { useDeparments } from "@app/providers/deparments";
+import { useModal } from "@app/providers/modal";
+import { Box, Card, Container, IconButton, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useStyles } from "./departmentsStyles";
+import CreateIcon from "@mui/icons-material/AddCircle";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { DepartmentForm } from "./DepartmentsForm";
+import { useTable } from "./hooks/useTable";
+import { SearchBar } from "@app/components/SearchBar";
+import { ConfirmModal } from "@app/components/ConfirmModal";
+import { useLocation } from "react-router-dom";
 export const Departmets = () => {
   const query = new URLSearchParams(useLocation().search);
-  const [clientId, setClientId] = useState(query.get('clientid'));
+  const [clientId, setClientId] = useState(query.get("clientid"));
 
   const {
     catalogues,
@@ -45,7 +45,7 @@ export const Departmets = () => {
   useEffect(() => {
     if (clientId) {
       applyFilters({ clientId });
-      setClientId('');
+      setClientId("");
     } else {
       getAll();
     }
@@ -69,7 +69,7 @@ export const Departmets = () => {
 
   const openEditModal = async () => {
     const _deparment = list?.find(
-      ({ id }) => id === table.selectedDeparmentsIds[0]
+      ({ id }) => id === table.selectedDeparmentsIds[0],
     );
 
     if (_deparment) {
@@ -107,14 +107,14 @@ export const Departmets = () => {
         content: (
           <ConfirmModal
             Icon={DeleteIcon}
-            color='error'
-            confirmButtonText='Eliminar'
+            color="error"
+            confirmButtonText="Eliminar"
             title={`¿Está seguro de eliminar los ${table.selectedDeparmentsIds.length} departamentos seleccionados?`}
             description={`Los departamentos ${
               table.selectedDeparmentsIds.length > 2
-                ? departments?.slice(0, -1).join(', ') +
+                ? departments?.slice(0, -1).join(", ") +
                   ` y ${departments?.slice(-1)}`
-                : departments?.join(' y ')
+                : departments?.join(" y ")
             } seran eliminados. Esta acción es irreversible. Le recomendamos que considere cuidadosamente las consecuencias antes de proceder.`}
             confirmButtonAction={() => deleteMany(table.selectedDeparmentsIds)}
           />
@@ -122,7 +122,7 @@ export const Departmets = () => {
       });
     } else {
       const department = list?.find(
-        ({ id }) => id === table.selectedDeparmentsIds[0]
+        ({ id }) => id === table.selectedDeparmentsIds[0],
       );
 
       if (department) {
@@ -130,11 +130,11 @@ export const Departmets = () => {
           content: (
             <ConfirmModal
               Icon={DeleteIcon}
-              color='error'
-              confirmButtonText='Eliminar'
+              color="error"
+              confirmButtonText="Eliminar"
               title={`¿Está seguro de eliminar el departamento '${department.name}'?`}
               description={
-                'Esta acción es irreversible. Le recomendamos que considere cuidadosamente las consecuencias antes de proceder.'
+                "Esta acción es irreversible. Le recomendamos que considere cuidadosamente las consecuencias antes de proceder."
               }
               confirmButtonAction={() => deleteOne(department.id)}
             />
@@ -145,13 +145,13 @@ export const Departmets = () => {
   };
 
   return (
-    <Container className={classes.container} maxWidth='xl'>
+    <Container className={classes.container} maxWidth="xl">
       <Card className={classes.card}>
         <Box mb={3}>
-          <Typography variant='h1' fontWeight={500}>
+          <Typography variant="h2" fontWeight={500}>
             Departamentos
           </Typography>
-          <Typography mt={1} variant='body1'>
+          <Typography mt={1} variant="body1">
             En este apartado se pueden ver los departamentos registrados en el
             sistema, así como editarlos, crear nuevos y eliminar
           </Typography>
@@ -161,27 +161,27 @@ export const Departmets = () => {
           {table.selectedDeparmentsIds.length ? (
             <>
               <Box pl={0.5}>
-                <Typography variant='h6' color='common.white'>
-                  {table.selectedDeparmentsIds.length}{' '}
+                <Typography variant="h6" color="common.white">
+                  {table.selectedDeparmentsIds.length}{" "}
                   {table.selectedDeparmentsIds.length > 1
-                    ? 'elementos seleccionados'
-                    : 'elemento seleccionado'}
+                    ? "elementos seleccionados"
+                    : "elemento seleccionado"}
                 </Typography>
               </Box>
-              <Box display='flex' alignItems='center'>
-                <IconButton className={classes.invisibleButton} size='small'>
-                  <CreateIcon fontSize='large' />
+              <Box display="flex" alignItems="center">
+                <IconButton className={classes.invisibleButton} size="small">
+                  <CreateIcon fontSize="large" />
                 </IconButton>
                 {table.selectedDeparmentsIds.length === 1 && (
-                  <IconButton size='medium' onClick={openEditModal}>
+                  <IconButton size="medium" onClick={openEditModal}>
                     <EditIcon
-                      sx={{ color: 'common.white' }}
-                      fontSize='medium'
+                      sx={{ color: "common.white" }}
+                      fontSize="medium"
                     />
                   </IconButton>
                 )}
-                <IconButton edge='end' size='medium' onClick={openDeleteModal}>
-                  <DeleteIcon sx={{ color: 'white' }} fontSize='medium' />
+                <IconButton edge="end" size="medium" onClick={openDeleteModal}>
+                  <DeleteIcon sx={{ color: "white" }} fontSize="medium" />
                 </IconButton>
               </Box>
             </>
@@ -192,9 +192,9 @@ export const Departmets = () => {
                 onSearch={table.applySearchBarFilters}
                 values={{ ...filter }}
               />
-              <Box display='flex' gap={2}>
-                <IconButton edge='end' size='small' onClick={openCreateModal}>
-                  <CreateIcon sx={{ color: 'primary.dark' }} fontSize='large' />
+              <Box display="flex" gap={2}>
+                <IconButton edge="end" size="small" onClick={openCreateModal}>
+                  <CreateIcon sx={{ color: "primary.dark" }} fontSize="large" />
                 </IconButton>
               </Box>
             </>
@@ -207,15 +207,15 @@ export const Departmets = () => {
           multiselect
           noDataMessage={
             !filter.clientId
-              ? 'Seleccione un cliente para poder ver sus departamentos'
+              ? "Seleccione un cliente para poder ver sus departamentos"
               : list
-              ? 'No hay departamentos registrados que coincidan con el filtrado'
-              : 'Cargando...'
+              ? "No hay departamentos registrados que coincidan con el filtrado"
+              : "Cargando..."
           }
           onRowSelectionChange={(ids) =>
             table.setSelectedDeparmentsIds(ids as string[])
           }
-          paginationMode='server'
+          paginationMode="server"
           rowCount={pagination.totalItems}
           paginationModel={{
             page: pagination.currentPage - 1,

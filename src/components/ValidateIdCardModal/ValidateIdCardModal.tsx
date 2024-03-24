@@ -17,7 +17,7 @@ export const ValidateIdCardModal: FC<Props> = ({ idCard, setIdValidate }) => {
   const [state, setState] = useState("pending");
   const [carga, setCarga] = useState("Cargando");
   const [response, setResponse] = useState(
-    "Espere unos segundo mientras comprobamos le cedula del usuario"
+    "Espere unos segundo mientras comprobamos le cedula del usuario",
   );
   useEffect(() => {
     let index = 0;

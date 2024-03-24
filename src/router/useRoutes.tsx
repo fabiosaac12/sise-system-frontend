@@ -1,3 +1,4 @@
+import { Eventuality } from "@app/views/Eventuality/Eventuality";
 import { AuthRoleEnum, AuthStatusEnum } from "@app/enums/auth";
 import { BaseLayout } from "@app/layouts";
 import { LoginLayout } from "@app/layouts/LoginLayout";
@@ -59,6 +60,14 @@ export const useRoutes = () => {
       element: (
         <BaseLayout>
           <Employees />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/eventuality",
+      element: (
+        <BaseLayout>
+          <Eventuality />
         </BaseLayout>
       ),
     },

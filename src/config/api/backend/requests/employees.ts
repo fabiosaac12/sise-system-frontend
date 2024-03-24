@@ -1,11 +1,11 @@
-import { backend } from "../instance";
+import { backend } from '../instance';
 import {
   EmployeeData,
   EmployeeFilter,
   EmployeeForTable,
   EmployeeFormData,
-} from "@app/models/employee.model";
-import { PaginatedResponse, Pagination } from "@app/models/pagination";
+} from '@app/models/employee.model';
+import { PaginatedResponse, Pagination } from '@app/models/pagination';
 
 export const deleteEmployee = async ({ id }: { id: string }) => {
   const response = await backend.delete(`employee/delete/${id}`);
@@ -14,7 +14,7 @@ export const deleteEmployee = async ({ id }: { id: string }) => {
 };
 
 export const deleteEmployees = async ({ ids }: { ids: string[] }) => {
-  const response = await backend.delete("employee/deleteMany", {
+  const response = await backend.delete('employee/deleteMany', {
     params: { ids },
   });
 
@@ -37,7 +37,7 @@ export const editEmployee = async ({
 };
 
 export const createEmployee = async ({ data }: { data: EmployeeFormData }) => {
-  const response = await backend.post("employee/create", {
+  const response = await backend.post('employee/create', {
     ...data,
     idCard: +data.idCard,
   });
@@ -53,7 +53,7 @@ export const getEmployees = async ({
   pagination: Pagination;
 }) => {
   const response = await backend.get<PaginatedResponse<EmployeeForTable>>(
-    "employee",
+    'employee',
     {
       params: {
         ...filter,

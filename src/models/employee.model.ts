@@ -1,30 +1,30 @@
-import { Dayjs } from "dayjs";
-import { Catalogue } from "./catalogue.model";
-import { Pagination } from "./pagination";
-import { Dispatch } from "react";
+import { Dayjs } from 'dayjs';
+import { Catalogue } from './catalogue.model';
+import { Pagination } from './pagination';
+import { Dispatch } from 'react';
 
 export enum GenderEnum {
-  female = "F",
-  male = "M",
+  female = 'F',
+  male = 'M',
 }
 
 export enum EmployeeStatusEnum {
-  permanent = "FIJO",
-  hired = "CONTRATADO",
+  permanent = 'FIJO',
+  hired = 'CONTRATADO',
 }
 
 export enum CivilStatusEnum {
-  single = "S",
-  widower = "V",
-  divorced = "D",
-  married = "C",
-  u = "U",
-  o = "O",
+  single = 'S',
+  widower = 'V',
+  divorced = 'D',
+  married = 'C',
+  u = 'U',
+  o = 'O',
 }
 
 export enum DominantHandEnum {
-  right = "D",
-  left = "I",
+  right = 'D',
+  left = 'I',
 }
 
 export type EmployeeForTable = {
@@ -99,9 +99,15 @@ export type EmployeeFilter = {
 };
 
 export const initialEmployeeFilter: EmployeeFilter = {
-  clientId: "",
-  departmentId: "",
-  idCard: "",
+  clientId: '',
+  departmentId: '',
+  idCard: '',
+};
+
+export type EmployeeData = {
+  idcard: number;
+  firstNames: string;
+  lastNames: string;
 };
 
 export type EmployeeData = {

@@ -49,7 +49,7 @@ export const Navbar = () => {
           { text: "CLIENTES", icon: <StoreIcon />, path: "/clients" },
           { text: "DEPARTAMENTOS", icon: <DomainIcon />, path: "/departments" },
           { text: "EMPLEADOS", icon: <BadgeIcon />, path: "/employees" },
-          { text: "EVENTUALIDAD", icon: <MoodBadIcon />, path: "/" },
+          { text: "EVENTUALIDAD", icon: <MoodBadIcon />, path: "/eventuality" },
           { text: "PERFIL", icon: <AccountCircleIcon />, path: "/" },
         ]
       : [
@@ -61,7 +61,7 @@ export const Navbar = () => {
           { text: "INFORMES", icon: <ArticleIcon />, path: "/reports" },
           { text: "CONSULTAS", icon: <MedicalServicesIcon />, path: "/" },
           { text: "EMPLEADOS", icon: <BadgeIcon />, path: "/" },
-          { text: "EVENTUALIDAD", icon: <MoodBadIcon />, path: "/" },
+          { text: "EVENTUALIDAD", icon: <MoodBadIcon />, path: "/eventuality" },
           { text: "PERFIL", icon: <AccountCircleIcon />, path: "/" },
         ];
 
