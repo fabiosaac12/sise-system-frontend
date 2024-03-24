@@ -37,8 +37,7 @@ export const useValidationSchema = () => {
         )
         .moreThan(0, validNumberError)
         .integer(validNumberError)
-        .typeError(validNumberError)
-        .required(requiredError),
+        .typeError(validNumberError),
       superiorStatement: yup.string(),
       superiorEventDefinition: yup
         .mixed()
