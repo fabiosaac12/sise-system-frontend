@@ -1,19 +1,19 @@
-import { ThemeModeEnum } from '@app/enums/theme';
-import { Theme } from '@mui/material';
-import { palette, shape } from '.';
-import { hexToRgba } from '@app/helpers/theme';
+import { ThemeModeEnum } from "@app/enums/theme";
+import { Theme } from "@mui/material";
+import { palette, shape } from ".";
+import { hexToRgba } from "@app/helpers/theme";
 
-export const components = (mode: ThemeModeEnum): Theme['components'] => ({
+export const components = (mode: ThemeModeEnum): Theme["components"] => ({
   MuiButton: {
     styleOverrides: {
       containedPrimary: {
-        '&:hover': {
+        "&:hover": {
           backgroundColor: hexToRgba(palette(mode).primary!.dark, 0.5),
         },
       },
     },
     defaultProps: {
-      variant: 'contained',
+      variant: "contained",
     },
   },
   MuiTypography: {
@@ -25,7 +25,30 @@ export const components = (mode: ThemeModeEnum): Theme['components'] => ({
   },
   MuiTextField: {
     defaultProps: {
-      variant: 'filled',
+      variant: "outlined",
+      fullWidth: true,
+    },
+  },
+  MuiOutlinedInput: {
+    styleOverrides: {
+      root: {
+        backgroundColor: palette(mode).primary?.light,
+        "&:hover": {
+          backgroundColor: palette(mode).primary?.light,
+        },
+        "&.Mui-focused": {
+          backgroundColor: palette(mode).primary?.light,
+        },
+        "&::after": {
+          display: "none",
+        },
+        "&::before": {
+          display: "none",
+        },
+      },
+      notchedOutline: {
+        border: "none",
+      },
     },
   },
   MuiFilledInput: {
@@ -34,17 +57,17 @@ export const components = (mode: ThemeModeEnum): Theme['components'] => ({
         backgroundColor: palette(mode).primary?.light,
         borderBottomLeftRadius: shape.borderRadius,
         borderBottomRightRadius: shape.borderRadius,
-        '&:hover': {
+        "&:hover": {
           backgroundColor: palette(mode).primary?.light,
         },
-        '&.Mui-focused': {
+        "&.Mui-focused": {
           backgroundColor: palette(mode).primary?.light,
         },
-        '&::after': {
-          display: 'none',
+        "&::after": {
+          display: "none",
         },
-        '&::before': {
-          display: 'none',
+        "&::before": {
+          display: "none",
         },
       },
     },
@@ -52,7 +75,7 @@ export const components = (mode: ThemeModeEnum): Theme['components'] => ({
   MuiFormLabel: {
     styleOverrides: {
       root: {
-        '&.Mui-focused': {
+        "&.Mui-focused": {
           color: palette(mode).primary?.dark,
         },
       },
@@ -61,8 +84,17 @@ export const components = (mode: ThemeModeEnum): Theme['components'] => ({
   MuiCheckbox: {
     styleOverrides: {
       root: {
-        '&.Mui-checked': {
+        "&.Mui-checked": {
           color: palette(mode).secondary?.main,
+        },
+      },
+    },
+  },
+  MuiSelect: {
+    styleOverrides: {
+      select: {
+        ":focus": {
+          background: "none",
         },
       },
     },

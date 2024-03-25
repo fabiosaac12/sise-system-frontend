@@ -272,7 +272,6 @@ export const MorbidityTable = () => {
           <EnhancedTableToolbar selected={rowsSelected} />
           
           <DataGrid
-            
             sx={{
               height: 390, width: '100%',
               ".MuiDataGrid-columnSeparator": {

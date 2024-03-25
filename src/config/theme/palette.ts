@@ -27,9 +27,9 @@ export const palette = (mode: ThemeModeEnum): Partial<Theme['palette']> =>
           disabled: 'rgba(0, 0, 0, 0.38)',
         },
         error: {
-          main: '#EB0014',
-          light: '#FF99A2',
-          dark: '#C70011',
+          main: '#bc182e',
+          light: '#db2a3b',
+          dark: '#ad0723',
           contrastText: '#fff',
         },
         success: {
@@ -96,9 +96,9 @@ export const palette = (mode: ThemeModeEnum): Partial<Theme['palette']> =>
           disabled: 'rgba(255, 255, 255, 0.5)',
         },
         error: {
-          main: '#EB0014',
-          light: '#FF99A2',
-          dark: '#C70011',
+          main: '#bc182e',
+          light: '#db2a3b',
+          dark: '#ad0723',
           contrastText: '#fff',
         },
         success: {
