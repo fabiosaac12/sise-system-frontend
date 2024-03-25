@@ -34,10 +34,10 @@ export type UserState = {
     filter?: Partial<UserFilter>;
     pagination?: Partial<Pagination>;
   }) => Promise<UserForTable[] | undefined>;
-  sendCreateEmail: (data: UserFormData) => Promise<boolean>;
-  sendEditEmail: (data: UserFormData) => Promise<boolean>;
-  editPassword: (data: UserFormData) => Promise<boolean>;
-  createOne: (data: UserFormData) => Promise<boolean>;
+  sendCreateEmailOne: (data: UserFormData) => Promise<boolean>;
+  sendEditEmailOne: (email: string) => Promise<boolean>;
+  editPasswordOne: (newPassword: string) => Promise<boolean>;
+  createOne: (password: string) => Promise<boolean>;
   editOne: (id: string, data: UserFormData) => Promise<boolean>;
   deleteOne: (id: string) => Promise<boolean>;
   deleteMany: (ids: string[]) => Promise<boolean>;

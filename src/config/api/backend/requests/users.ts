@@ -6,7 +6,7 @@ export const getUsers = async ({
   filter,
   pagination,
 }: {
-  filter: UserFilter;
+  filter?: UserFilter;
   pagination: Pagination;
 }) => {
   const response = await backend.get<PaginatedResponse<UserForTable>>("user", {
