@@ -35,17 +35,7 @@ export const ClientsProvider: FC<PropsWithChildren> = ({ children }) => {
     filter?: Partial<ClientFilter>;
     pagination?: Partial<Pagination>;
   } = {}) => {
-    let response;
-    if (filter.name === "") {
-      response = await _getAll({
-        pagination: { ...pagination, ..._pagination },
-      });
-
-      setList(response?.list);
-      return response?.list;
-    }
-
-    response = await _getAll({
+    const response = await _getAll({
       filter: { ...filter, ..._filter },
       pagination: { ...pagination, ..._pagination },
     });
@@ -77,7 +67,7 @@ export const ClientsProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const editOne: ClientState["editOne"] = async (
     id: string,
-    data: ClientFormData
+    data: ClientFormData,
   ) => {
     const done = await _editOne({ data, id });
 

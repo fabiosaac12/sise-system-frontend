@@ -2,8 +2,7 @@ import { ClientFormData } from "@app/models/client.model";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { FC } from "react";
 import { useForm } from "./hooks/useForm";
-import { Select, TextField } from "@app/components/form";
-import { useClients } from "@app/providers/clients";
+import { TextField } from "@app/components/form";
 import { useModal } from "@app/providers/modal";
 import { useStyles } from "./ClientFormStyles";
 
@@ -20,8 +19,6 @@ export const ClientForm: FC<Props> = ({
 }) => {
   const modal = useModal();
   const classes = useStyles();
-
-  const { catalogues } = useClients();
 
   const formik = useForm({
     initialValues,
@@ -42,15 +39,6 @@ export const ClientForm: FC<Props> = ({
       </Box>
       <Box className={classes.body}>
         <Grid container spacing={3} justifyContent="center" alignItems="center">
-          {/* <Grid item xs={12} sm={6}>
-            <Select
-              formik={formik}
-              label="Departamento"
-              placeholder="Seleccionar..."
-              name="departments"
-              options={catalogues.departments}
-            />
-          </Grid> */}
           <Grid item xs={12} sm={6}>
             <TextField
               formik={formik}
