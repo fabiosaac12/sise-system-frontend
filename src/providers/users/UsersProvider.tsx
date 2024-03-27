@@ -41,18 +41,16 @@ export const UsersProvider: FC<PropsWithChildren> = ({ children }) => {
     filter?: Partial<UserFilter>;
     pagination?: Partial<Pagination>;
   } = {}) => {
-    let response;
-    if (filter.email === "") {
-      response = await _getAll({
-        pagination: { ...pagination, ..._pagination },
-      });
-
-      setList(response?.list);
-      return response?.list;
-    }
-
-    response = await _getAll({
-      filter: { ...filter, ..._filter },
+    const response = await _getAll({
+      filter: {
+        ...filter,
+        ..._filter,
+        email: (_filter?.email || filter.email || undefined) as string,
+        firstName: (_filter?.firstName ||
+          filter.firstName ||
+          undefined) as string,
+        lastName: (_filter?.lastName || filter.lastName || undefined) as string,
+      },
       pagination: { ...pagination, ..._pagination },
     });
 
