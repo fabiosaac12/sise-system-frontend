@@ -4,26 +4,26 @@ import { Pagination } from "./pagination";
 export type UserForTable = {
   id: string;
   email: string;
-  firstNames: string;
-  lastNames: string;
+  firstName: string;
+  lastName: string;
 };
 
 export type UserFormData = {
   email: string;
-  firstNames: string;
-  lastNames: string;
+  firstName: string;
+  lastName: string;
 };
 
 export type UserFilter = {
   email: string;
-  firstNames: string;
-  lastNames: string;
+  firstName: string;
+  lastName: string;
 };
 
 export const initialUserFilter = {
   email: "",
-  firstNames: "",
-  lastNames: "",
+  firstName: "",
+  lastName: "",
 };
 
 export type UserState = {
