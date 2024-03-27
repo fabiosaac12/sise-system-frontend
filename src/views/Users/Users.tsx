@@ -11,6 +11,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { SearchBar } from "@app/components/SearchBar";
 import { Table } from "@app/components/Table";
+import ErrorIcon from "@mui/icons-material/Error";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 export const Users = () => {
   const {
@@ -49,7 +51,31 @@ export const Users = () => {
             const done = await sendCreateEmailOne(data);
 
             if (done) {
-              modal.close();
+              modal.open({
+                content: (
+                  <ConfirmModal
+                    Icon={CheckCircleOutlineIcon}
+                    color={"success"}
+                    title={"EXITO"}
+                    description={`Se le ha enviado un correo a ${data.email} para configurar su contraseña y poder completar el registro`}
+                    confirmButtonText={"aceptar"}
+                  ></ConfirmModal>
+                ),
+              });
+            } else {
+              modal.open({
+                content: (
+                  <ConfirmModal
+                    Icon={ErrorIcon}
+                    color={"error"}
+                    title={"ERROR"}
+                    description={
+                      "Ha ocurrido un error inesperado, inténtelo nuevamente"
+                    }
+                    confirmButtonText={"aceptar"}
+                  ></ConfirmModal>
+                ),
+              });
             }
           }}
         />
@@ -188,7 +214,7 @@ export const Users = () => {
           noDataMessage={
             !list
               ? "Cargando..."
-              : "No hay clientes registrados que coincidan con el filtrado"
+              : "No hay usuarios registrados que coincidan con el filtrado"
           }
           onRowSelectionChange={(ids) =>
             table.setSelectedUserIds(ids as string[])
