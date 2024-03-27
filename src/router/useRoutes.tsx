@@ -11,6 +11,7 @@ import { Morbidity } from "@app/views/Morbidity";
 import { Reports } from "@app/views/Reports";
 import { Login } from "@app/views/auth/Login/Login";
 import { RouteProps, Navigate } from "react-router-dom";
+import { Users } from "@app/views/Users";
 
 export const useRoutes = () => {
   const auth = useAuth();
@@ -60,6 +61,14 @@ export const useRoutes = () => {
       element: (
         <BaseLayout>
           <Employees />
+        </BaseLayout>
+      ),
+    },
+    {
+      path: "/users",
+      element: (
+        <BaseLayout>
+          <Users />
         </BaseLayout>
       ),
     },
