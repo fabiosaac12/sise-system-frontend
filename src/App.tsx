@@ -10,25 +10,28 @@ import { EmployeesProvider } from "./providers/employees";
 import { ConsultProvider } from "./providers/consult";
 import { DeparmentsProvider } from "./providers/deparments";
 import { ClientsProvider } from "./providers/clients";
+import { UsersProvider } from "./providers/users";
 
 function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
       <ThemeProvider>
         <AuthProvider>
-          <ModalProvider>
-            <ClientsProvider>
-              <DeparmentsProvider>
-                <EmployeesProvider>
-                  <EventualityProvider>
-                    <ConsultProvider>
-                      <Router />
-                    </ConsultProvider>
-                  </EventualityProvider>
-                </EmployeesProvider>
-              </DeparmentsProvider>
-            </ClientsProvider>
-          </ModalProvider>
+          <UsersProvider>
+            <ModalProvider>
+              <ClientsProvider>
+                <DeparmentsProvider>
+                  <EmployeesProvider>
+                    <EventualityProvider>
+                      <ConsultProvider>
+                        <Router />
+                      </ConsultProvider>
+                    </EventualityProvider>
+                  </EmployeesProvider>
+                </DeparmentsProvider>
+              </ClientsProvider>
+            </ModalProvider>
+          </UsersProvider>
         </AuthProvider>
       </ThemeProvider>
     </LocalizationProvider>
