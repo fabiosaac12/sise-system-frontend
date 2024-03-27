@@ -45,7 +45,7 @@ export const Navbar = () => {
             icon: <MedicalServicesIcon />,
             path: "/consult",
           },
-          { text: "USUARIOS", icon: <PeopleAltIcon />, path: "/" },
+          { text: "USUARIOS", icon: <PeopleAltIcon />, path: "/users" },
           { text: "CLIENTES", icon: <StoreIcon />, path: "/clients" },
           { text: "DEPARTAMENTOS", icon: <DomainIcon />, path: "/departments" },
           { text: "EMPLEADOS", icon: <BadgeIcon />, path: "/employees" },
