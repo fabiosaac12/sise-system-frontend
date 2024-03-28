@@ -132,6 +132,7 @@ export const MorbidityForm: FC<Props> = ({
                 id: value,
                 name: value,
               }))}
+              disabled={!idValidate || edit}
             />
           </Grid>
           <Grid {...gridItemsCommonProps}>
