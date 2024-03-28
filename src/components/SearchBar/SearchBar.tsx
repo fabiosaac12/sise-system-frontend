@@ -9,6 +9,8 @@ import {
   SearchBarAppliedFilter,
   SearchBarFilter,
 } from "@app/models/components";
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs, { Dayjs } from "dayjs";
 
 interface Props {
   values?: Record<string, string>;
@@ -22,7 +24,7 @@ export const SearchBar: FC<Props> = ({ searchBy, onSearch, values }) => {
   >([]);
 
   const [selectedField, setSelectedField] = useState<SearchBarFilter>(
-    searchBy[0]
+    searchBy[0],
   );
 
   const [searchText, setSearchText] = useState<string>("");
@@ -43,11 +45,11 @@ export const SearchBar: FC<Props> = ({ searchBy, onSearch, values }) => {
                     ...filter,
                     value: values[filter.keyName],
                   }
-                : undefined
+                : undefined,
             )
             .filter(
-              (filter) => filter !== undefined
-            ) as SearchBarAppliedFilter[]
+              (filter) => filter !== undefined,
+            ) as SearchBarAppliedFilter[],
       );
     }
   }, [values]);
@@ -73,7 +75,7 @@ export const SearchBar: FC<Props> = ({ searchBy, onSearch, values }) => {
 
   const handleApplyFilters = () => {
     const filterExist = appliedFilters?.find(
-      (filterItem) => filterItem.keyName === selectedField.keyName
+      (filterItem) => filterItem.keyName === selectedField.keyName,
     );
 
     let newFilters = [...appliedFilters];
@@ -84,9 +86,18 @@ export const SearchBar: FC<Props> = ({ searchBy, onSearch, values }) => {
           return {
             ...filterItem,
             value: searchText,
+            // label:
+            //   selectedField.options?.find(({ id }) => id === searchText)
+            //     ?.name || searchText,
             label:
-              selectedField.options?.find(({ id }) => id === searchText)
-                ?.name || searchText,
+              selectedField.type === "text"
+                ? searchText
+                : selectedField.type === "select"
+                ? selectedField.options?.find(({ id }) => id === searchText)
+                    ?.name || ""
+                : selectedField.type === "date"
+                ? dayjs(searchText).format("DD/MM/YYYY")
+                : "",
           };
         }
 
@@ -107,7 +118,7 @@ export const SearchBar: FC<Props> = ({ searchBy, onSearch, values }) => {
 
   const handleClearFilter = (filterToClear: SearchBarFilter) => {
     const newFilters = appliedFilters.filter(
-      (filterItem) => filterItem.keyName !== filterToClear.keyName
+      (filterItem) => filterItem.keyName !== filterToClear.keyName,
     );
 
     setAppliedFilters([...newFilters]);
@@ -141,7 +152,7 @@ export const SearchBar: FC<Props> = ({ searchBy, onSearch, values }) => {
           setSelectedField(selectedField);
 
           const currentValue = appliedFilters.find(
-            (filterItem) => filterItem.keyName === selectedField.keyName
+            (filterItem) => filterItem.keyName === selectedField.keyName,
           );
 
           setSearchText(currentValue ? currentValue.value : "");
@@ -150,7 +161,7 @@ export const SearchBar: FC<Props> = ({ searchBy, onSearch, values }) => {
         onClearAllFilters={handleClearAllFilters}
       />
 
-      {selectedField.options ? (
+      {selectedField.type === "select" ? (
         <Select
           sx={{ ml: 1, flex: 1 }}
           variant="standard"
@@ -163,13 +174,13 @@ export const SearchBar: FC<Props> = ({ searchBy, onSearch, values }) => {
           <MenuItem value="none">
             <Typography color="text.disabled">Seleccionar...</Typography>
           </MenuItem>
-          {selectedField.options.map((option) => (
+          {selectedField.options?.map((option) => (
             <MenuItem key={`searchbar-menuitem-${option.id}`} value={option.id}>
               {option.name}
             </MenuItem>
           ))}
         </Select>
-      ) : (
+      ) : selectedField.type === "text" ? (
         <InputBase
           sx={{ ml: 1, flex: 1 }}
           placeholder={`Buscar por ${selectedField.text.toLowerCase()}`}
@@ -178,6 +189,14 @@ export const SearchBar: FC<Props> = ({ searchBy, onSearch, values }) => {
             setSearchText(e.target.value);
           }}
         />
+      ) : (
+        <DatePicker
+          sx={{ ml: 1, flex: 1 }}
+          value={searchText ? dayjs(searchText) : null}
+          onChange={(value) => {
+            setSearchText((value as Dayjs).toISOString() || "");
+          }}
+        ></DatePicker>
       )}
 
       <IconButton

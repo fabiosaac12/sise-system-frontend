@@ -5,6 +5,7 @@ export interface SearchBarFilter {
     id: string;
     name: string;
   }[];
+  type: "text" | "select" | "date";
 }
 
 export interface SearchBarAppliedFilter extends SearchBarFilter {
