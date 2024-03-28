@@ -1,4 +1,7 @@
-import { MorbidityFormData } from "@app/models/morbidity.model";
+import {
+  MorbidityFormData,
+  DiagnosisTypeEnum,
+} from "@app/models/morbidity.model";
 import * as yup from "yup";
 
 export const useValidationSchema = () => {
@@ -16,15 +19,20 @@ export const useValidationSchema = () => {
     idCard: yup
       .number()
       .transform((_, originalValue) =>
-        originalValue === "" ? undefined : +originalValue
+        originalValue === "" ? undefined : +originalValue,
       )
       .moreThan(0, "Introduzca un número de cédula válido")
       .required(requiredError),
-    firstNames: yup.string().required(requiredError),
-    lastNames: yup.string().required(requiredError),
-    diagnosis: yup.string().required(requiredError),
+    diagnosis: yup
+      .mixed<DiagnosisTypeEnum>()
+      .oneOf(Object.values(DiagnosisTypeEnum))
+      .required(requiredError),
     treatment: yup.string(),
-    quantity: yup.number(),
+    quantity: yup
+      .number()
+      .transform((_, originalValue) =>
+        originalValue === "" ? undefined : +originalValue,
+      ),
   }) as unknown as yup.ObjectSchema<MorbidityFormData>;
 
   return validationSchema;

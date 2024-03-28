@@ -1,6 +1,10 @@
-import { MorbidityFormData } from "@app/models/morbidity.model";
+import {
+  DiagnosisTypeEnum,
+  MorbidityFormData,
+} from "@app/models/morbidity.model";
 import { useValidationSchema } from "./useValidationSchema";
 import { useFormik, FormikProps } from "formik";
+import { Dayjs } from "dayjs";
 
 interface Props {
   initialValues?: MorbidityFormData;
@@ -8,12 +12,12 @@ interface Props {
 }
 
 const defaultInitialValues: MorbidityFormData = {
-  date: null as unknown as Date,
-  hour: "",
-  firstNames: "",
-  lasNames: "",
+  date: null as unknown as Dayjs,
+  hour: null as unknown as Dayjs,
   idCard: "",
-  diagnosis: "",
+  diagnosis: "" as DiagnosisTypeEnum,
+  quantity: "",
+  treatment: "",
 };
 
 export const useForm = ({
