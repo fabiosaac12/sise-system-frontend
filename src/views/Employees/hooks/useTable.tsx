@@ -157,17 +157,19 @@ export const useTable = () => {
       keyName: "clientId",
       text: "Cliente",
       options: catalogues.clients,
+      type: "select",
     },
     {
       keyName: "departmentId",
       text: "Departamento",
       options: catalogues.departments,
+      type: "select",
     },
-    { keyName: "idCard", text: "Cédula" },
+    { keyName: "idCard", text: "Cédula", type: "text" },
   ];
 
   const applySearchBarFilters = (
-    appliedFilters: SearchBarAppliedFilter[] = []
+    appliedFilters: SearchBarAppliedFilter[] = [],
   ) => {
     applyFilters(
       appliedFilters.reduce<Partial<EmployeeFilter>>(
@@ -175,8 +177,8 @@ export const useTable = () => {
           ...filters,
           [field.keyName]: field.value,
         }),
-        {}
-      )
+        {},
+      ),
     );
   };
 
