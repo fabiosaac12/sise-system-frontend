@@ -1,57 +1,71 @@
 import { Dayjs } from "dayjs";
+import { Dispatch } from "react";
+import { Pagination } from "./pagination";
+import { Catalogue } from "./catalogue.model";
 
+export enum DiagnosisTypeEnum {
+  cefalea = "cefalea",
+  herida = "herida",
+}
 export type MorbidityForTable = {
-  date: Dayjs;
-  hour: Dayjs;
-  idCard: string;
-  age: number;
-  firstNames: string;
-  lastNames: string;
-  diagnosis: string;
+  id: string;
+  dateTime: string;
+  employee: {
+    idCard: string;
+    firstNames: string;
+    lastNames: string;
+    birthdate: string;
+    workPosition: string;
+  };
+  diagnosis: DiagnosisTypeEnum;
   treatment?: string;
-  quantity?: number;
+  quantity?: string;
 };
 
 export type MorbidityFormData = {
   date: Dayjs;
   hour: Dayjs;
   idCard: string;
-  firstNames: string;
-  lastNames: string;
-  diagnosis: string;
+  diagnosis: DiagnosisTypeEnum;
   treatment?: string;
-  quantity?: number | string;
+  quantity?: string;
+};
+export type Morbidity = {
+  dateTime: Dayjs;
+  idCard: string;
+  diagnosis: DiagnosisTypeEnum;
+  treatment?: string | null;
+  quantity?: number | null;
 };
 
 export type MorbidityFilter = {
-  date: Dayjs;
-  clientID: string;
+  date: string;
+  clientId: string;
   workPosition: string;
 };
 
 export const initialMorbidityFilter: MorbidityFilter = {
-  date: null as unknown as Dayjs,
-  clientID: "",
+  date: "",
+  clientId: "",
   workPosition: "",
 };
 
 export type MorbidityState = {
-  list?: MorbidityForTable;
+  list?: MorbidityForTable[];
   filter: MorbidityFilter;
   pagination: Pagination;
-  getall: (props?: {
+  getAll: (props?: {
     filter?: Partial<MorbidityFilter>;
     pagination?: Partial<Pagination>;
   }) => Promise<MorbidityForTable[] | undefined>;
-  createOne: (data: MorbidityFormData) => Promise<boolean>;
-  editOne: (id: string, data: MorbidityFormData) => Promise<boolean>;
+  createOne: (data: Morbidity) => Promise<boolean>;
+  editOne: (id: string, data: Morbidity) => Promise<boolean>;
   deleteOne: (id: string) => Promise<boolean>;
+  deleteMany: (id: string[]) => Promise<boolean>;
   applyFilters: (filter: Partial<MorbidityFilter>) => void;
   setPagination: Dispatch<React.SetStateAction<Pagination>>;
   catalogues: {
     clients: Catalogue;
-    departments: Catalogue;
     getClients: () => Promise<Catalogue | undefined>;
-    getDepartments: (clientId?: string) => Promise<Catalogue | undefined>;
   };
 };
