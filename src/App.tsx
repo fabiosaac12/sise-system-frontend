@@ -10,6 +10,7 @@ import { EmployeesProvider } from "./providers/employees";
 import { ConsultProvider } from "./providers/consult";
 import { DeparmentsProvider } from "./providers/deparments";
 import { ClientsProvider } from "./providers/clients";
+import { MorbidityProvider } from "./providers/morbidity";
 
 function App() {
   return (
@@ -22,7 +23,9 @@ function App() {
                 <EmployeesProvider>
                   <EventualityProvider>
                     <ConsultProvider>
-                      <Router />
+                      <MorbidityProvider>
+                        <Router />
+                      </MorbidityProvider>
                     </ConsultProvider>
                   </EventualityProvider>
                 </EmployeesProvider>
