@@ -1,8 +1,8 @@
-import { Dayjs } from 'dayjs';
+import { Dayjs } from "dayjs";
 
 export enum EventDefinitionEnum {
-  accidente = 'ACCIDENTE',
-  incidente = 'INCIDENTE',
+  accidente = "ACCIDENTE",
+  incidente = "INCIDENTE",
 }
 export type EventualityFormData = {
   idCard: string;
@@ -12,7 +12,7 @@ export type EventualityFormData = {
   eventDate: Dayjs;
   typeOfInjury: string;
   injuredBodyPart: string;
-  daysOfRest: number;
+  daysOfRest: string;
   workerStatement: string;
   workerEventDefinition: EventDefinitionEnum | null;
   witnessStatement: string;

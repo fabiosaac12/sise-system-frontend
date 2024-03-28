@@ -1,25 +1,26 @@
 import {
   EventDefinitionEnum,
   EventualityFormData,
-} from '@app/models/eventuality.model';
-import { Dayjs } from 'dayjs';
-import { useFormik } from 'formik';
-import { useValidationSchema } from './useValidationSchema';
+} from "@app/models/eventuality.model";
+import { Dayjs } from "dayjs";
+import { useFormik } from "formik";
+import { useValidationSchema } from "./useValidationSchema";
 
 const defaultInitialValues: EventualityFormData = {
-  idCard: '',
+  idCard: "",
   eventDatetime: null as unknown as Dayjs,
   eventDate: null as unknown as Dayjs,
-  injuredBodyPart: '',
-  eventPlace: '',
-  typeOfInjury: '',
-  eventDefinition: '' as EventDefinitionEnum,
-  superiorEventDefinition: '' as EventDefinitionEnum,
-  superiorStatement: '',
-  witnessEventDefinition: '' as EventDefinitionEnum,
-  witnessStatement: '',
-  workerEventDefinition: '' as EventDefinitionEnum,
-  workerStatement: '',
+  injuredBodyPart: "",
+  daysOfRest: "",
+  eventPlace: "",
+  typeOfInjury: "",
+  eventDefinition: "" as EventDefinitionEnum,
+  superiorEventDefinition: "" as EventDefinitionEnum,
+  superiorStatement: "",
+  witnessEventDefinition: "" as EventDefinitionEnum,
+  witnessStatement: "",
+  workerEventDefinition: "" as EventDefinitionEnum,
+  workerStatement: "",
 };
 
 type Props = {
